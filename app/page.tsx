@@ -2,6 +2,7 @@ import Hero from "./(features)/home/components/sections/Hero";
 import About from "./(features)/home/components/sections/About";
 import Products from "./(features)/home/components/sections/products";
 import WhyChooseTopo from "./(features)/home/components/sections/WhyChooseTopo";
+import ProductFeatures from "./(features)/home/components/sections/ProductFeatures";
 import Testimonials from "./(features)/home/components/sections/Testimonials";
 
 export default function Home() {
@@ -23,6 +24,11 @@ export default function Home() {
 
       {/* Testimonials Section */}
       <Testimonials />
+      
+
+      {/* Product Features Section */}
+      <ProductFeatures />
+
       
       {/* Spacer for scrolling */}
       <section className="h-[50vh] bg-gray-50 flex items-center justify-center">
