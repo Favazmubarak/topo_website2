@@ -6,6 +6,7 @@ import FAQ from "./(features)/home/components/sections/FAQ";
 import ProductFeatures from "./(features)/home/components/sections/ProductFeatures";
 import Testimonials from "./(features)/home/components/sections/Testimonials";
 import Gallery from "./(features)/home/components/sections/Gallery";
+import Upgrade from "./(features)/home/components/sections/Upgrade";
 
 export default function Home() {
   return (
@@ -35,6 +36,9 @@ export default function Home() {
 
       {/* Gallery Section */}
       <Gallery />
+
+      {/* Upgrade CTA Section */}
+      <Upgrade />
 
       {/* Spacer for scrolling */}
       <section className="h-[50vh] bg-gray-50 flex items-center justify-center">
