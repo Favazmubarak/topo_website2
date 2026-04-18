@@ -5,6 +5,7 @@ import WhyChooseTopo from "./(features)/home/components/sections/WhyChooseTopo";
 import FAQ from "./(features)/home/components/sections/FAQ";
 import ProductFeatures from "./(features)/home/components/sections/ProductFeatures";
 import Testimonials from "./(features)/home/components/sections/Testimonials";
+import Gallery from "./(features)/home/components/sections/Gallery";
 
 export default function Home() {
   return (
@@ -32,6 +33,8 @@ export default function Home() {
       {/* FAQ Section */}
       <FAQ />
 
+      {/* Gallery Section */}
+      <Gallery />
 
       {/* Spacer for scrolling */}
       <section className="h-[50vh] bg-gray-50 flex items-center justify-center">
