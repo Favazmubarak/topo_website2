@@ -6,7 +6,7 @@ import Navbar from "@/src/components/Navbar";
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const geistSans = Geist({
