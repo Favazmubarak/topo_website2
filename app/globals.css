@@ -23,6 +23,7 @@
 
   /* ✅ Add this */
   --font-highrise: "HighriseDemo", sans-serif;
+  --font-montserrat: var(--font-montserrat), sans-serif;
 
   --color-brand-blue: #0066B2;
 }
