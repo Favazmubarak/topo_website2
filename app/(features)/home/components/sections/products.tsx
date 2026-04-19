@@ -50,14 +50,20 @@ export default function Products() {
       </div>
 
       {/* Products Section */}
-      <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto md:overflow-visible pb-4 scrollbar-hide">
+      <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 
+gap-3 md:gap-6 lg:gap-8 
+overflow-x-auto md:overflow-visible pb-2 
+no-scrollbar scrollbar-hide snap-x snap-mandatory">
+
         {products.map((product) => (
           <div
             key={product.id}
-            className="relative group overflow-hidden rounded-2xl aspect-[4/5] shadow-lg 
-            min-w-[75%] sm:min-w-[60%] md:min-w-0 flex-shrink-0"
+            className="relative group overflow-hidden rounded-xl md:rounded-2xl 
+      aspect-[3/4] md:aspect-[4/5] shadow-md 
+      min-w-[60%] sm:min-w-[45%] md:min-w-0 
+      flex-shrink-0 snap-start"
           >
-            {/* Background Image */}
+            {/* Image */}
             <Image
               src={product.image}
               alt={product.title}
@@ -65,22 +71,21 @@ export default function Products() {
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
 
-            {/* Bottom Card */}
-            <div className="absolute h-[32%] bottom-2 left-2 right-2 bg-white/85 
-  p-3 sm:p-4 md:p-5 rounded-xl transition-all duration-300 
-  flex flex-col justify-start overflow-hidden">
+            {/* Content */}
+            <div className="absolute h-[32%] bottom-1.5 left-1.5 right-1.5 
+      bg-white/85 p-2 md:p-4 rounded-lg md:rounded-xl 
+      flex flex-col justify-start overflow-hidden">
 
               <h3 className="font-montserrat text-black 
-    text-[clamp(14px,1.6vw,20px)] 
-    leading-tight font-semibold mb-1 
-    line-clamp-2">
+        text-[clamp(12px,1.4vw,18px)] 
+        leading-tight font-semibold mb-1 line-clamp-2">
                 {product.title}
               </h3>
 
               <p className="font-poppins text-[#2F2F2F] 
-    text-[clamp(11px,1.4vw,16px)] 
-    leading-snug font-[300] 
-    line-clamp-2 sm:line-clamp-3">
+        text-[clamp(9px,1.2vw,15px)] 
+        leading-snug font-[300] 
+        line-clamp-2">
                 {product.description}
               </p>
             </div>
