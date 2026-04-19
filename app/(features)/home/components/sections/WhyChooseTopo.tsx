@@ -76,7 +76,7 @@ export default function WhyChooseTopo() {
 
           {/* Right */}
           <div className="w-full lg:w-[58%] lg:pl-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-8 sm:gap-y-10 lg:gap-y-12">
+            <div className="grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-6 sm:gap-y-10 lg:gap-y-12">
               {features.map((feature, index) => (
                 <div key={index} className="flex flex-col gap-2 sm:gap-3">
                   <div>{feature.icon}</div>
