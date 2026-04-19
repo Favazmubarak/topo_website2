@@ -19,27 +19,57 @@ export default function Hero() {
             <div className="absolute inset-0 bg-black/5" />
 
             {/* Content */}
-            <div className="relative z-10 flex items-center h-full px-6 sm:px-10 md:px-16 lg:px-24">
-                <h1
-                    className="
-    font-highrise 
-    text-white 
-    uppercase 
-    leading-[0.85] 
-    tracking-[-0.03em]
+            <div className="relative z-10 flex flex-col gap-13 items-between justify-center h-full">
 
-    text-[42px]
-    sm:text-[56px]
-    md:text-[72px]
-    lg:text-[96px]
-    xl:text-[120px]
+                {/* First Line */}
+                <div className="relative  right-75 scale-x-50">
+                    <h1
+                        className="
+        font-highrise 
+        font-black
+        text-white 
+        uppercase 
+        leading-[0.8] 
+        tracking-[-0.05em]
+        scale-y-130
+        text-[42px]
+        sm:text-[56px]
+        md:text-[72px]
+        lg:text-[80px]
+        xl:text-[110px]
+        max-w-full
+        text-end
+      "
+                    >
+                        FRAMING THE FUTURE OF
+                    </h1>
+                </div>
 
-    max-w-[900px]
-  "
-                >
-                    FRAMING THE FUTURE OF <br />
-                    MODERN LIVING
-                </h1>
+                {/* Second Line */}
+                <div className="relative right-75 scale-x-50">
+                    <h2
+                        className="
+                        ml-auto
+        font-highrise 
+        font-black
+        text-white 
+        uppercase 
+        leading-[0.8] 
+        tracking-[-0.05em]
+        scale-y-130
+        text-[42px]
+        sm:text-[56px]
+        md:text-[72px]
+        lg:text-[80px]
+        xl:text-[110px]
+        max-w-full
+        text-end
+      "
+                    >
+                        MODERN LIVING
+                    </h2>
+                </div>
+
             </div>
 
             {/* Bottom White Fade Effect */}
