@@ -12,9 +12,8 @@ export default function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="h-screen bg-gray-900 flex items-center justify-center text-white">
-        <Hero />
-      </section>
+      <Hero />
+      
 
       {/* About Section */}
       <About />
