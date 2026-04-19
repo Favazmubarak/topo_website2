@@ -21,52 +21,55 @@ export default function Hero() {
             {/* Content */}
             <div className="relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16">
 
-                {/* Wrapper */}
                 <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
 
-                    {/* Line 1 */}
-                    <div className="relative scale-x-50 origin-left">
-                        <h1 className="
-    font-highrise 
-    font-black
-    text-white 
-    uppercase 
-    leading-[0.8] 
-    tracking-[-0.05em]
-    scale-y-[1.3]
-    text-[26px]
-    sm:text-[38px]
-    md:text-[60px]
-    lg:text-[80px]
-    xl:text-[110px]
-    text-left
-    whitespace-nowrap
-    [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]
-">
-                            FRAMING THE FUTURE OF
-                        </h1>
-                    </div>
+                    <div className="inline-block flex flex-col gap-2 sm:gap-3 md:gap-4">
 
-                    {/* Line 2 */}
-                    <div className="relative scale-x-50 origin-left">
-                        <h2 className="
-                            font-highrise 
-                            font-black
-                            text-white 
-                            uppercase 
-                            leading-[0.8] 
-                            tracking-[-0.05em]
-                            scale-y-[1.3]
-                            text-[26px]
-                            sm:text-[38px]
-                            md:text-[60px]
-                            lg:text-[80px]
-                            xl:text-[110px]
-                            text-left
-                             [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]
-                        ">
-                            MODERN LIVING
-                        </h2>
+                        {/* Line 1 */}
+                        <div className="relative scale-x-50 origin-left w-fit">
+                            <h1 className="
+        font-highrise 
+        font-black
+        text-white 
+        uppercase 
+        leading-[0.8] 
+        tracking-[-0.05em]
+        scale-y-[1.3]
+        text-[26px]
+        sm:text-[38px]
+        md:text-[60px]
+        lg:text-[80px]
+        xl:text-[110px]
+        whitespace-nowrap
+        [text-shadow:0_2px_6px_rgba(0,0,0,0.4)]
+      ">
+                                FRAMING THE FUTURE OF
+                            </h1>
+                        </div>
+
+                        {/* Line 2 */}
+                        <div className="relative scale-x-50 origin-left flex justify-end w-full mt-5 sm:mt-10 md:mt-10 lg:mt-12 xl:mt-15">
+                            <h2 className="
+        font-highrise 
+        font-black
+        text-white 
+        uppercase 
+        leading-[0.8] 
+        tracking-[-0.05em]
+        scale-y-[1.3]
+        text-[26px]
+        sm:text-[38px]
+        md:text-[60px]
+        lg:text-[80px]
+        xl:text-[110px]
+        whitespace-nowrap
+        text-right
+        [text-shadow:0_2px_6px_rgba(0,0,0,0.4)]
+      ">
+                                MODERN LIVING
+                            </h2>
+                        </div>
+
                     </div>
 
                 </div>
