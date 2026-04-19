@@ -1,44 +1,31 @@
 "use client";
 
 import Image from "next/image";
+import { GoShieldCheck } from "react-icons/go";
+import { PiPencilSimple } from "react-icons/pi";
+import { SlEnergy } from "react-icons/sl";
+import { TbCloudPlus } from "react-icons/tb";
 
 const features = [
   {
     title: "High Durability",
     description: "Built with strong aluminum to ensure long-lasting performance in all conditions.",
-    icon: (
-      <svg className="w-8 h-8 text-[#0066B2]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
+    icon: <GoShieldCheck className="w-8 h-8 text-[#0066B2]" />,
   },
   {
     title: "Modern Design",
     description: "Clean, sleek designs that enhance any modern space.",
-    icon: (
-      <svg className="w-8 h-8 text-[#0066B2]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 19l7-7 3 3-7 7-3-3z" />
-        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-      </svg>
-    ),
+    icon: <PiPencilSimple className="w-8 h-8 text-[#0066B2]" />,
   },
   {
     title: "Energy Efficient",
     description: "Designed to reduce heat loss and improve energy savings.",
-    icon: (
-      <svg className="w-8 h-8 text-[#0066B2]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-      </svg>
-    ),
+    icon: <SlEnergy className="w-8 h-8 text-[#0066B2]" />,
   },
   {
     title: "Custom Solutions",
     description: "Tailored designs to fit your unique space and style.",
-    icon: (
-      <svg className="w-8 h-8 text-[#0066B2]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M17.5 19c.5 0 1 .5 1 1s-.5 1-1 1H4c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h3.5" />
-      </svg>
-    ),
+    icon: <TbCloudPlus className="w-8 h-8 text-[#0066B2]" />,
   },
 ];
 
