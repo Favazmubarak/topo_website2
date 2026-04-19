@@ -39,11 +39,6 @@ export default function Home() {
 
       {/* Upgrade CTA Section */}
       <Upgrade />
-
-      {/* Spacer for scrolling */}
-      <section className="h-[50vh] bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-400">Scroll down for more...</p>
-      </section>
     </main>
   );
 }
