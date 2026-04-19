@@ -27,21 +27,22 @@ export default function Hero() {
                     {/* Line 1 */}
                     <div className="relative scale-x-50 origin-left">
                         <h1 className="
-                            font-highrise 
-                            font-black
-                            text-white 
-                            uppercase 
-                            leading-[0.8] 
-                            tracking-[-0.05em]
-                            scale-y-[1.3]
-                            text-[26px]
-                            sm:text-[38px]
-                            md:text-[60px]
-                            lg:text-[80px]
-                            xl:text-[110px]
-                            text-left
-                            whitespace-nowrap
-                        ">
+    font-highrise 
+    font-black
+    text-white 
+    uppercase 
+    leading-[0.8] 
+    tracking-[-0.05em]
+    scale-y-[1.3]
+    text-[26px]
+    sm:text-[38px]
+    md:text-[60px]
+    lg:text-[80px]
+    xl:text-[110px]
+    text-left
+    whitespace-nowrap
+    [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]
+">
                             FRAMING THE FUTURE OF
                         </h1>
                     </div>
@@ -62,6 +63,7 @@ export default function Hero() {
                             lg:text-[80px]
                             xl:text-[110px]
                             text-left
+                             [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]
                         ">
                             MODERN LIVING
                         </h2>
