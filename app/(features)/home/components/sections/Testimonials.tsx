@@ -147,8 +147,9 @@ export default function Testimonials() {
             onScroll={handleScroll}
             className="grid md:grid-cols-2 lg:grid-cols-3 px-6 sm:px-8 lg:px-10 gap-8 sm:gap-10 lg:gap-16 overflow-x-auto md:overflow-x-visible scrollbar-hide"
             style={{
-              gridAutoFlow: window.innerWidth < 768 ? "column" : "row",
-              gridAutoColumns: window.innerWidth < 768 ? "minmax(280px, 1fr)" : "auto",
+              // Use the state variable instead of window.innerWidth
+              gridAutoFlow: isSmallScreen ? "column" : "row",
+              gridAutoColumns: isSmallScreen ? "minmax(280px, 1fr)" : "auto",
             }}
           >
             {testimonials.map((testimonial) => (
