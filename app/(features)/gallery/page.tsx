@@ -28,13 +28,14 @@ export default function GalleryPage() {
           {/* Header Section */}
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
             <div className="w-full md:w-1/2">
-              <h1 className="font-montserrat text-[#0066B2] text-[clamp(32px,6vw,64px)] font-medium leading-tight tracking-tight">
-                Our Gallery
+              <h1 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
+                Gallery
               </h1>
             </div>
             <div className="w-full md:w-1/2 lg:max-w-[500px]">
               <p className="font-poppins font-[400] text-black text-sm sm:text-lg md:text-[20px] leading-relaxed">
-                Discover our extensive portfolio of high-end projects, where innovative design meets exceptional craftsmanship.
+                Explore our completed projects showcasing
+                quality, style, and precision in every detail.
               </p>
             </div>
           </div>
