@@ -40,7 +40,7 @@ export default function Hero() {
                                 xl:text-[120px]
                                 whitespace-nowrap
                                [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
-                                scale-y-130
+                                scale-y-120
                             ">
                                 FRAMING THE FUTURE OF
                             </h1>
@@ -63,6 +63,7 @@ export default function Hero() {
         whitespace-nowrap
         text-right
         [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
+        scale-y-120
     ">
                                 MODERN LIVING
                             </h2>
