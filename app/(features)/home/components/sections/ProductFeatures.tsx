@@ -8,7 +8,6 @@ const features = [
     title: "Noise reduction",
     description: "Blocks outside noise for a peaceful space",
     icon: <BsNoiseReduction className="w-8 h-8 sm:w-10 sm:h-10" />,
-    isPrimary: true,
   },
   {
     title: "Thermal insulation",
@@ -20,26 +19,22 @@ const features = [
           alt="steam"
           width={40}
           height={40}
-          className="object-contain w-8 h-8 sm:w-10 sm:h-10"
+          className="object-contain"
         />
       </div>
     ),
-    isPrimary: false,
   },
   {
     title: "Low maintenance",
     description: "Blocks outside noise for a peaceful space",
     icon: <BsTools className="w-8 h-8 sm:w-10 sm:h-10" />,
-    isPrimary: false,
   },
   {
     title: "Weather resistance",
     description: "Blocks outside noise for a peaceful space",
     icon: (
       <BsFillCloudsFill className="w-8 h-8 sm:w-10 sm:h-10 scale-x-[-1]" />
-    ), // flipped horizontally
-  
-    isPrimary: false,
+    ),
   },
 ];
 
@@ -53,8 +48,8 @@ const ArrowIcon = ({ color }: { color: string }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <line x1="7" y1="17" x2="17" y2="7"></line>
-    <polyline points="7 7 17 7 17 17"></polyline>
+    <line x1="7" y1="17" x2="17" y2="7" />
+    <polyline points="7 7 17 7 17 17" />
   </svg>
 );
 
@@ -78,42 +73,32 @@ export default function ProductFeatures() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`relative rounded-[20px] p-4 sm:p-8 pr-2 flex flex-col h-full min-h-[200px] sm:min-h-[240px] transition-transform duration-300 hover:scale-[1.02] ${feature.isPrimary
-                  ? "bg-[#0066B2] text-white"
-                  : "bg-white text-black"
-                }`}
+              className="group relative rounded-[20px] p-4 sm:p-8 pr-2 flex flex-col h-full min-h-[200px] sm:min-h-[240px]
+              bg-white text-black
+              transition-all duration-500 ease-in-out
+              hover:bg-[#0066B2] hover:text-white
+              hover:scale-[1.02]
+              hover:shadow-[0_10px_30px_rgba(0,102,178,0.3)]"
             >
               {/* Icon */}
-              <div className="mb-4 sm:mb-6">
-                <div className={feature.isPrimary ? "text-white" : "text-black"}>
-                  {feature.icon}
-                </div>
+              <div className="mb-4 sm:mb-6 text-black transition-colors duration-500 group-hover:text-white">
+                {feature.icon}
               </div>
 
               {/* Title */}
-              <h3 className="font-montserrat text-sm sm:text-xl font-[400]">
+              <h3 className="font-montserrat text-sm sm:text-xl font-[400] transition-colors duration-500">
                 {feature.title}
               </h3>
 
               {/* Text */}
-              <p
-                className={`font-montserrat font-[500] text-xs sm:text-[16px] leading-relaxed mb-8 sm:mb-12 ${feature.isPrimary ? "text-[#D9D9D9]" : "text-[#929292]"
-                  }`}
-              >
+              <p className="font-montserrat font-[500] text-xs sm:text-[16px] leading-relaxed mb-8 sm:mb-12 text-[#929292] transition-colors duration-500 group-hover:text-[#D9D9D9]">
                 {feature.description}
               </p>
 
               {/* Arrow */}
               <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
-                <div
-                  className={`rounded-full p-2 sm:p-2.5 flex items-center justify-center ${feature.isPrimary ? "bg-white" : "bg-[#0066B2]"
-                    }`}
-                >
-                  <ArrowIcon
-                    color={
-                      feature.isPrimary ? "text-[#0066B2]" : "text-white"
-                    }
-                  />
+                <div className="rounded-full p-2 sm:p-2.5 flex items-center justify-center bg-[#0066B2] transition-colors duration-500 group-hover:bg-white">
+                  <ArrowIcon color="text-white group-hover:text-[#0066B2]" />
                 </div>
               </div>
             </div>
