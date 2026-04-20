@@ -19,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === "/";
-  const isWhiteHeader = isHomePage && !isScrolled;
+  const isWhiteHeader = false; // Glassmorphism is now permanent, so we always use the dark/colored header style
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,99 +136,37 @@ export default function Navbar() {
     }
   };
   return (
-    <nav
-      className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20 py-5 transition-all duration-300 bg-transparent"
-    >
-      <div className="flex items-center z-50">
-        <Link 
-          href="/" 
-          onClick={(e) => {
-            if (isHomePage) {
-              handleScrollNav(e, "hero");
-            } else {
-              sessionStorage.setItem("scrollTarget", "hero");
-              router.push("/");
-            }
-          }}
-        >
-          <Image
-            src={isWhiteHeader ? "/logo.png" : "/logo-blue.png"}
-            alt="topo logo"
-            width={160}
-            height={64}
-            className={`w-auto h-20 md:h-20 object-contain transition-all duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader
-              ? "brightness-0 invert"
-              : ""
-              }`}
-            priority
-          />
-        </Link>
-      </div>
-
-      <div className="hidden md:flex items-center space-x-6">
-        {navLinks.map((link) => {
-          const isScrollLink = link.isScroll || link.name === "Home";
-          const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
-          const isActive = isScrollLink
-            ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
-            : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
-          
-          const linkHref = isScrollLink ? "/" : link.href;
-
-          return (
-            <Link
-              key={link.name}
-              href={linkHref}
-              scroll={false}
-              onClick={(e) => {
-                if (isScrollLink) {
-                  handleScrollNav(e, targetId);
-                } else {
-                  setIsMobileMenuOpen(false);
-                }
-              }}              className={`group text-base transition-all duration-200 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${isWhiteHeader
-                ? "text-white hover:text-white"
-                : isActive
-                  ? "text-brand-blue"
-                  : "text-black hover:text-brand-blue"
+    <>
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-300 bg-white/40 backdrop-blur-sm shadow-md border-b border-white/10`}
+      >
+        <div className="flex items-center z-50">
+          <Link
+            href="/"
+            onClick={(e) => {
+              if (isHomePage) {
+                handleScrollNav(e, "hero");
+              } else {
+                sessionStorage.setItem("scrollTarget", "hero");
+                router.push("/");
+              }
+            }}
+          >
+            <Image
+              src={isWhiteHeader ? "/logo.png" : "/logo-blue.png"}
+              alt="topo logo"
+              width={160}
+              height={64}
+              className={`w-auto h-12 md:h-20 object-contain transition-all duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader
+                ? "brightness-0 invert"
+                : ""
                 }`}
-            >
-              <span className="flex flex-col items-center">
-                <span className={`transition-all duration-200 ${isActive ? "font-bold opacity-100 text-brand-blue" : "font-medium opacity-80 group-hover:font-bold group-hover:opacity-100"
-                  }`}>
-                  {link.name}
-                </span>
-                <span className="font-bold invisible h-0 select-none pointer-events-none" aria-hidden="true">
-                  {link.name}
-                </span>
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-
-      <button
-        className={`md:hidden z-50 p-2 focus:outline-none ${isWhiteHeader && !isMobileMenuOpen ? "text-white" : "text-black"}`}
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        aria-label="Toggle menu"
-      >
-        <div className="w-8 h-6 flex flex-col justify-between items-end relative">
-          <span
-            className={`h-0.5 transition-all duration-300 rounded-full ${isWhiteHeader && !isMobileMenuOpen ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
-          />
-          <span
-            className={`h-0.5 transition-all duration-300 rounded-full ${isWhiteHeader && !isMobileMenuOpen ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
-          />
-          <span
-            className={`h-0.5 transition-all duration-300 rounded-full ${isWhiteHeader && !isMobileMenuOpen ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
-          />
+              priority
+            />
+          </Link>
         </div>
-      </button>
 
-      <div
-        className={`fixed inset-0 bg-white/90 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out md:hidden ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
-      >
-        <div className="flex flex-col items-center justify-center space-y-10">
+        <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => {
             const isScrollLink = link.isScroll || link.name === "Home";
             const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
@@ -239,7 +177,74 @@ export default function Navbar() {
             const linkHref = isScrollLink ? "/" : link.href;
 
             return (
-              <div key={link.name} className="overflow-hidden">
+              <Link
+                key={link.name}
+                href={linkHref}
+                scroll={false}
+                onClick={(e) => {
+                  if (isScrollLink) {
+                    handleScrollNav(e, targetId);
+                  } else {
+                    setIsMobileMenuOpen(false);
+                  }
+                }} className={`group text-base transition-all duration-200 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${isWhiteHeader
+                  ? "text-white hover:text-white"
+                  : isActive
+                    ? "text-brand-blue"
+                    : "text-black hover:text-brand-blue"
+                  }`}
+              >
+                <span className="flex flex-col items-center">
+                  <span className={`transition-all duration-200 ${isActive ? "font-bold opacity-100 text-brand-blue" : "font-medium opacity-80 group-hover:font-bold group-hover:opacity-100"
+                    }`}>
+                    {link.name}
+                  </span>
+                  <span className="font-bold invisible h-0 select-none pointer-events-none" aria-hidden="true">
+                    {link.name}
+                  </span>
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+
+        <button
+          className="md:hidden z-50 p-2 focus:outline-none text-black"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <div className="w-8 h-6 flex flex-col justify-between items-end relative">
+            <span
+              className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
+            />
+            <span
+              className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
+            />
+            <span
+              className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
+            />
+          </div>
+        </button>
+      </nav>
+
+      <div
+        className={`fixed top-20 right-4 w-[80%] max-w-[280px] bg-[#001524]/90 backdrop-blur-2xl z-[100] flex flex-col items-end justify-center p-6 transition-all duration-500 ease-in-out md:hidden shadow-2xl rounded-3xl border border-white/10 ${isMobileMenuOpen 
+          ? "translate-y-0 opacity-100 scale-100 visible" 
+          : "translate-y-4 opacity-0 scale-95 invisible"
+        }`}
+      >
+        <div className="flex flex-col items-end space-y-6 w-full px-2">
+          {navLinks.map((link) => {
+            const isScrollLink = link.isScroll || link.name === "Home";
+            const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
+            const isActive = isScrollLink
+              ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
+              : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
+
+            const linkHref = isScrollLink ? "/" : link.href;
+
+            return (
+              <div key={link.name} className="overflow-hidden w-full text-right">
                 <Link
                   href={linkHref}
                   scroll={false}
@@ -250,12 +255,12 @@ export default function Navbar() {
                       setIsMobileMenuOpen(false);
                     }
                   }}
-                  className={`text-4xl transition-all duration-300 relative group block text-center ${isActive ? "font-bold text-brand-blue" : "font-medium text-black/60"
+                  className={`text-xl transition-all duration-300 relative group inline-block ${isActive ? "font-bold text-brand-blue" : "font-medium text-white/70"
                     } hover:text-brand-blue`}
                 >
-                  <span className="relative">
-                    {link.name}
-                    <span className={`absolute -bottom-2 left-0 w-0 h-1 bg-brand-blue rounded-full transition-all duration-300 group-hover:w-full ${isActive ? "w-full" : ""}`} />
+                  <span className="flex items-center justify-end space-x-2">
+                    <span>{link.name}</span>
+                    {isActive && <span className="w-1.5 h-1.5 bg-brand-blue rounded-full" />}
                   </span>
                 </Link>
               </div>
@@ -263,8 +268,6 @@ export default function Navbar() {
           })}
         </div>
       </div>
-
-      <div className="hidden md:block w-40 shrink-0" />
-    </nav>
+    </>
   );
 }

@@ -47,12 +47,12 @@ export default function WhyChooseTopo() {
               Built on quality, designed for modern living, and trusted for lasting performance.
             </p>
 
-            <div className="relative w-full aspect-[21/9] sm:aspect-[16/7] lg:aspect-[21/9] rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-xl" data-aos="fade-up" data-aos-delay="300">
+            <div className="group relative w-full aspect-[21/9] sm:aspect-[16/7] lg:aspect-[21/9] rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-xl" data-aos="fade-up" data-aos-delay="300">
               <Image
                 src="/about/image2.jpg"
                 alt="Modern window solutions"
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 priority
                 sizes="(max-width: 1024px) 100vw, 42vw"
               />

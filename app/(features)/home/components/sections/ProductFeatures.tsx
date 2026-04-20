@@ -76,24 +76,25 @@ export default function ProductFeatures() {
               className="group relative rounded-[20px] p-4 sm:p-8 pr-2 flex flex-col h-full min-h-[200px] sm:min-h-[240px]
               bg-white text-black
               transition-all duration-500 ease-in-out
-              hover:bg-[#0066B2] hover:text-white
-              hover:scale-[1.02]
-              hover:shadow-[0_10px_30px_rgba(0,102,178,0.3)]"
+              hover:shadow-[0_20px_40px_rgba(0,102,178,0.2)]"
             >
-              <div className="mb-4 sm:mb-6 text-black transition-colors duration-500 group-hover:text-white">
+              {/* Smooth Background Overlay */}
+              <div className="absolute inset-0 bg-[#0066B2] rounded-[20px] opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100" />
+
+              <div className="relative z-10 mb-4 sm:mb-6 text-black transition-colors duration-500 group-hover:text-white">
                 {feature.icon}
               </div>
 
-              <h3 className="font-montserrat text-sm sm:text-xl font-[400] transition-colors duration-500">
+              <h3 className="relative z-10 font-montserrat text-sm sm:text-xl font-[400] transition-colors duration-500 group-hover:text-white">
                 {feature.title}
               </h3>
 
-              <p className="font-montserrat font-[500] text-xs sm:text-[16px] leading-relaxed mb-8 sm:mb-12 text-[#929292] transition-colors duration-500 group-hover:text-[#D9D9D9]">
+              <p className="relative z-10 font-montserrat font-[500] text-xs sm:text-[16px] leading-relaxed mb-8 sm:mb-12 text-[#929292] transition-colors duration-500 group-hover:text-blue-50/90">
                 {feature.description}
               </p>
 
-              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
-                <div className="rounded-full p-2 sm:p-2.5 flex items-center justify-center bg-[#0066B2] transition-colors duration-500 group-hover:bg-white">
+              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-10">
+                <div className="rounded-full p-2 sm:p-2.5 flex items-center justify-center bg-[#0066B2] transition-all duration-500 group-hover:bg-white group-hover:scale-105">
                   <ArrowIcon color="text-white group-hover:text-[#0066B2]" />
                 </div>
               </div>
