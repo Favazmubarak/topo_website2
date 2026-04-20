@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -14,43 +14,165 @@ const navLinks = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === "/";
+  const isWhiteHeader = isHomePage && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
-  const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px", // Trigger when section is in the upper part of viewport
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Watch sections
+    if (isHomePage) {
+      const sections = ["about", "hero"]; // Add more if needed
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, [isHomePage]);
+
+  // Handle hash-based smooth scroll on mount
+  useEffect(() => {
+    if (isHomePage && typeof window !== "undefined") {
+      const handleHashScroll = () => {
+        const hash = window.location.hash;
+        if (!hash) return false;
+
+        const id = hash.replace("#", "");
+        const element = document.getElementById(id);
+        if (element) {
+          // Small delay to ensure layout has settled
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+          return true;
+        }
+        return false;
+      };
+
+      // Check if we should perform a scroll from sessionStorage or hash
+      const scrollTarget = sessionStorage.getItem("scrollTarget");
+      if (scrollTarget || window.location.hash) {
+        // Immediate scroll to top to override browser jump
+        window.scrollTo(0, 0);
+
+        const targetId = scrollTarget || window.location.hash.replace("#", "");
+
+        // Polling to catch the element when it's ready in the DOM
+        let attempts = 0;
+        const intervalId = setInterval(() => {
+          attempts++;
+          const hash = window.location.hash;
+          const currentTarget = sessionStorage.getItem("scrollTarget") || (hash ? hash.replace("#", "") : null);
+          
+          if (currentTarget) {
+            const element = document.getElementById(currentTarget);
+            if (element) {
+              setTimeout(() => {
+                element.scrollIntoView({ behavior: "smooth" });
+                sessionStorage.removeItem("scrollTarget");
+              }, 100);
+              clearInterval(intervalId);
+            }
+          }
+          
+          if (attempts > 20) {
+            clearInterval(intervalId);
+            sessionStorage.removeItem("scrollTarget");
+          }
+        }, 100);
+
+        return () => clearInterval(intervalId);
+      }
+
+      // Also listen for subsequent hash changes
+      const handleHashChange = () => {
+        const hash = window.location.hash;
+        if (hash) {
+          const id = hash.replace("#", "");
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      };
+      
+      window.addEventListener("hashchange", handleHashChange);
+      return () => window.removeEventListener("hashchange", handleHashChange);
+    }
+  }, [isHomePage, pathname]);
+
+  const handleScrollNav = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     setIsMobileMenuOpen(false);
     if (isHomePage) {
       e.preventDefault();
-      const aboutSection = document.getElementById("about");
-      if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: "smooth" });
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
       }
+    } else {
+      // Cross-page navigation: store target and navigate to /
+      sessionStorage.setItem("scrollTarget", id);
+      // Link's href handling will take care of the navigation if we don't preventDefault
     }
   };
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20 py-5 transition-all duration-300 bg-transparent ${isScrolled ? "py-7" : ""
-        }`}
+      className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20 py-5 transition-all duration-300 bg-transparent"
     >
       {/* Logo */}
       <div className="flex items-center z-50">
-        <Link href="/">
+        <Link 
+          href="/" 
+          onClick={(e) => {
+            if (isHomePage) {
+              handleScrollNav(e, "hero");
+            } else {
+              // Programmatic navigation to ensure no hash is added
+              e.preventDefault();
+              sessionStorage.setItem("scrollTarget", "hero");
+              router.push("/");
+            }
+          }}
+        >
           <Image
-            src="/logo.png"
+            src={isWhiteHeader ? "/logo.png" : "/logo-blue.png"}
             alt="topo logo"
             width={160}
             height={64}
-            className="w-auto h-20 md:h-20 object-contain transition-all duration-300 brightness-0 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]"
+            className={`w-auto h-20 md:h-20 object-contain transition-all duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader
+              ? "brightness-0 invert"
+              : ""
+              }`}
             priority
           />
         </Link>
@@ -59,16 +181,35 @@ export default function Navbar() {
       {/* Desktop Navigation Links */}
       <div className="hidden md:flex items-center space-x-6">
         {navLinks.map((link) => {
-          const isActive = pathname === link.href;
+          const isScrollLink = link.isScroll || link.name === "Home";
+          const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
+          const isActive = isScrollLink
+            ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
+            : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
+          
+          // Construct href: / for home/scroll links across pages to avoid hash in URL
+          const linkHref = isScrollLink ? "/" : link.href;
+
           return (
             <Link
               key={link.name}
-              href={link.isScroll ? (isHomePage ? "#about" : "/#about") : link.href}
-              onClick={link.isScroll ? handleAboutClick : undefined}
-              className="group text-base transition-all duration-200 flex flex-col items-center text-black hover:text-brand-blue drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]"
+              href={linkHref}
+              scroll={false}
+              onClick={(e) => {
+                if (isScrollLink) {
+                  handleScrollNav(e, targetId);
+                } else {
+                  setIsMobileMenuOpen(false);
+                }
+              }}              className={`group text-base transition-all duration-200 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${isWhiteHeader
+                ? "text-white hover:text-white"
+                : isActive
+                  ? "text-brand-blue"
+                  : "text-black hover:text-brand-blue"
+                }`}
             >
               <span className="flex flex-col items-center">
-                <span className={`transition-all duration-200 ${isActive ? "font-bold opacity-100" : "font- opacity-80 group-hover:font-bold group-hover:opacity-100"
+                <span className={`transition-all duration-200 ${isActive ? "font-bold opacity-100 text-brand-blue" : "font-medium opacity-80 group-hover:font-bold group-hover:opacity-100"
                   }`}>
                   {link.name}
                 </span>
@@ -83,34 +224,61 @@ export default function Navbar() {
 
       {/* Mobile Menu Toggle */}
       <button
-        className="md:hidden z-50 p-2 text-black focus:outline-none"
+        className={`md:hidden z-50 p-2 focus:outline-none ${isWhiteHeader && !isMobileMenuOpen ? "text-white" : "text-black"}`}
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label="Toggle menu"
       >
-        <div className="w-8 h-6 flex flex-col justify-between items-end">
-          <span className={`w-8 h-0.5 bg-black transition-transform duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-2.5" : ""}`} />
-          <span className={`w-6 h-0.5 bg-black transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-0" : ""}`} />
-          <span className={`w-8 h-0.5 bg-black transition-transform duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-2.5" : ""}`} />
+        <div className="w-8 h-6 flex flex-col justify-between items-end relative">
+          <span
+            className={`h-0.5 transition-all duration-300 rounded-full ${isWhiteHeader && !isMobileMenuOpen ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
+          />
+          <span
+            className={`h-0.5 transition-all duration-300 rounded-full ${isWhiteHeader && !isMobileMenuOpen ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
+          />
+          <span
+            className={`h-0.5 transition-all duration-300 rounded-full ${isWhiteHeader && !isMobileMenuOpen ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
+          />
         </div>
       </button>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-10 transition-transform duration-500 md:hidden ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}>
-        {navLinks.map((link) => {
-          const isActive = pathname === link.href;
-          return (
-            <Link
-              key={link.name}
-              href={link.isScroll ? (isHomePage ? "#about" : "/#about") : link.href}
-              onClick={link.isScroll ? handleAboutClick : () => setIsMobileMenuOpen(false)}
-              className={`text-3xl transition-all duration-200 ${isActive ? "font-bold text-brand-blue" : "font-light text-black"
-                } hover:text-brand-blue hover:font-bold`}
-            >
-              {link.name}
-            </Link>
-          );
-        })}
+      <div
+        className={`fixed inset-0 bg-white/90 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out md:hidden ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
+      >
+        <div className="flex flex-col items-center justify-center space-y-10">
+          {navLinks.map((link) => {
+            const isScrollLink = link.isScroll || link.name === "Home";
+            const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
+            const isActive = isScrollLink
+              ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
+              : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
+
+            const linkHref = isScrollLink ? "/" : link.href;
+
+            return (
+              <div key={link.name} className="overflow-hidden">
+                <Link
+                  href={linkHref}
+                  scroll={false}
+                  onClick={(e) => {
+                    if (isScrollLink) {
+                      handleScrollNav(e, targetId);
+                    } else {
+                      setIsMobileMenuOpen(false);
+                    }
+                  }}
+                  className={`text-4xl transition-all duration-300 relative group block text-center ${isActive ? "font-bold text-brand-blue" : "font-medium text-black/60"
+                    } hover:text-brand-blue`}
+                >
+                  <span className="relative">
+                    {link.name}
+                    <span className={`absolute -bottom-2 left-0 w-0 h-1 bg-brand-blue rounded-full transition-all duration-300 group-hover:w-full ${isActive ? "w-full" : ""}`} />
+                  </span>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Spacer to keep balance on desktop */}
