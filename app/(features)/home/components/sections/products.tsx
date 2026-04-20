@@ -32,7 +32,9 @@ export default function Products() {
       id="products"
       className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20"
     >
-      {/* Header Section */}
+
+      <div className="max-w-[1400px] mx-auto">
+ {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 lg:mb-16">
         <div className="w-full md:w-1/2">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] leading-tight font-medium">
@@ -98,6 +100,9 @@ lg:min-h-[150px]">
           </div>
         ))}
       </div>
+
+      </div>
+     
     </section>
   );
 }

@@ -47,7 +47,7 @@ export default function ProductsPage() {
   return (
     <main className="pt-40 xl:pt-52 pb-20 md:pb-28">
       <section className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20">
-
+        <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 lg:mb-16">
           <div className="w-full md:w-1/2">
@@ -115,6 +115,7 @@ export default function ProductsPage() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </section>
     </main>

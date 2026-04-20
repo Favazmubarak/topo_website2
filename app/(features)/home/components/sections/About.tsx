@@ -8,6 +8,7 @@ export default function About() {
       id="about"
       className="w-full bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20"
     >
+      <div className="max-w-[1400px] mx-auto">
       {/* Top Part */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-12">
 
@@ -97,6 +98,7 @@ export default function About() {
 
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
