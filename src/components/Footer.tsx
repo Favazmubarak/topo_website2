@@ -5,7 +5,7 @@ import { HiMapPin, HiPhone, HiEnvelope } from "react-icons/hi2";
 
 const Footer = () => {
   return (
-    <footer className="bg-brand-blue text-white py-12 md:py-16 lg:py-20 px-4 md:px-12 lg:px-20 font-poppins overflow-hidden">
+    <footer className="bg-brand-blue text-white py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-20 font-poppins overflow-hidden">
       <div className="mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12 lg:gap-16 mb-10">
           {/* Column 1: Logo & Description - Span 2 on lg */}
