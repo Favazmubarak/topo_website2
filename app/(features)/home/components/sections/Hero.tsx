@@ -24,7 +24,7 @@ export default function Hero() {
 
                 <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
 
-                    <div className="inline-block flex flex-col gap-2 sm:gap-3 md:gap-4">
+                    <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
 
                         {/* Line 1 */}
                         <div className="w-fit">
