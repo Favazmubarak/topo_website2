@@ -34,7 +34,7 @@ export default function WhyChooseTopo() {
     <section className="w-full bg-white py-14 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
 
-        <div className="max-w-[700px] mb-8 sm:mb-10">
+        <div className="max-w-[700px] mb-8 sm:mb-10" data-aos="fade-up">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight">
             Why Choose Topo
           </h2>
@@ -42,12 +42,12 @@ export default function WhyChooseTopo() {
 
         <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-16">
 
-          <div className="w-full lg:w-[42%]">
+          <div className="w-full lg:w-[42%]" data-aos="fade-right" data-aos-delay="200">
             <p className="font-montserrat text-black text-[clamp(13px,2.5vw,18px)] mb-6 sm:mb-8 leading-relaxed">
               Built on quality, designed for modern living, and trusted for lasting performance.
             </p>
 
-            <div className="relative w-full aspect-[21/9] sm:aspect-[16/7] lg:aspect-[21/9] rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-xl">
+            <div className="relative w-full aspect-[21/9] sm:aspect-[16/7] lg:aspect-[21/9] rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-xl" data-aos="fade-up" data-aos-delay="300">
               <Image
                 src="/about/image2.jpg"
                 alt="Modern window solutions"
@@ -62,7 +62,7 @@ export default function WhyChooseTopo() {
           <div className="w-full lg:w-[58%] lg:pl-12">
             <div className="grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-6 sm:gap-y-10 lg:gap-y-12">
               {features.map((feature, index) => (
-                <div key={index} className="flex flex-col gap-2 sm:gap-3">
+                <div key={index} className="flex flex-col gap-2 sm:gap-3" data-aos="fade-left" data-aos-delay={index * 100 + 400}>
                   <div>{feature.icon}</div>
 
                   <h3 className="font-montserrat text-black text-base sm:text-lg lg:text-xl font-medium">

@@ -7,12 +7,12 @@ export default function Gallery() {
     <section className="w-full pb-10 sm:pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2" data-aos="fade-right">
             <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
               Gallery
             </h2>
           </div>
-          <div className="w-full md:w-1/2 lg:max-w-[500px]">
+          <div className="w-full md:w-1/2 lg:max-w-[500px]" data-aos="fade-left">
             <p className="font-poppins font-[400] text-black text-sm sm:text-lg md:text-[20px] leading-relaxed">
               Explore our completed projects showcasing quality, style, and precision in every detail.
             </p>
@@ -20,7 +20,7 @@ export default function Gallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
-          <div className="col-span-1 md:col-span-7 relative aspect-[4/3] md:aspect-[7/4] overflow-hidden rounded-[15px] group">
+          <div className="col-span-1 md:col-span-7 relative aspect-[4/3] md:aspect-[7/4] overflow-hidden rounded-[15px] group" data-aos="fade-up">
             <Image
               src="/gallery/image1.png"
               alt="Modern living room with large glass windows overlooking a city skyline"
@@ -30,7 +30,7 @@ export default function Gallery() {
             />
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group">
+          <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="80">
             <Image
               src="/gallery/image2.jpg"
               alt="Elegant interior with a designer pendant lamp and mountain view"
@@ -41,7 +41,7 @@ export default function Gallery() {
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
-          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
+          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="160">
             <Image
               src="/gallery/image3.jpg"
               alt="Stylish red lounger chair in a sun-drenched room"
@@ -51,7 +51,7 @@ export default function Gallery() {
             />
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
+          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="240">
             <Image
               src="/gallery/image4.jpg"
               alt="Minimalist living space with a white sofa and large windows"
@@ -61,7 +61,7 @@ export default function Gallery() {
             />
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
+          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="320">
             <Image
               src="/gallery/image5.jpg"
               alt="Contemporary living room with forest views through panoramic windows"
@@ -72,7 +72,7 @@ export default function Gallery() {
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
-          <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group">
+          <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="160">
             <Image
               src="/gallery/image6.png"
               alt="Modern glass outdoor patio structure nestled in greenery"
@@ -83,7 +83,7 @@ export default function Gallery() {
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
-          <div className="col-span-2 md:col-span-7 relative aspect-[2/1] md:aspect-[7/4] overflow-hidden rounded-[15px] group">
+          <div className="col-span-2 md:col-span-7 relative aspect-[2/1] md:aspect-[7/4] overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="320">
             <Image
               src="/gallery/image7.jpg"
               alt="Luxury lounge area with sunset views and artistic lighting"

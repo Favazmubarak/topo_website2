@@ -26,12 +26,12 @@ export default function GalleryPage() {
       <section className="w-full px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2" data-aos="fade-right">
               <h1 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
                 Gallery
               </h1>
             </div>
-            <div className="w-full md:w-1/2 lg:max-w-[500px]">
+            <div className="w-full md:w-1/2 lg:max-w-[500px]" data-aos="fade-left">
               <p className="font-poppins font-[400] text-black text-sm sm:text-lg md:text-[20px] leading-relaxed">
                 Explore our completed projects showcasing
                 quality, style, and precision in every detail.
@@ -43,6 +43,8 @@ export default function GalleryPage() {
             {images.map((image, index) => (
               <div
                 key={index}
+                data-aos="fade-up"
+                data-aos-delay={(index % 4) * 80}
                 className={`${image.span} ${image.aspect} relative aspect-[4/3] overflow-hidden rounded-[15px] group`}
               >
                 <Image

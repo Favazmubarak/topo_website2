@@ -35,12 +35,12 @@ export default function Products() {
 
       <div className="max-w-[1400px] mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 lg:mb-16">
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2" data-aos="fade-right">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] leading-tight font-medium">
             Our Products
           </h2>
         </div>
-        <div className="w-full md:w-1/2 lg:max-w-[600px]">
+        <div className="w-full md:w-1/2 lg:max-w-[600px]" data-aos="fade-left">
           <p className="font-poppins font-[400] text-[#A0A0A0] text-[clamp(12px,2.5vw,18px)] leading-relaxed">
             At Topo, we offer high-quality aluminum window solutions designed
             for durability, style, and performance. Our products combine modern
@@ -55,9 +55,11 @@ gap-3 md:gap-6 lg:gap-8
 overflow-x-auto md:overflow-visible pb-2 
 no-scrollbar scrollbar-hide snap-x snap-mandatory">
 
-        {products.map((product) => (
+        {products.map((product, index) => (
           <div
             key={product.id}
+            data-aos="fade-up"
+            data-aos-delay={index * 80}
             className="relative group overflow-hidden rounded-xl md:rounded-2xl 
   aspect-[3/4] md:aspect-[4/5] shadow-md 
   min-w-[60%] sm:min-w-[45%] md:min-w-0 

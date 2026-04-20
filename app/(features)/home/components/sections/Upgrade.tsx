@@ -18,16 +18,16 @@ export default function Upgrade() {
           <div className="absolute inset-0 bg-black/45" />
         </div>
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-2 sm:px-4 md:px-6 max-w-[900px] mx-auto">
-          <h2 className="font-poppins text-white text-[clamp(14px,4vw,48px)] font-[500] leading-tight tracking-tight mb-1 sm:mb-2 md:mb-4 lg:mb-6 px-1">
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-2 sm:px-4 md:px-6 max-w-[900px] mx-auto" data-aos="fade-up">
+          <h2 className="font-poppins text-white text-[clamp(14px,4vw,48px)] font-[500] leading-tight tracking-tight mb-1 sm:mb-2 md:mb-4 lg:mb-6 px-1" data-aos="fade-up" data-aos-delay="100">
             Upgrade Your Space with Topo
           </h2>
 
-          <p className="font-poppins text-white text-[11px] sm:text-xs md:text-base lg:text-[22px] leading-snug mb-2 sm:mb-4 md:mb-6 lg:mb-8 max-w-[650px] mx-auto font-[300] px-1 opacity-90">
+          <p className="font-poppins text-white text-[11px] sm:text-xs md:text-base lg:text-[22px] leading-snug mb-2 sm:mb-4 md:mb-6 lg:mb-8 max-w-[650px] mx-auto font-[300] px-1 opacity-90" data-aos="fade-up" data-aos-delay="200">
             Transform your home with premium aluminum designed for style, strength, and performance.
           </p>
 
-          <button className="group/btn text-[10px] sm:text-xs md:text-sm lg:text-base inline-flex items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 bg-[#0066B2] text-white pl-3 sm:pl-5 md:pl-7 lg:pl-8 pr-0.5 sm:pr-1 md:pr-2 py-1 sm:py-1.5 md:py-2 lg:py-2.5 rounded-full font-poppins transition-all duration-300 hover:bg-[#005596] hover:scale-105 shadow-md sm:shadow-lg md:shadow-xl">
+          <button className="group/btn text-[10px] sm:text-xs md:text-sm lg:text-base inline-flex items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 bg-[#0066B2] text-white pl-3 sm:pl-5 md:pl-7 lg:pl-8 pr-0.5 sm:pr-1 md:pr-2 py-1 sm:py-1.5 md:py-2 lg:py-2.5 rounded-full font-poppins transition-all duration-300 hover:bg-[#005596] hover:scale-105 shadow-md sm:shadow-lg md:shadow-xl" data-aos="fade-up" data-aos-delay="300">
             Get a Free Quote
             <div className="bg-white w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover/btn:scale-110">
               <svg

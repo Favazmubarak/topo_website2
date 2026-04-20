@@ -11,13 +11,13 @@ export default function About() {
       <div className="max-w-[1400px] mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-12">
 
-        <div className="w-full md:w-[30%]">
+        <div className="w-full md:w-[30%]" data-aos="fade-right">
           <h2 className="font-montserrat text-[36px] sm:text-[44px] md:text-[64px] lg:text-[90px] leading-none text-[#8F8F8F]">
             About
           </h2>
         </div>
 
-        <div className="w-full md:w-[70%] lg:max-w-[720px]">
+        <div className="w-full md:w-[70%] lg:max-w-[720px]" data-aos="fade-left" data-aos-delay="200">
           <p className="font-poppins text-base sm:text-lg md:text-xl text-[#6C6868] leading-relaxed mb-8 sm:mb-10">
             Established in 2016,{" "}
             <span className="text-[#0066B2]">
@@ -58,7 +58,7 @@ export default function About() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
 
-            <div className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[20px]">
+            <div className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[20px]" data-aos="fade-up" data-aos-delay="300">
 
               <Image
                 src="/about/image1.jpg"
@@ -72,7 +72,7 @@ export default function About() {
 
             </div>
 
-            <div className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[20px]">
+            <div className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[20px]" data-aos="fade-up" data-aos-delay="450">
 
               <Image
                 src="/about/image2.jpg"

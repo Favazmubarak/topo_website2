@@ -37,7 +37,7 @@ export default function FAQ() {
     <section className="w-full my-10 sm:my-16 py-10 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20" id="faq">
       <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-10 lg:gap-16 justify-between items-start">
         
-        <div className="w-full lg:w-[35%] text-left">
+        <div className="w-full lg:w-[35%] text-left" data-aos="fade-right">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight mb-4 tracking-tight">
             Frequently Asked <br className="hidden lg:block" /> Questions
           </h2>
@@ -50,6 +50,8 @@ export default function FAQ() {
           {faqs.map((faq, index) => (
             <div
               key={index}
+              data-aos="fade-left"
+              data-aos-delay={index * 80}
               className="bg-[#E1ECFF] rounded-[20px] p-5 sm:p-6 md:p-8 flex flex-col gap-4 transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
               onClick={() => toggleFAQ(index)}
             >

@@ -59,10 +59,10 @@ export default function ProductFeatures() {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="text-center mb-10 sm:mb-16">
-          <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] font-medium leading-tight mb-3">
+          <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] font-medium leading-tight mb-3" data-aos="fade-up">
             Product Features
           </h2>
-          <p className="font-montserrat font-[500] text-black text-xs sm:text-base md:text-[20px] max-w-[800px] mx-auto">
+          <p className="font-montserrat font-[500] text-black text-xs sm:text-base md:text-[20px] max-w-[800px] mx-auto" data-aos="fade-up" data-aos-delay="100">
             Designed to deliver comfort, durability, and high performance in every detail.
           </p>
         </div>
@@ -71,6 +71,8 @@ export default function ProductFeatures() {
           {features.map((feature, index) => (
             <div
               key={index}
+              data-aos="fade-up"
+              data-aos-delay={index * 80}
               className="group relative rounded-[20px] p-4 sm:p-8 pr-2 flex flex-col h-full min-h-[200px] sm:min-h-[240px]
               bg-white text-black
               transition-all duration-500 ease-in-out

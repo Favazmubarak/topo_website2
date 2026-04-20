@@ -85,7 +85,7 @@ export default function Testimonials() {
     <section className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 sm:mb-14 md:mb-16">
-          <h2 className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight">
+          <h2 className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight" data-aos="fade-up">
             What Our Clients Say
           </h2>
         </div>
@@ -144,9 +144,11 @@ export default function Testimonials() {
               gridAutoColumns: isSmallScreen ? "minmax(280px, 1fr)" : "auto",
             }}
           >
-            {testimonials.map((testimonial) => (
+            {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
+                data-aos={index === 0 ? "fade-right" : index === 1 ? "fade-up" : "fade-left"}
+                data-aos-delay={index * 80}
                 className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-4 sm:pb-2 sm:p-5 flex flex-col h-full shrink-0 md:shrink"
               >
                 <div className="flex justify-between items-start mb-4">

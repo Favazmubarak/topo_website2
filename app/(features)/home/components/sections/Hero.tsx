@@ -23,7 +23,7 @@ export default function Hero() {
 
                     <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
 
-                        <div className="w-fit">
+                        <div className="w-fit" data-aos="fade-right" data-aos-delay="200">
                             <h1 className="
                                 font-highrise 
                                 font-black
@@ -44,7 +44,7 @@ export default function Hero() {
                         </div>
 
                         <div className="flex justify-end w-full 
-    mt-3 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8">
+    mt-3 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8" data-aos="fade-left" data-aos-delay="400">
                             <h2 className="
         font-highrise 
         font-black

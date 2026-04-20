@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="bg-brand-blue text-white py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-20 font-poppins overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12 lg:gap-16 mb-10">
-          <div className="lg:col-span-2 flex flex-col ">
+          <div className="lg:col-span-2 flex flex-col" data-aos="fade-up">
             <Link href="/">
               <Image
                 src="/logo.png"
@@ -38,7 +38,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-1">
+          <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-1" data-aos="fade-up" data-aos-delay="100">
             <h3 className="text-lg md:text-xl lg:text-2xl font-medium">Company</h3>
             <ul className="space-y-2 font-light text-sm sm:text-base lg:text-lg">
               <li><Link href="/" className="hover:underline">Home</Link></li>
@@ -48,7 +48,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-1">
+          <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-1" data-aos="fade-up" data-aos-delay="200">
             <h3 className="text-lg md:text-xl lg:text-2xl font-medium">Support</h3>
             <ul className="space-y-2 font-light text-sm sm:text-base lg:text-lg">
               <li><Link href="#" className="hover:underline">Help</Link></li>
@@ -59,7 +59,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-2">
+          <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-2" data-aos="fade-up" data-aos-delay="300">
             <h3 className="text-lg md:text-xl lg:text-2xl font-medium">Contact</h3>
             <ul className="space-y-4 font-light">
               <li className="flex items-start space-x-3 sm:space-x-4">
