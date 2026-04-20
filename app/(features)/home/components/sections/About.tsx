@@ -6,7 +6,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="w-full bg-white py-16 sm:py-20 md:py-24 px-6 sm:px-10 md:px-16 lg:px-24"
+      className="w-full bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20"
     >
       {/* Top Part */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-12">

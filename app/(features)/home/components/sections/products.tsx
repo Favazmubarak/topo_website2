@@ -30,7 +30,7 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="w-full bg-white px-6 sm:px-10 md:px-16 lg:px-24"
+      className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20"
     >
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 lg:mb-16">
