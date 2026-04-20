@@ -8,7 +8,7 @@
 /* ✅ Add custom font */
 @font-face {
   font-family: "HighriseDemo";
-  src: url("/fonts/HighriseDemo.ttf") format("truetype");
+  src: url("/fonts/HighriseFont-Bold-Demo.otf") format("truetype");
   font-display: swap;
 }
 

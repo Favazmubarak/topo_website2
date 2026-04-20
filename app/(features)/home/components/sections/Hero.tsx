@@ -26,46 +26,44 @@ export default function Hero() {
                     <div className="inline-block flex flex-col gap-2 sm:gap-3 md:gap-4">
 
                         {/* Line 1 */}
-                        <div className="relative scale-x-50 origin-left w-fit">
+                        <div className="w-fit">
                             <h1 className="
-        font-highrise 
-        font-black
-        text-white 
-        uppercase 
-        leading-[0.8] 
-        tracking-[-0.05em]
-        scale-y-[1.3]
-        text-[26px]
-        sm:text-[38px]
-        md:text-[60px]
-        lg:text-[80px]
-        xl:text-[110px]
-        whitespace-nowrap
-        [text-shadow:0_2px_6px_rgba(0,0,0,0.4)]
-      ">
+                                font-highrise 
+                                font-black
+                                text-white 
+                                uppercase 
+                                leading-[0.9] 
+                                text-[36px]
+                                sm:text-[48px]
+                                md:text-[70px]
+                                lg:text-[90px]
+                                xl:text-[120px]
+                                whitespace-nowrap
+                               [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
+                                scale-y-130
+                            ">
                                 FRAMING THE FUTURE OF
                             </h1>
                         </div>
 
                         {/* Line 2 */}
-                        <div className="relative scale-x-50 origin-left flex justify-end w-full mt-5 sm:mt-10 md:mt-10 lg:mt-12 xl:mt-15">
+                        <div className="flex justify-end w-full 
+    mt-3 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8">
                             <h2 className="
         font-highrise 
         font-black
         text-white 
         uppercase 
-        leading-[0.8] 
-        tracking-[-0.05em]
-        scale-y-[1.3]
-        text-[26px]
-        sm:text-[38px]
-        md:text-[60px]
-        lg:text-[80px]
-        xl:text-[110px]
+        leading-[0.9] 
+        text-[36px]
+        sm:text-[48px]
+        md:text-[70px]
+        lg:text-[90px]
+        xl:text-[120px]
         whitespace-nowrap
         text-right
-        [text-shadow:0_2px_6px_rgba(0,0,0,0.4)]
-      ">
+        [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
+    ">
                                 MODERN LIVING
                             </h2>
                         </div>
@@ -77,7 +75,7 @@ export default function Hero() {
 
             {/* Bottom White Fade Effect */}
             <div className="absolute bottom-0 left-0 w-full h-20 sm:h-24 md:h-28 lg:h-32 
-bg-[linear-gradient(to_top,white_0%,white_25%,rgba(255,255,255,0.1)_70%,transparent_100%)]" />
+            bg-[linear-gradient(to_top,white_0%,white_25%,rgba(255,255,255,0.1)_70%,transparent_100%)]" />
         </section>
     );
 }
