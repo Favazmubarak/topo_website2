@@ -6,7 +6,6 @@ export default function Gallery() {
   return (
     <section className="w-full pb-10 sm:pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
           <div className="w-full md:w-1/2">
             <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
@@ -20,9 +19,7 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
-          {/* Row 1: Image 1 and 2 */}
           <div className="col-span-1 md:col-span-7 relative aspect-[4/3] md:aspect-[7/4] overflow-hidden rounded-[15px] group">
             <Image
               src="/gallery/image1.png"
@@ -44,7 +41,6 @@ export default function Gallery() {
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
-          {/* Row 2: Image 3 and 4 */}
           <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
             <Image
               src="/gallery/image3.jpg"
@@ -65,7 +61,6 @@ export default function Gallery() {
             />
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          {/* Row 3: Image 5 and 6 */}
           <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
             <Image
               src="/gallery/image5.jpg"
@@ -88,7 +83,6 @@ export default function Gallery() {
             <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
-          {/* Row 4: Image 7 */}
           <div className="col-span-2 md:col-span-7 relative aspect-[2/1] md:aspect-[7/4] overflow-hidden rounded-[15px] group">
             <Image
               src="/gallery/image7.jpg"

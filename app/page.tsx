@@ -11,32 +11,16 @@ import Upgrade from "./(features)/home/components/sections/Upgrade";
 export default function Home() {
   return (
     <main>
-      {/* Hero Section */}
       <Hero />
       
 
-      {/* About Section */}
       <About />
-
-      {/* Products Section */}
       <Products />
-
-      {/* Why Choose Topo Section */}
       <WhyChooseTopo />
-
-      {/* Testimonials Section */}
       <Testimonials />
-
-      {/* Product Features Section */}
       <ProductFeatures />
-
-      {/* FAQ Section */}
       <FAQ />
-
-      {/* Gallery Section */}
       <Gallery />
-
-      {/* Upgrade CTA Section */}
       <Upgrade />
     </main>
   );

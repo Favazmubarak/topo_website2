@@ -25,7 +25,6 @@ export default function GalleryPage() {
     <main className="pt-40 sm:pt-32 md:pt-40 lg:pt-40 xl:pt-52 pb-16">
       <section className="w-full px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
-          {/* Header Section */}
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
             <div className="w-full md:w-1/2">
               <h1 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
@@ -40,7 +39,6 @@ export default function GalleryPage() {
             </div>
           </div>
 
-          {/* Gallery Grid */}
           <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
             {images.map((image, index) => (
               <div

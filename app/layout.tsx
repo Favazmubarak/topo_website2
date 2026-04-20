@@ -41,7 +41,6 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
     >
-      {/* ✅ Use font-sans (mapped to Poppins) */}
       <body className="min-h-full flex flex-col font-sans">
         <Navbar />
         {children}

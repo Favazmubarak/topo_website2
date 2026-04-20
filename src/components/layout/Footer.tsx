@@ -8,7 +8,6 @@ const Footer = () => {
     <footer className="bg-brand-blue text-white py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-20 font-poppins overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12 lg:gap-16 mb-10">
-          {/* Column 1: Logo & Description - Span 2 on lg */}
           <div className="lg:col-span-2 flex flex-col ">
             <Link href="/">
               <Image
@@ -39,7 +38,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 2: Company */}
           <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-1">
             <h3 className="text-lg md:text-xl lg:text-2xl font-medium">Company</h3>
             <ul className="space-y-2 font-light text-sm sm:text-base lg:text-lg">
@@ -50,7 +48,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Support */}
           <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-1">
             <h3 className="text-lg md:text-xl lg:text-2xl font-medium">Support</h3>
             <ul className="space-y-2 font-light text-sm sm:text-base lg:text-lg">
@@ -62,7 +59,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Contact - Wider (Span 2) on lg */}
           <div className="flex flex-col space-y-4 md:space-y-6 lg:col-span-2">
             <h3 className="text-lg md:text-xl lg:text-2xl font-medium">Contact</h3>
             <ul className="space-y-4 font-light">
@@ -86,7 +82,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Line */}
         <div className="border-t border-white pt-8">
         </div>
       </div>

@@ -34,7 +34,6 @@ export default function Products() {
     >
 
       <div className="max-w-[1400px] mx-auto">
- {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 lg:mb-16">
         <div className="w-full md:w-1/2">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] leading-tight font-medium">
@@ -51,7 +50,6 @@ export default function Products() {
         </div>
       </div>
 
-      {/* Products Section */}
       <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 
 gap-3 md:gap-6 lg:gap-8 
 overflow-x-auto md:overflow-visible pb-2 
@@ -65,7 +63,6 @@ no-scrollbar scrollbar-hide snap-x snap-mandatory">
   min-w-[60%] sm:min-w-[45%] md:min-w-0 
   flex-shrink-0 snap-start"
           >
-            {/* Image */}
             <Image
               src={product.image}
               alt={product.title}
@@ -74,10 +71,8 @@ no-scrollbar scrollbar-hide snap-x snap-mandatory">
               className="object-cover transition-all duration-700 ease-out group-hover:scale-110"
             />
 
-            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500" />
 
-            {/* Content */}
             <div className="absolute bottom-1.5 left-1.5 right-1.5 
   bg-white/60
   p-2 md:p-4 rounded-lg md:rounded-xl 

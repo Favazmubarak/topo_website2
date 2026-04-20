@@ -34,7 +34,6 @@ export default function WhyChooseTopo() {
     <section className="w-full bg-white py-14 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
 
-        {/* Heading */}
         <div className="max-w-[700px] mb-8 sm:mb-10">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight">
             Why Choose Topo
@@ -43,7 +42,6 @@ export default function WhyChooseTopo() {
 
         <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-16">
 
-          {/* Left */}
           <div className="w-full lg:w-[42%]">
             <p className="font-montserrat text-black text-[clamp(13px,2.5vw,18px)] mb-6 sm:mb-8 leading-relaxed">
               Built on quality, designed for modern living, and trusted for lasting performance.
@@ -61,7 +59,6 @@ export default function WhyChooseTopo() {
             </div>
           </div>
 
-          {/* Right */}
           <div className="w-full lg:w-[58%] lg:pl-12">
             <div className="grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-6 sm:gap-y-10 lg:gap-y-12">
               {features.map((feature, index) => (

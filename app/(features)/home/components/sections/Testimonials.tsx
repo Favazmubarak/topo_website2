@@ -49,7 +49,6 @@ export default function Testimonials() {
   const [showRightArrow, setShowRightArrow] = useState(true);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  // Check if screen is small
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 768);
@@ -60,7 +59,6 @@ export default function Testimonials() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Update arrow visibility on scroll
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
 
@@ -72,7 +70,7 @@ export default function Testimonials() {
   const scroll = (direction: "left" | "right") => {
     if (!scrollContainerRef.current) return;
 
-    const scrollAmount = 320; // Adjust based on card width
+    const scrollAmount = 320;
     const targetScroll =
       scrollContainerRef.current.scrollLeft +
       (direction === "left" ? -scrollAmount : scrollAmount);
@@ -86,16 +84,13 @@ export default function Testimonials() {
   return (
     <section className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
-        {/* Heading */}
         <div className="mb-10 sm:mb-14 md:mb-16">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight">
             What Our Clients Say
           </h2>
         </div>
 
-        {/* Testimonials Container */}
         <div className="relative">
-          {/* Left Arrow - Mobile Only */}
           {isSmallScreen && showLeftArrow && (
             <button
               onClick={() => scroll("left")}
@@ -118,7 +113,6 @@ export default function Testimonials() {
             </button>
           )}
 
-          {/* Right Arrow - Mobile Only */}
           {isSmallScreen && showRightArrow && (
             <button
               onClick={() => scroll("right")}
@@ -141,13 +135,11 @@ export default function Testimonials() {
             </button>
           )}
 
-          {/* Testimonials Grid/Scroll */}
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
             className="grid md:grid-cols-2 lg:grid-cols-3 px-6 sm:px-8 lg:px-10 gap-8 sm:gap-10 lg:gap-16 overflow-x-auto md:overflow-x-visible scrollbar-hide"
             style={{
-              // Use the state variable instead of window.innerWidth
               gridAutoFlow: isSmallScreen ? "column" : "row",
               gridAutoColumns: isSmallScreen ? "minmax(280px, 1fr)" : "auto",
             }}
@@ -157,7 +149,6 @@ export default function Testimonials() {
                 key={testimonial.id}
                 className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-4 sm:pb-2 sm:p-5 flex flex-col h-full shrink-0 md:shrink"
               >
-                {/* Top Row */}
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex gap-1">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -174,12 +165,10 @@ export default function Testimonials() {
                   />
                 </div>
 
-                {/* Text */}
                 <p className="font-poppins text-[#2F2F2F] text-sm sm:text-[15px] lg:text-base leading-relaxed mb-14 flex-grow">
                   {testimonial.text}
                 </p>
 
-                {/* User Info */}
                 <div className="flex items-center gap-3 pt-4 border-t border-[#E9E9E9]">
                   <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden flex-shrink-0">
                     <Image

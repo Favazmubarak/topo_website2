@@ -58,7 +58,6 @@ export default function ProductFeatures() {
     <section className="w-full bg-[#E1ECFF] my-10 sm:my-16 py-14 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
 
-        {/* Heading */}
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] font-medium leading-tight mb-3">
             Product Features
@@ -68,7 +67,6 @@ export default function ProductFeatures() {
           </p>
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature, index) => (
             <div
@@ -80,22 +78,18 @@ export default function ProductFeatures() {
               hover:scale-[1.02]
               hover:shadow-[0_10px_30px_rgba(0,102,178,0.3)]"
             >
-              {/* Icon */}
               <div className="mb-4 sm:mb-6 text-black transition-colors duration-500 group-hover:text-white">
                 {feature.icon}
               </div>
 
-              {/* Title */}
               <h3 className="font-montserrat text-sm sm:text-xl font-[400] transition-colors duration-500">
                 {feature.title}
               </h3>
 
-              {/* Text */}
               <p className="font-montserrat font-[500] text-xs sm:text-[16px] leading-relaxed mb-8 sm:mb-12 text-[#929292] transition-colors duration-500 group-hover:text-[#D9D9D9]">
                 {feature.description}
               </p>
 
-              {/* Arrow */}
               <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
                 <div className="rounded-full p-2 sm:p-2.5 flex items-center justify-center bg-[#0066B2] transition-colors duration-500 group-hover:bg-white">
                   <ArrowIcon color="text-white group-hover:text-[#0066B2]" />

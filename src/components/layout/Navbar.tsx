@@ -28,7 +28,7 @@ export default function Navbar() {
 
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px", // Trigger when section is in the upper part of viewport
+      rootMargin: "-20% 0px -70% 0px",
       threshold: 0,
     };
 
@@ -42,9 +42,8 @@ export default function Navbar() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Watch sections
     if (isHomePage) {
-      const sections = ["about", "hero"]; // Add more if needed
+      const sections = ["about", "hero"];
       sections.forEach((id) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
@@ -58,7 +57,6 @@ export default function Navbar() {
     };
   }, [isHomePage]);
 
-  // Handle hash-based smooth scroll on mount
   useEffect(() => {
     if (isHomePage && typeof window !== "undefined") {
       const handleHashScroll = () => {
@@ -68,7 +66,6 @@ export default function Navbar() {
         const id = hash.replace("#", "");
         const element = document.getElementById(id);
         if (element) {
-          // Small delay to ensure layout has settled
           setTimeout(() => {
             const el = document.getElementById(id);
             if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -78,15 +75,12 @@ export default function Navbar() {
         return false;
       };
 
-      // Check if we should perform a scroll from sessionStorage or hash
       const scrollTarget = sessionStorage.getItem("scrollTarget");
       if (scrollTarget || window.location.hash) {
-        // Immediate scroll to top to override browser jump
         window.scrollTo(0, 0);
 
         const targetId = scrollTarget || window.location.hash.replace("#", "");
 
-        // Polling to catch the element when it's ready in the DOM
         let attempts = 0;
         const intervalId = setInterval(() => {
           attempts++;
@@ -113,7 +107,6 @@ export default function Navbar() {
         return () => clearInterval(intervalId);
       }
 
-      // Also listen for subsequent hash changes
       const handleHashChange = () => {
         const hash = window.location.hash;
         if (hash) {
@@ -139,17 +132,13 @@ export default function Navbar() {
         section.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      // Cross-page navigation: store target and navigate to /
       sessionStorage.setItem("scrollTarget", id);
-      // Link's href handling will take care of the navigation if we don't preventDefault
     }
   };
-
   return (
     <nav
       className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20 py-5 transition-all duration-300 bg-transparent"
     >
-      {/* Logo */}
       <div className="flex items-center z-50">
         <Link 
           href="/" 
@@ -157,8 +146,6 @@ export default function Navbar() {
             if (isHomePage) {
               handleScrollNav(e, "hero");
             } else {
-              // Programmatic navigation to ensure no hash is added
-              e.preventDefault();
               sessionStorage.setItem("scrollTarget", "hero");
               router.push("/");
             }
@@ -178,7 +165,6 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* Desktop Navigation Links */}
       <div className="hidden md:flex items-center space-x-6">
         {navLinks.map((link) => {
           const isScrollLink = link.isScroll || link.name === "Home";
@@ -187,7 +173,6 @@ export default function Navbar() {
             ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
             : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
           
-          // Construct href: / for home/scroll links across pages to avoid hash in URL
           const linkHref = isScrollLink ? "/" : link.href;
 
           return (
@@ -222,7 +207,6 @@ export default function Navbar() {
         })}
       </div>
 
-      {/* Mobile Menu Toggle */}
       <button
         className={`md:hidden z-50 p-2 focus:outline-none ${isWhiteHeader && !isMobileMenuOpen ? "text-white" : "text-black"}`}
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -241,7 +225,6 @@ export default function Navbar() {
         </div>
       </button>
 
-      {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 bg-white/90 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out md:hidden ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
       >
@@ -281,7 +264,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Spacer to keep balance on desktop */}
       <div className="hidden md:block w-40 shrink-0" />
     </nav>
   );

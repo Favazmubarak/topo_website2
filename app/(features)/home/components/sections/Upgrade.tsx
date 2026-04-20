@@ -6,7 +6,6 @@ export default function Upgrade() {
   return (
     <section className="w-full my-3 sm:my-6 md:my-12 lg:my-20 pb-3 sm:pb-6 md:pb-12 lg:pb-20">
       <div className="w-full h-[180px] sm:h-[240px] md:h-[360px] lg:h-[450px] relative overflow-hidden group">
-        {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image
             src="/about/image2.jpg"
@@ -19,7 +18,6 @@ export default function Upgrade() {
           <div className="absolute inset-0 bg-black/45" />
         </div>
 
-        {/* Content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-2 sm:px-4 md:px-6 max-w-[900px] mx-auto">
           <h2 className="font-poppins text-white text-[clamp(14px,4vw,48px)] font-[500] leading-tight tracking-tight mb-1 sm:mb-2 md:mb-4 lg:mb-6 px-1">
             Upgrade Your Space with Topo
@@ -29,7 +27,6 @@ export default function Upgrade() {
             Transform your home with premium aluminum designed for style, strength, and performance.
           </p>
 
-          {/* Action Button */}
           <button className="group/btn text-[10px] sm:text-xs md:text-sm lg:text-base inline-flex items-center gap-1 sm:gap-2 md:gap-3 lg:gap-4 bg-[#0066B2] text-white pl-3 sm:pl-5 md:pl-7 lg:pl-8 pr-0.5 sm:pr-1 md:pr-2 py-1 sm:py-1.5 md:py-2 lg:py-2.5 rounded-full font-poppins transition-all duration-300 hover:bg-[#005596] hover:scale-105 shadow-md sm:shadow-lg md:shadow-xl">
             Get a Free Quote
             <div className="bg-white w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover/btn:scale-110">
