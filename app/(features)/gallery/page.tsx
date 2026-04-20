@@ -22,7 +22,7 @@ export default function GalleryPage() {
   ];
 
   return (
-    <main className="pt-30 sm:pt-32 md:pt-32 lg:pt-36 pb-16">
+    <main className="pt-40 sm:pt-32 md:pt-40 lg:pt-40 xl:pt-52 pb-16">
       <section className="w-full px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
           {/* Header Section */}
