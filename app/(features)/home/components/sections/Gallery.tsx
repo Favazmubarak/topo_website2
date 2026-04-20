@@ -29,8 +29,9 @@ export default function Gallery() {
               alt="Modern living room with large glass windows overlooking a city skyline"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
           <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group">
             <Image
@@ -38,8 +39,9 @@ export default function Gallery() {
               alt="Elegant interior with a designer pendant lamp and mountain view"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
           {/* Row 2: Image 3 and 4 */}
@@ -49,8 +51,9 @@ export default function Gallery() {
               alt="Stylish red lounger chair in a sun-drenched room"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
           <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
             <Image
@@ -58,8 +61,9 @@ export default function Gallery() {
               alt="Minimalist living space with a white sofa and large windows"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
           {/* Row 3: Image 5 and 6 */}
           <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group">
@@ -68,8 +72,9 @@ export default function Gallery() {
               alt="Contemporary living room with forest views through panoramic windows"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
           <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group">
@@ -78,8 +83,9 @@ export default function Gallery() {
               alt="Modern glass outdoor patio structure nestled in greenery"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
           {/* Row 4: Image 7 */}
@@ -89,8 +95,9 @@ export default function Gallery() {
               alt="Luxury lounge area with sunset views and artistic lighting"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
         </div>
       </div>

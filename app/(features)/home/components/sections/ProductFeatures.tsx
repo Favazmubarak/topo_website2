@@ -18,8 +18,9 @@ const features = [
         <Image
           src="/icons/steam.png"
           alt="steam"
-          fill
-          className="object-contain"
+          width={40}
+          height={40}
+          className="object-contain w-8 h-8 sm:w-10 sm:h-10"
         />
       </div>
     ),

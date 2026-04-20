@@ -59,33 +59,39 @@ no-scrollbar scrollbar-hide snap-x snap-mandatory">
           <div
             key={product.id}
             className="relative group overflow-hidden rounded-xl md:rounded-2xl 
-      aspect-[3/4] md:aspect-[4/5] shadow-md 
-      min-w-[60%] sm:min-w-[45%] md:min-w-0 
-      flex-shrink-0 snap-start"
+  aspect-[3/4] md:aspect-[4/5] shadow-md 
+  min-w-[60%] sm:min-w-[45%] md:min-w-0 
+  flex-shrink-0 snap-start"
           >
             {/* Image */}
             <Image
               src={product.image}
               alt={product.title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              sizes="(max-width: 768px) 60vw, (max-width: 1024px) 45vw, 30vw"
+              className="object-cover transition-all duration-700 ease-out group-hover:scale-110"
             />
 
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500" />
+
             {/* Content */}
-            <div className="absolute h-[32%] bottom-1.5 left-1.5 right-1.5 
-      bg-white/85 p-2 md:p-4 rounded-lg md:rounded-xl 
-      flex flex-col justify-start overflow-hidden">
+            <div className="absolute bottom-1.5 left-1.5 right-1.5 
+  bg-white/60
+  p-2 md:p-4 rounded-lg md:rounded-xl 
+  flex flex-col gap-1
+  transition-all duration-500
+lg:min-h-[150px]">
 
               <h3 className="font-montserrat text-black 
-        text-[clamp(12px,1.4vw,18px)] 
-        leading-tight font-semibold mb-1 line-clamp-2">
+    text-[clamp(12px,1.4vw,18px)] 
+    leading-tight font-semibold">
                 {product.title}
               </h3>
 
               <p className="font-poppins text-[#2F2F2F] 
-        text-[clamp(9px,1.2vw,15px)] 
-        leading-snug font-[300] 
-        line-clamp-2">
+    text-[clamp(10px,1.2vw,15px)] 
+    leading-snug font-[300]">
                 {product.description}
               </p>
             </div>

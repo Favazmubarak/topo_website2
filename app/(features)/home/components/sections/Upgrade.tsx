@@ -14,6 +14,7 @@ export default function Upgrade() {
             fill
             className="object-cover object-[center_60%] transition-transform duration-1000 group-hover:scale-105"
             priority
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/45" />
         </div>
