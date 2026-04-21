@@ -138,9 +138,9 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-300 bg-white/40 backdrop-blur-sm shadow-md border-b border-white/10`}
+        className={`fixed top-0 left-0 w-full z-50 flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-300 bg-white/40 backdrop-blur-sm shadow-md border-b border-white/10`}
       >
-        <div className="flex items-center z-50">
+        <div className="flex-1 flex items-center z-50">
           <Link
             href="/"
             onClick={(e) => {
@@ -166,7 +166,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-6 flex-none">
           {navLinks.map((link) => {
             const isScrollLink = link.isScroll || link.name === "Home";
             const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
@@ -208,32 +208,34 @@ export default function Navbar() {
           })}
         </div>
 
-        <button
-          className="md:hidden z-50 p-2 focus:outline-none text-black"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <div className="w-8 h-6 flex flex-col justify-between items-end relative">
-            <span
-              className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
-            />
-            <span
-              className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
-            />
-            <span
-              className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
-            />
-          </div>
-        </button>
+        <div className="flex-1 flex justify-end">
+          <button
+            className="md:hidden z-50 p-2 focus:outline-none text-black"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <div className="w-8 h-6 flex flex-col justify-between items-end relative">
+              <span
+                className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
+              />
+              <span
+                className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
+              />
+              <span
+                className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
+              />
+            </div>
+          </button>
+        </div>
       </nav>
 
       <div
-        className={`fixed top-20 right-4 w-[80%] max-w-[280px] bg-[#001524]/90 backdrop-blur-2xl z-[100] flex flex-col items-end justify-center p-6 transition-all duration-500 ease-in-out md:hidden shadow-2xl rounded-3xl border border-white/10 ${isMobileMenuOpen 
-          ? "translate-y-0 opacity-100 scale-100 visible" 
-          : "translate-y-4 opacity-0 scale-95 invisible"
+        className={`fixed top-[72px] left-0 w-full bg-white/40 backdrop-blur-sm z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/10 ${isMobileMenuOpen 
+          ? "translate-y-0 opacity-100 visible" 
+          : "-translate-y-full opacity-0 invisible"
         }`}
       >
-        <div className="flex flex-col items-end space-y-6 w-full px-2">
+        <div className="flex flex-col items-center space-y-8 w-full">
           {navLinks.map((link) => {
             const isScrollLink = link.isScroll || link.name === "Home";
             const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
@@ -244,7 +246,7 @@ export default function Navbar() {
             const linkHref = isScrollLink ? "/" : link.href;
 
             return (
-              <div key={link.name} className="overflow-hidden w-full text-right">
+              <div key={link.name} className="overflow-hidden w-full text-center">
                 <Link
                   href={linkHref}
                   scroll={false}
@@ -255,12 +257,12 @@ export default function Navbar() {
                       setIsMobileMenuOpen(false);
                     }
                   }}
-                  className={`text-xl transition-all duration-300 relative group inline-block ${isActive ? "font-bold text-brand-blue" : "font-medium text-white/70"
+                  className={`text-2xl transition-all duration-300 relative group inline-block ${isActive ? "font-bold text-brand-blue" : "font-medium text-black/70"
                     } hover:text-brand-blue`}
                 >
-                  <span className="flex items-center justify-end space-x-2">
+                  <span className="flex items-center justify-center space-x-2">
                     <span>{link.name}</span>
-                    {isActive && <span className="w-1.5 h-1.5 bg-brand-blue rounded-full" />}
+                    {isActive && <span className="w-2 h-2 bg-brand-blue rounded-full" />}
                   </span>
                 </Link>
               </div>
