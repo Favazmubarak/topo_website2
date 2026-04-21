@@ -6,13 +6,22 @@ import "aos/dist/aos.css";
 
 export const AOSProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-in-out",
-      once: false,
-      mirror: false,
-      offset: 50,
-    });
+    const initAOS = () => {
+      AOS.init({
+        duration: 800,
+        easing: "ease-in-out",
+        once: false,
+        mirror: false,
+        offset: 50,
+      });
+    };
+
+    // Listen for custom event from LoadingScreen
+    window.addEventListener("loaderFinished", initAOS);
+
+    return () => {
+      window.removeEventListener("loaderFinished", initAOS);
+    };
   }, []);
 
   return <>{children}</>;

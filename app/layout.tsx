@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 };
 
 import { AOSProvider } from "@/src/providers/AOSProvider";
+import LoadingScreen from "@/src/components/common/LoadingScreen";
 
 export default function RootLayout({
   children,
@@ -44,6 +45,7 @@ export default function RootLayout({
       className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
+        <LoadingScreen />
         <AOSProvider>
           <Navbar />
           <div className="flex-grow overflow-x-hidden">

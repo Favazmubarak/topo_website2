@@ -44,3 +44,33 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@keyframes smooth-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes smooth-rotate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-smooth-rotate {
+  animation: smooth-rotate 3s linear infinite;
+}
+
+.animate-smooth-rotate-reverse {
+  animation: smooth-rotate-reverse 1.5s linear infinite;
+}
+
+.blur-glow {
+  box-shadow: 0 0 12px rgba(203, 213, 225, 0.4);
+}
