@@ -197,16 +197,21 @@ export default function Navbar() {
                   } else {
                     setIsMobileMenuOpen(false);
                   }
-                }} className={`group text-base transition-all duration-500 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${isActive 
-                    ? "text-brand-blue" 
-                    : isWhiteHeader
-                      ? "text-white hover:text-brand-blue"
+                }}
+                className={`group text-base transition-all duration-500 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${
+                  isWhiteHeader
+                    ? "text-white hover:text-white"
+                    : isActive
+                      ? "text-brand-blue"
                       : "text-black hover:text-brand-blue"
-                  }`}
+                }`}
               >
                 <span className="flex flex-col items-center">
-                  <span className={`transition-all duration-500 ${isActive ? "font-bold opacity-100 text-brand-blue" : "font-light opacity-80 group-hover:font-bold group-hover:opacity-100"
-                    }`}>
+                  <span className={`transition-all duration-500 ${
+                    isActive 
+                      ? `font-bold opacity-100 ${isWhiteHeader ? "text-white" : "text-brand-blue"}` 
+                      : "font-light opacity-80 group-hover:font-bold group-hover:opacity-100"
+                  }`}>
                     {link.name}
                   </span>
                   <span className="font-bold invisible h-0 select-none pointer-events-none" aria-hidden="true">
@@ -245,7 +250,7 @@ export default function Navbar() {
           : "-translate-y-full opacity-0 invisible"
         }`}
       >
-        <div className="flex flex-col items-center space-y-8 w-full">
+        <div className="flex flex-col items-center space-y-3 w-full">
           {navLinks.map((link) => {
             const isScrollLink = link.isScroll || link.name === "Home";
             const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
@@ -267,12 +272,21 @@ export default function Navbar() {
                       setIsMobileMenuOpen(false);
                     }
                   }}
-                  className={`text-2xl transition-all duration-300 relative group inline-block ${isActive ? "font-bold text-brand-blue" : "font-medium text-black/70"
-                    } hover:text-brand-blue`}
+                  className={`
+  block w-full py-2 px-3 rounded-lg
+  text-xl relative
+  transition-all duration-200
+
+  ${isActive
+                      ? "bg-white/20 backdrop-blur-md border border-white/30 text-brand-blue font-semibold shadow-sm"
+                      : "text-black/70 font-medium"
+                    }
+
+  active:scale-[0.97]
+`}
                 >
-                  <span className="flex items-center justify-center space-x-2">
+                  <span className="flex items-center justify-center gap-2">
                     <span>{link.name}</span>
-                    {isActive && <span className="w-2 h-2 bg-brand-blue rounded-full" />}
                   </span>
                 </Link>
               </div>
