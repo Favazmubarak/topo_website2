@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
@@ -16,6 +16,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === "/";
@@ -23,7 +25,15 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
     };
 
     const observerOptions = {
@@ -138,7 +148,9 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 w-full z-50 flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-300 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20"
+        className={`fixed top-0 left-0 w-full z-50 flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-500 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20 ${
+          isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
         <div className="flex-1 flex items-center z-50">
           <Link
