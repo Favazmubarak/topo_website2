@@ -19,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === "/";
-  const isWhiteHeader = false; // Glassmorphism is now permanent, so we always use the dark/colored header style
+  const isWhiteHeader = isHomePage && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -138,7 +138,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-300 bg-white/40 backdrop-blur-sm shadow-md border-b border-white/10`}
+        className="fixed top-0 left-0 w-full z-50 flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-300 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20"
       >
         <div className="flex-1 flex items-center z-50">
           <Link
@@ -151,16 +151,26 @@ export default function Navbar() {
                 router.push("/");
               }
             }}
+            className="relative block w-[160px] h-12 md:h-20"
           >
             <Image
-              src={isWhiteHeader ? "/logo.png" : "/logo-blue.png"}
-              alt="topo logo"
+              src="/logo.png"
+              alt="topo logo white"
               width={160}
               height={64}
-              className={`w-auto h-12 md:h-20 object-contain transition-all duration-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader
-                ? "brightness-0 invert"
-                : ""
-                }`}
+              className={`absolute inset-0 w-auto h-full object-contain transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${
+                isWhiteHeader ? "opacity-100" : "opacity-0"
+              }`}
+              priority
+            />
+            <Image
+              src="/logo-blue.png"
+              alt="topo logo blue"
+              width={161}
+              height={64}
+              className={`absolute inset-0 w-auto h-full object-contain transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${
+                isWhiteHeader ? "opacity-0" : "opacity-100"
+              }`}
               priority
             />
           </Link>
@@ -187,15 +197,15 @@ export default function Navbar() {
                   } else {
                     setIsMobileMenuOpen(false);
                   }
-                }} className={`group text-base transition-all duration-200 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${isWhiteHeader
-                  ? "text-white hover:text-white"
-                  : isActive
-                    ? "text-brand-blue"
-                    : "text-black hover:text-brand-blue"
+                }} className={`group text-base transition-all duration-500 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${isActive 
+                    ? "text-brand-blue" 
+                    : isWhiteHeader
+                      ? "text-white hover:text-brand-blue"
+                      : "text-black hover:text-brand-blue"
                   }`}
               >
                 <span className="flex flex-col items-center">
-                  <span className={`transition-all duration-200 ${isActive ? "font-bold opacity-100 text-brand-blue" : "font-medium opacity-80 group-hover:font-bold group-hover:opacity-100"
+                  <span className={`transition-all duration-500 ${isActive ? "font-bold opacity-100 text-brand-blue" : "font-light opacity-80 group-hover:font-bold group-hover:opacity-100"
                     }`}>
                     {link.name}
                   </span>
@@ -210,19 +220,19 @@ export default function Navbar() {
 
         <div className="flex-1 flex justify-end">
           <button
-            className="md:hidden z-50 p-2 focus:outline-none text-black"
+            className={`md:hidden z-50 p-2 focus:outline-none ${isWhiteHeader ? "text-white" : "text-black"}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             <div className="w-8 h-6 flex flex-col justify-between items-end relative">
               <span
-                className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
+                className={`h-0.5 transition-all duration-500 rounded-full ${isWhiteHeader ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
               />
               <span
-                className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
+                className={`h-0.5 transition-all duration-500 rounded-full ${isWhiteHeader ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
               />
               <span
-                className={`h-0.5 transition-all duration-300 rounded-full bg-black ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
+                className={`h-0.5 transition-all duration-500 rounded-full ${isWhiteHeader ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
               />
             </div>
           </button>
@@ -230,7 +240,7 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed top-[72px] left-0 w-full bg-white/40 backdrop-blur-sm z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/10 ${isMobileMenuOpen 
+        className={`fixed top-[72px] left-0 w-full bg-white/10 backdrop-blur-sm z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/20 ${isMobileMenuOpen 
           ? "translate-y-0 opacity-100 visible" 
           : "-translate-y-full opacity-0 invisible"
         }`}
