@@ -52,7 +52,7 @@ export default function FAQ() {
               key={index}
               data-aos="fade-left"
               data-aos-delay={index * 80}
-              className="bg-[#E1ECFF] rounded-[20px] p-5 sm:p-6 md:p-8 flex flex-col gap-4 transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
+              className="bg-[#E1ECFF] rounded-[20px] p-5 sm:p-6 md:p-8 flex flex-col transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
               onClick={() => toggleFAQ(index)}
             >
               <div className="flex items-center justify-between gap-4 w-full">
@@ -73,14 +73,15 @@ export default function FAQ() {
                 </div>
               </div>
 
-              <div 
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                }`}
+              <div
+                className={`grid transition-all duration-300 ease-in-out ${activeIndex === index ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"
+                  }`}
               >
-                <p className="font-montserrat text-[#929292] text-[12px] sm:text-sm md:text-base leading-relaxed pl-[44px] sm:pl-[64px] md:pl-[72px]">
-                  {faq.answer}
-                </p>
+                <div className="overflow-hidden">
+                  <p className="font-montserrat text-[#929292] text-[12px] sm:text-sm md:text-base leading-relaxed pl-[44px] sm:pl-[64px] md:pl-[72px]">
+                    {faq.answer}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
