@@ -33,15 +33,6 @@ const StarIcon = () => (
   </svg>
 );
 
-const QuoteIcon = () => (
-  <svg
-    className="w-7 h-7 text-[#0066B2] -translate-y-1"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-  >
-    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-  </svg>
-);
 
 export default function Testimonials() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -85,7 +76,10 @@ export default function Testimonials() {
     <section className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 sm:mb-14 md:mb-16">
-          <h2 className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight" data-aos="fade-up">
+          <h2
+            className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight"
+            data-aos="fade-up"
+          >
             What Our Clients Say
           </h2>
         </div>
@@ -147,7 +141,13 @@ export default function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                data-aos={index === 0 ? "fade-right" : index === 1 ? "fade-up" : "fade-left"}
+                data-aos={
+                  index === 0
+                    ? "fade-right"
+                    : index === 1
+                      ? "fade-up"
+                      : "fade-left"
+                }
                 data-aos-delay={index * 80}
                 className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-4 sm:pb-2 sm:p-5 flex flex-col h-full shrink-0 md:shrink"
               >
@@ -178,6 +178,7 @@ export default function Testimonials() {
                       alt={testimonial.name}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 640px) 64px, (max-width: 1024px) 80px, 96px"
                     />
                   </div>
                   <span className="font-montserrat text-black text-sm sm:text-[15px] font-medium">
