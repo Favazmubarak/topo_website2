@@ -53,13 +53,10 @@ export default function About() {
       </div>
 
       <div className="w-full pt-12 sm:pt-16">
-
         <div className="w-full md:max-w-[55%]">
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
 
             <div className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[20px]" data-aos="fade-up" data-aos-delay="300">
-
               <Image
                 src="/about/image1.jpg"
                 alt="Modern window with pool view"
@@ -67,13 +64,9 @@ export default function About() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 30vw"
               />
-
-
-
             </div>
 
             <div className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[20px]" data-aos="fade-up" data-aos-delay="450">
-
               <Image
                 src="/about/image2.jpg"
                 alt="Interior with premium windows"
@@ -81,9 +74,6 @@ export default function About() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 30vw"
               />
-
-
-
             </div>
 
           </div>

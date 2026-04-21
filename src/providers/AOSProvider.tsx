@@ -16,7 +16,6 @@ export const AOSProvider = ({ children }: { children: React.ReactNode }) => {
       });
     };
 
-    // Listen for custom event from LoadingScreen
     window.addEventListener("loaderFinished", initAOS);
 
     return () => {

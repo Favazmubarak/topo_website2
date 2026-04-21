@@ -11,7 +11,7 @@ const features = [
   },
   {
     title: "Thermal insulation",
-    description: "Blocks outside noise for a peaceful space",
+    description: "Keeps your space cool in summer and warm in winter",
     icon: (
       <div className="relative w-8 h-8 sm:w-10 sm:h-10">
         <Image
@@ -26,12 +26,12 @@ const features = [
   },
   {
     title: "Low maintenance",
-    description: "Blocks outside noise for a peaceful space",
+    description: "Easy to clean and highly durable for everyday use",
     icon: <BsTools className="w-8 h-8 sm:w-10 sm:h-10" />,
   },
   {
     title: "Weather resistance",
-    description: "Blocks outside noise for a peaceful space",
+    description: "Designed to withstand extreme weather conditions",
     icon: (
       <BsFillCloudsFill className="w-8 h-8 sm:w-10 sm:h-10 scale-x-[-1]" />
     ),
@@ -57,7 +57,6 @@ export default function ProductFeatures() {
   return (
     <section className="w-full bg-[#E1ECFF] my-10 sm:my-16 py-14 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
-
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] font-medium leading-tight mb-3" data-aos="fade-up">
             Product Features
@@ -101,7 +100,6 @@ export default function ProductFeatures() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

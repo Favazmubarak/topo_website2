@@ -5,7 +5,6 @@ import Image from "next/image";
 export default function Hero() {
     return (
         <section id="hero" className="relative w-full h-[65vh] sm:h-[75vh] md:h-screen overflow-hidden px-4 sm:px-6 md:px-12 lg:px-20">
-
             <Image
                 src="/hero/banner.jpeg"
                 alt="Hero Background"
@@ -16,13 +15,9 @@ export default function Hero() {
             />
 
             <div className="absolute inset-0 bg-black/5" />
-
             <div className="relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16">
-
                 <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
-
                     <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
-
                         <div className="w-fit" data-aos="fade-right" data-aos-delay="200">
                             <h1 className="
                                 font-highrise 

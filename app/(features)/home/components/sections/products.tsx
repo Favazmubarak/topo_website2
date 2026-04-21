@@ -32,7 +32,6 @@ export default function Products() {
       id="products"
       className="w-full bg-white px-4 sm:px-6 md:px-12 lg:px-20"
     >
-
       <div className="max-w-[1400px] mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-8 lg:mb-16">
         <div className="w-full md:w-1/2" data-aos="fade-right">
@@ -54,7 +53,6 @@ export default function Products() {
 gap-3 md:gap-6 lg:gap-8 
 overflow-x-auto md:overflow-visible pb-2 
 no-scrollbar scrollbar-hide snap-x snap-mandatory">
-
         {products.map((product, index) => (
           <div
             key={product.id}
