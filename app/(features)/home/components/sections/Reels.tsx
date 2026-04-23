@@ -50,9 +50,8 @@ function VideoCard({ reel, index }: { reel: any; index: number }) {
             e.stopPropagation();
             togglePlay();
           }}
-          className={`w-14 h-14 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto hover:scale-110 transition-all duration-300 ${
-            isPlaying ? "opacity-0 group-hover/card:opacity-100" : "opacity-100"
-          }`}
+          className={`w-14 h-14 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto hover:scale-110 transition-all duration-300 ${isPlaying ? "opacity-0 group-hover/card:opacity-100" : "opacity-100"
+            }`}
         >
           {isPlaying ? (
             <FaPause className="w-5 h-5" />
