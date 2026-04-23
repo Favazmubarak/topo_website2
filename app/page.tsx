@@ -7,6 +7,7 @@ import ProductFeatures from "./(features)/home/components/sections/ProductFeatur
 import Testimonials from "./(features)/home/components/sections/Testimonials";
 import Gallery from "./(features)/home/components/sections/Gallery";
 import Upgrade from "./(features)/home/components/sections/Upgrade";
+import Reels from "./(features)/home/components/sections/Reels";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <FAQ />
       <Gallery />
       <Upgrade />
+      <Reels />
     </main>
   );
 }
