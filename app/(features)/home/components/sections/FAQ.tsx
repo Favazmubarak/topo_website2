@@ -2,33 +2,12 @@
 
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import { useFAQ } from "../../hooks/useFaq";
 
-const faqs = [
-  {
-    question: "What types of aluminum window systems do you offer?",
-    answer: "We offer sliding, casement, fixed, and custom-designed aluminum window systems.",
-  },
-  {
-    question: "Do your windows help with energy efficiency and insulation?",
-    answer: "Yes, our windows are designed to improve insulation and help reduce energy costs.",
-  },
-  {
-    question: "Can you provide custom-designed window solutions?",
-    answer: "Absolutely. We create made-to-measure solutions tailored to your space and style.",
-  },
-  {
-    question: "Why should I choose aluminum windows?",
-    answer: "Aluminum windows are highly durable, weather resistant, and built to last for years.",
-  },
-  {
-    question: "How can I get a quote or contact your team?",
-    answer: "You can contact us through our website or call us directly for a free quote.",
-  },
-];
 
 export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
+const {faqs, loading, error} = useFAQ();
   const toggleFAQ = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
@@ -49,7 +28,7 @@ export default function FAQ() {
         <div className="w-full lg:w-[60%] flex flex-col gap-4 sm:gap-6 lg:ml-auto">
           {faqs.map((faq, index) => (
             <div
-              key={index}
+              key={faq._id}
               data-aos="fade-left"
               data-aos-delay={index * 80}
               className="bg-[#E1ECFF] rounded-[20px] p-5 sm:p-6 md:p-8 flex flex-col transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
