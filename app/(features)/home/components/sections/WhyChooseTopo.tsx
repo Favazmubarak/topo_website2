@@ -5,6 +5,7 @@ import { GoShieldCheck } from "react-icons/go";
 import { PiPencilSimple } from "react-icons/pi";
 import { SlEnergy } from "react-icons/sl";
 import { TbCloudPlus } from "react-icons/tb";
+import { useImage } from "../../hooks/useImage";
 
 const features = [
   {
@@ -30,6 +31,24 @@ const features = [
 ];
 
 export default function WhyChooseTopo() {
+
+  const {images, loading, error} = useImage("why-choose")
+
+  if (loading) {
+    return (
+      <main className="pt-40 xl:pt-52 pb-20 flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
+      </main>
+    );
+  }
+
+   if (error) {
+     return (
+       <main className="pt-40 xl:pt-52 pb-20 text-center">
+         <h1 className="text-2xl text-red-500">Error: {error}</h1>
+       </main>
+     );
+   }
   return (
     <section className="w-full bg-white py-14 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
@@ -49,7 +68,7 @@ export default function WhyChooseTopo() {
 
             <div className="group relative w-full aspect-[21/9] sm:aspect-[16/7] lg:aspect-[21/9] rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-xl" data-aos="fade-up" data-aos-delay="300">
               <Image
-                src="/about/image2.jpg"
+                src={images[0]?.imageUrl?.trim() || "/fallback.png"}
                 alt="Modern window solutions"
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"

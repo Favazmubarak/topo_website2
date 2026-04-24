@@ -1,14 +1,33 @@
 "use client";
 
 import Image from "next/image";
+import { useImage } from "../../hooks/useImage";
 
 export default function Upgrade() {
+
+  const { images, loading, error } = useImage("cta")
+
+  if (loading) {
+    return (
+      <main className="pt-40 xl:pt-52 pb-20 flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="pt-40 xl:pt-52 pb-20 text-center">
+        <h1 className="text-2xl text-red-500">Error: {error}</h1>
+      </main>
+    );
+  }
   return (
     <section className="w-full my-3 sm:my-6 md:my-12 lg:my-20 pb-3 sm:pb-6 md:pb-12 lg:pb-20">
       <div className="w-full h-[180px] sm:h-[240px] md:h-[360px] lg:h-[450px] relative overflow-hidden group">
         <div className="absolute inset-0">
           <Image
-            src="/about/image2.jpg"
+            src={images[0]?.imageUrl?.trim() || "/fallback.png"}
             alt="Premium interior with aluminum glass doors"
             fill
             className="object-cover object-[center_60%] transition-transform duration-1000 group-hover:scale-105"
