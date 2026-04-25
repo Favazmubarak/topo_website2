@@ -5,28 +5,12 @@ import { useImage } from "../../hooks/useImage";
 
 export default function About() {
 
-   const { images,loading,error } = useImage("about");
+  const { images, loading, error } = useImage("about");
 
-   const getSafeSrc = (url?: string) =>
-     url && url.trim() !== "" ? url : "/fallback.png";
-  
-   if (loading) {
-    return (
-      <main className="pt-40 xl:pt-52 pb-20 flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
-      </main>
-    );
-  }
+  const getSafeSrc = (url?: string) =>
+    url && url.trim() !== "" ? url : "/fallback.png";
 
-  if (error) {
-    return (
-      <main className="pt-40 xl:pt-52 pb-20 text-center">
-        <h1 className="text-2xl text-red-500">Error: {error}</h1>
-      </main>
-    );
-  }
-  
-   return (
+  return (
     <section
       id="about"
       className="w-full bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20"
@@ -82,32 +66,55 @@ export default function About() {
         <div className="w-full pt-12 sm:pt-16">
           <div className="w-full md:max-w-[55%]">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+
+
               <div
-                className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[20px]"
+                className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[20px] shadow-xl"
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <Image
-                  src={getSafeSrc(images[0]?.imageUrl)}
-                  alt="Modern window with pool view"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 30vw"
-                />
+                {
+                  loading ? (
+                    <div className="animate-pulse bg-gray-200 w-full h-full rounded-[16px] sm:rounded-[20px]" />
+                  ) : error ? (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
+                      <p className="text-red-500 text-xs">Failed to load</p>
+                    </div>
+                  ) : (
+                    <Image
+                      src={getSafeSrc(images[0]?.imageUrl)}
+                      alt="Modern window with pool view"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 30vw"
+                    />
+                  )
+                }
               </div>
 
               <div
-                className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[20px]"
+                className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[20px] shadow-xl"
                 data-aos="fade-up"
                 data-aos-delay="450"
               >
-                <Image
-                  src={getSafeSrc(images[1]?.imageUrl)}
-                  alt="Interior with premium windows"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 30vw"
-                />
+                {
+
+                  loading ? (
+                    <div className="animate-pulse bg-gray-200 w-full h-full rounded-[16px] sm:rounded-[20px]" />
+                  ) : error ? (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
+                      <p className="text-red-500 text-xs">Failed to load</p>
+                    </div>
+                  ) : (
+                    <Image
+                      src={getSafeSrc(images[1]?.imageUrl)}
+                      alt="Interior with premium windows"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 30vw"
+                    />
+                  )
+                }
               </div>
             </div>
           </div>

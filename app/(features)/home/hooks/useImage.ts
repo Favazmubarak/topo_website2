@@ -6,10 +6,17 @@ interface ImageState {
   images: Record<Section, SectionImage[]>;
   loading: Record<Section, boolean>;
   error: Record<Section, string | null>; 
+  isFetched: Record<Section, boolean>;
   fetchImage: (section: Section) => Promise<void>;
 }
 
 const useImageStore = create<ImageState>((set, get) => ({
+  isFetched: {
+    hero: false,
+    about: false,
+    "why-choose": false,
+    cta: false,
+  },
   images: {
     hero: [],
     about: [],
@@ -30,6 +37,7 @@ const useImageStore = create<ImageState>((set, get) => ({
   },
 
   fetchImage: async (section) => {
+    console.log("Fetching image for section:", section);
     try {
       set((state) => ({
         loading: {
@@ -53,6 +61,7 @@ const useImageStore = create<ImageState>((set, get) => ({
           ...state.loading,
           [section]: false,
         },
+        isFetched: { ...state.isFetched, [section]: true },
       }));
     } catch (err: any) {
       const message =
@@ -69,23 +78,23 @@ const useImageStore = create<ImageState>((set, get) => ({
           ...state.loading,
           [section]: false,
         },
+        isFetched: { ...state.isFetched, [section]: true },
       }));
     }
   },
 }));
 
 export const useImage = (section: Section) => {
-  const { images, loading, error, fetchImage } = useImageStore();
-
-  const sectionImages = images[section];
-  const isLoading = loading[section];
-  const sectionError = error[section]; 
-
+  const sectionImages = useImageStore((state) => state.images[section]);
+  const isLoading = useImageStore((state) => state.loading[section]);
+  const sectionError = useImageStore((state) => state.error[section]);
+  const fetchImage = useImageStore((state) => state.fetchImage);
+  const isFetched = useImageStore((state) => state.isFetched[section]);
   useEffect(() => {
-    if (sectionImages.length === 0 && !isLoading) {
+    if (!isLoading && !sectionError && !isFetched) {
       fetchImage(section);
     }
-  }, [section]);
+  }, [section, isLoading, sectionError, fetchImage,isFetched]);
 
   return { images: sectionImages, loading: isLoading, error: sectionError };
 };

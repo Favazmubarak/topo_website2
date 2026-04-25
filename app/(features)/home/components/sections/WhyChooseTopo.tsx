@@ -34,21 +34,7 @@ export default function WhyChooseTopo() {
 
   const {images, loading, error} = useImage("why-choose")
 
-  if (loading) {
-    return (
-      <main className="pt-40 xl:pt-52 pb-20 flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
-      </main>
-    );
-  }
 
-   if (error) {
-     return (
-       <main className="pt-40 xl:pt-52 pb-20 text-center">
-         <h1 className="text-2xl text-red-500">Error: {error}</h1>
-       </main>
-     );
-   }
   return (
     <section className="w-full bg-white py-14 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
@@ -67,14 +53,26 @@ export default function WhyChooseTopo() {
             </p>
 
             <div className="group relative w-full aspect-[21/9] sm:aspect-[16/7] lg:aspect-[21/9] rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-xl" data-aos="fade-up" data-aos-delay="300">
-              <Image
+             {
+              loading?(
+                  <div className="animate-pulse bg-gray-200 w-full h-full rounded-[16px] sm:rounded-[20px]" />
+              ): error?(
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
+                      <p className="text-red-500 text-xs">Failed to load</p>
+                    </div>
+              ): (
+                <Image
                 src={images[0]?.imageUrl?.trim() || "/fallback.png"}
                 alt="Modern window solutions"
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
                 priority
                 sizes="(max-width: 1024px) 100vw, 42vw"
               />
+              )
+             }
+             
+              
             </div>
           </div>
 
