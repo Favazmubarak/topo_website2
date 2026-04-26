@@ -24,7 +24,6 @@ const useTestimonialStore = create<TestimonialState>((set, get) => ({
 
             set({
                 testimonials: data,
-                loading: false,
             });
         } catch (err: any) {
             const message =
@@ -34,9 +33,10 @@ const useTestimonialStore = create<TestimonialState>((set, get) => ({
 
             set({
                 error: message,
-                loading: false,
             });
-        }
+        } finally {
+            set({ loading: false });
+        }   
     },
 }));
 

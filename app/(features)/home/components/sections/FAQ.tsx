@@ -4,18 +4,22 @@ import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useFAQ } from "../../hooks/useFaq";
 
-
 export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-const {faqs, loading, error} = useFAQ();
+  const { faqs, loading, error } = useFAQ();
+
   const toggleFAQ = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
-    <section className="w-full my-10 sm:my-16 py-10 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20" id="faq">
+    <section
+      className="w-full my-10 sm:my-16 py-10 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20"
+      id="faq"
+    >
       <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-10 lg:gap-16 justify-between items-start">
-        
+
+        {/* LEFT SIDE */}
         <div className="w-full lg:w-[35%] text-left" data-aos="fade-right">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight mb-4 tracking-tight">
             Frequently Asked <br className="hidden lg:block" /> Questions
@@ -25,45 +29,67 @@ const {faqs, loading, error} = useFAQ();
           </p>
         </div>
 
+        {/* RIGHT SIDE */}
         <div className="w-full lg:w-[60%] flex flex-col gap-4 sm:gap-6 lg:ml-auto">
-          {faqs.map((faq, index) => (
-            <div
-              key={faq._id}
-              data-aos="fade-left"
-              data-aos-delay={index * 80}
-              className="bg-[#E1ECFF] rounded-[20px] p-5 sm:p-6 md:p-8 flex flex-col transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
-              onClick={() => toggleFAQ(index)}
-            >
-              <div className="flex items-center justify-between gap-4 w-full">
-                <div className="flex items-center gap-4 sm:gap-6 md:gap-8 overflow-hidden">
-                  <span className="font-montserrat text-[#0066B2] text-sm sm:text-lg md:text-xl font-medium min-w-[30px] sm:min-w-[40px]">
-                    ({index + 1})
-                  </span>
-                  
-                  <p className="font-montserrat text-black text-[13px] sm:text-base md:text-[18px] font-medium leading-[1.4]">
-                    {faq.question}
-                  </p>
+
+          {loading ? (
+            <div className="flex justify-center items-center min-h-[400px]">
+              <div className="animate-spin h-16 w-16 md:h-36 md:w-36 border-t-2 border-b-2 border-[#0066B2] rounded-full"></div>
+            </div>
+          ) : error ? (
+            <div className="flex justify-center items-center min-h-[400px] text-red-500">
+              Error: {error}
+            </div>
+          ) : faqs.length === 0 ? (
+            <div className="flex justify-center items-center min-h-[400px] text-gray-500">
+              No FAQs available right now.
+            </div>
+          ) : (
+            faqs.map((faq, index) => (
+              <div
+                key={faq._id}
+                data-aos="fade-left"
+                data-aos-delay={index * 80}
+                className="bg-[#E1ECFF] rounded-[20px] p-5 sm:p-6 md:p-8 flex flex-col transition-all duration-300 hover:scale-[1.01] cursor-pointer group"
+                onClick={() => toggleFAQ(index)}
+              >
+                <div className="flex items-center justify-between gap-4 w-full">
+                  <div className="flex items-center gap-4 sm:gap-6 md:gap-8 overflow-hidden">
+                    <span className="font-montserrat text-[#0066B2] text-sm sm:text-lg md:text-xl font-medium min-w-[30px] sm:min-w-[40px]">
+                      ({index + 1})
+                    </span>
+
+                    <p className="font-montserrat text-black text-[13px] sm:text-base md:text-[18px] font-medium leading-[1.4]">
+                      {faq.question}
+                    </p>
+                  </div>
+
+                  <div className="flex-shrink-0">
+                    <div
+                      className={`bg-[#0066B2] text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-300 group-hover:bg-[#005596] ${activeIndex === index ? "rotate-180" : ""
+                        }`}
+                    >
+                      <FaChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex-shrink-0">
-                  <div className={`bg-[#0066B2] text-white rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-all duration-300 group-hover:bg-[#005596] ${activeIndex === index ? 'rotate-180' : ''}`}>
-                    <FaChevronDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${activeIndex === index
+                      ? "grid-rows-[1fr] opacity-100 mt-2"
+                      : "grid-rows-[0fr] opacity-0"
+                    }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="font-montserrat text-[#929292] text-[12px] sm:text-sm md:text-base leading-relaxed pl-[44px] sm:pl-[64px] md:pl-[72px]">
+                      {faq.answer}
+                    </p>
                   </div>
                 </div>
               </div>
+            ))
+          )}
 
-              <div
-                className={`grid transition-all duration-300 ease-in-out ${activeIndex === index ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"
-                  }`}
-              >
-                <div className="overflow-hidden">
-                  <p className="font-montserrat text-[#929292] text-[12px] sm:text-sm md:text-base leading-relaxed pl-[44px] sm:pl-[64px] md:pl-[72px]">
-                    {faq.answer}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

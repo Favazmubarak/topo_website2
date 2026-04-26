@@ -15,8 +15,9 @@ const useFAQStore = create<FAQState>((set, get) => ({
     error: null,
 
     fetchFAQs: async () => {
+
+        
         try {
-            // prevent duplicate calls
             if (get().loading) return;
 
             set({ loading: true, error: null });
@@ -25,7 +26,6 @@ const useFAQStore = create<FAQState>((set, get) => ({
 
             set({
                 faqs: data,
-                loading: false,
             });
         } catch (err: any) {
             const message =
@@ -35,8 +35,9 @@ const useFAQStore = create<FAQState>((set, get) => ({
 
             set({
                 error: message,
-                loading: false,
             });
+        } finally {
+            set({ loading: false });
         }
     },
 }));
@@ -48,11 +49,8 @@ export const useFAQ = () => {
     const fetchFAQs = useFAQStore((s) => s.fetchFAQs);
 
     useEffect(() => {
-        
-        if (faqs.length === 0 && !loading) {
-            fetchFAQs();
-        }
-    }, [faqs.length, loading, fetchFAQs]);
+        fetchFAQs();
+    }, [fetchFAQs]);
 
     return { faqs, loading, error };
 };

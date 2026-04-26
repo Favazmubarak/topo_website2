@@ -37,6 +37,7 @@ const useImageStore = create<ImageState>((set, get) => ({
   },
 
   fetchImage: async (section) => {
+    if (get().loading[section]) return;
     try {
       set((state) => ({
         loading: {
