@@ -6,6 +6,8 @@ export interface Product {
   title: string;
   description: string;
   imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const getAllProducts = async (): Promise<Product[]> => {

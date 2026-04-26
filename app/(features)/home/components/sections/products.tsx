@@ -3,48 +3,10 @@
 import ProductCard from "@/app/(features)/products/components/ProductCard";
 import { useProduct } from "@/app/(features)/products/hooks/useProduct";
 
-// const products = [
-//   {
-//     id: 1,
-//     title: "Framed Glass Entrance System",
-//     description:
-//       "Strong, stylish aluminum doors that bring in natural light with a modern grid design.",
-//     image: "/product-section/product1.png",
-//   },
-//   {
-//     id: 2,
-//     title: "Full-Height Fixed Glass Panels",
-//     description:
-//       "Floor-to-ceiling panels that maximize light and create a clean, spacious look.",
-//     image: "/product-section/product2.png",
-//   },
-//   {
-//     id: 3,
-//     title: "Panoramic Sliding Window",
-//     description:
-//       "Smooth sliding windows offering wide views and a seamless indoor-outdoor feel.",
-//     image: "/product-section/product3.png",
-//   },
-// ];
 
 export default function Products() {
-    const { products, loading, error } = useProduct();
+  const { products, loading, error } = useProduct();
 
-      if (loading) {
-        return (
-          <main className="pt-40 xl:pt-52 pb-20 flex justify-center items-center h-screen">
-            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
-          </main>
-        );
-      }
-
-      if (error) {
-        return (
-          <main className="pt-40 xl:pt-52 pb-20 text-center">
-            <h1 className="text-2xl text-red-500">Error: {error}</h1>
-          </main>
-        );
-      }
   return (
     <section
       id="products"
@@ -69,29 +31,47 @@ export default function Products() {
             </p>
           </div>
         </div>
-
-        <div
-          className="flex md:grid md:grid-cols-2 lg:grid-cols-3 
+        {
+          loading ? (
+            <div className="flex justify-center min-h-[400px] py-10 items-center">
+              <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
+            </div>
+          ) : error ? (
+            <div className="flex justify-center min-h-[400px] py-10 items-center">
+              <h1 className="text-red-500">{error}</h1>
+            </div>
+          ) : !products.length ? (
+            
+              <div className="flex justify-center min-h-[400px] py-10 items-center">
+                <h1 className="text-red-500">No Products Available</h1>
+              </div>
+            
+          ) : (
+            <div
+              className="flex md:grid md:grid-cols-2 lg:grid-cols-3 
 gap-3 md:gap-6 lg:gap-8 
 overflow-x-auto md:overflow-visible pb-2 
 no-scrollbar scrollbar-hide snap-x snap-mandatory"
-        >
-          {products.slice(0,3).map((product, index) => (
-            <div
-              key={product._id}
-              data-aos="fade-up"
-              data-aos-delay={index * 80}
-              className="min-w-[60%] sm:min-w-[45%] md:min-w-0 flex-shrink-0 snap-start"
             >
-              <ProductCard
-                title={product.title}
-                productName={product.productName}
-                description={product.description}
-                image={product.imageUrl}
-              />
+              {products.slice(0, 3).map((product, index) => (
+                <div
+                  key={product._id}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 80}
+                  className="min-w-[60%] sm:min-w-[45%] md:min-w-0 flex-shrink-0 snap-start"
+                >
+                  <ProductCard
+                    title={product.title}
+                    productName={product.productName}
+                    description={product.description}
+                    image={product.imageUrl}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )
+        }
+
       </div>
     </section>
   );

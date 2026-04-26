@@ -37,7 +37,6 @@ const useImageStore = create<ImageState>((set, get) => ({
   },
 
   fetchImage: async (section) => {
-    console.log("Fetching image for section:", section);
     try {
       set((state) => ({
         loading: {
@@ -91,10 +90,10 @@ export const useImage = (section: Section) => {
   const fetchImage = useImageStore((state) => state.fetchImage);
   const isFetched = useImageStore((state) => state.isFetched[section]);
   useEffect(() => {
-    if (!isLoading && !sectionError && !isFetched) {
+    if (!isFetched) {
       fetchImage(section);
     }
-  }, [section, isLoading, sectionError, fetchImage,isFetched]);
+  }, [isFetched,section,fetchImage]);
 
   return { images: sectionImages, loading: isLoading, error: sectionError };
 };
