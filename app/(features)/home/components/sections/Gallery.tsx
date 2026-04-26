@@ -1,99 +1,102 @@
 "use client";
 
 import Image from "next/image";
+import { useGallery } from "@/app/(features)/gallery/hooks/useGallery";
+
+const LAYOUT_CONFIG = [
+  { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-[7/4]" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-[5/4]" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-[5/4]" },
+  { span: "col-span-2 md:col-span-7", aspect: "aspect-[2/1] md:aspect-[7/4]" },
+];
+
+function LoadingSkeleton() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
+      {[...Array(7)].map((_, i) => (
+        <div
+          key={i}
+          className={`${LAYOUT_CONFIG[i].span} ${LAYOUT_CONFIG[i].aspect} rounded-[15px] bg-gray-200 animate-pulse`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ErrorState({ error }: { error: string }) {
+  return (
+    <div className="flex justify-center items-center py-20">
+      <div className="text-center">
+        <p className="text-gray-600 text-red-500">{error}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function Gallery() {
+  const { galleryImages, loading, error } = useGallery();
+
+  // Show first 7 images
+  const displayImages = galleryImages?.slice(0, 7) || [];
+
   return (
     <section className="w-full pb-10 sm:pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
+        {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
           <div className="w-full md:w-1/2" data-aos="fade-right">
             <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
               Gallery
             </h2>
           </div>
-          <div className="w-full md:w-1/2 lg:max-w-[500px]" data-aos="fade-left">
+          <div
+            className="w-full md:w-1/2 lg:max-w-[500px]"
+            data-aos="fade-left"
+          >
             <p className="font-poppins font-[400] text-black text-sm sm:text-lg md:text-[20px] leading-relaxed">
-              Explore our completed projects showcasing quality, style, and precision in every detail.
+              Explore our completed projects showcasing quality, style, and
+              precision in every detail.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
-          <div className="col-span-1 md:col-span-7 relative aspect-[4/3] md:aspect-[7/4] overflow-hidden rounded-[15px] group" data-aos="fade-up">
-            <Image
-              src="/gallery/image1.png"
-              alt="Modern living room with large glass windows overlooking a city skyline"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Content */}
+        {loading ? (
+          <LoadingSkeleton />
+        ) : error ? (
+          <ErrorState error={error} />
+        ) : !displayImages.length ? (
+          <div className="flex justify-center items-center py-20">
+            <p className="text-gray-500 text-lg">No gallery images available</p>
           </div>
-          <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="80">
-            <Image
-              src="/gallery/image2.jpg"
-              alt="Elegant interior with a designer pendant lamp and mountain view"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
+            {displayImages.map((image, index) => {
+              const layout = LAYOUT_CONFIG[index];
 
-          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="160">
-            <Image
-              src="/gallery/image3.jpg"
-              alt="Stylish red lounger chair in a sun-drenched room"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              return (
+                <div
+                  key={image._id || index}
+                  className={`${layout.span} ${layout.aspect} relative overflow-hidden rounded-[15px] group`}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 80}
+                >
+                  <Image
+                    src={image.imageUrl}
+                    alt={`Gallery image ${index + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+              );
+            })}
           </div>
-          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="240">
-            <Image
-              src="/gallery/image4.jpg"
-              alt="Minimalist living space with a white sofa and large windows"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-          <div className="col-span-1 md:col-span-4 relative aspect-[4/3] md:aspect-square overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="320">
-            <Image
-              src="/gallery/image5.jpg"
-              alt="Contemporary living room with forest views through panoramic windows"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-
-          <div className="col-span-1 md:col-span-5 relative aspect-[4/3] md:aspect-[5/4] overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="160">
-            <Image
-              src="/gallery/image6.png"
-              alt="Modern glass outdoor patio structure nestled in greenery"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-
-          <div className="col-span-2 md:col-span-7 relative aspect-[2/1] md:aspect-[7/4] overflow-hidden rounded-[15px] group" data-aos="fade-up" data-aos-delay="320">
-            <Image
-              src="/gallery/image7.jpg"
-              alt="Luxury lounge area with sunset views and artistic lighting"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-            <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );
