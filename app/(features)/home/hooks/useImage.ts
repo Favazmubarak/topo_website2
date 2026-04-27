@@ -1,3 +1,4 @@
+
 import { create } from "zustand";
 import { Section, SectionImage, getImageBySection } from "../api/imageApi";
 import { useEffect } from "react";
@@ -96,5 +97,5 @@ export const useImage = (section: Section) => {
     }
   }, [isFetched,section,fetchImage]);
 
-  return { images: sectionImages, loading: isLoading, error: sectionError };
+  return { images: sectionImages, loading: isLoading, error: sectionError, fetchImage };
 };

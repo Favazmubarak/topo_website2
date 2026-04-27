@@ -5,6 +5,7 @@ import Navbar from "@/src/components/layout/Navbar";
 import Footer from "@/src/components/layout/Footer";
 import { AOSProvider } from "@/src/providers/AOSProvider";
 import LoadingScreen from "@/src/components/common/LoadingScreen";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -44,6 +45,7 @@ export default function RootLayout({
       className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
+        <Toaster position="top-right" reverseOrder={false} />
         <LoadingScreen />
         <AOSProvider>
           <Navbar />
