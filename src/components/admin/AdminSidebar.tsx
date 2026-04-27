@@ -16,6 +16,7 @@ import {
   FaSignOutAlt,
   FaTimes,
   FaStar,
+  FaVideo,
 } from "react-icons/fa";
 import { useUIStore } from "@/app/admin/(dashboard)/hooks/useUIStore";
 import { useAuthStore } from "@/app/admin/(dashboard)/hooks/useAuthStore";
@@ -30,6 +31,7 @@ const menuItems = [
   { name: "Gallery", href: "/admin/gallery", icon: FaImages },
   { name: "FAQ", href: "/admin/faq", icon: FaQuestionCircle },
   { name: "Why Choose Us", href: "/admin/why-choose", icon: FaCheckCircle },
+  { name: "Reels", href: "/admin/reels", icon: FaVideo },
 ];
 
 export default function AdminSidebar() {
