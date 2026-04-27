@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useGallery } from "@/app/(features)/gallery/hooks/useGallery";
+import { useGallery } from "@/app/(main)/(features)/gallery/hooks/useGallery";
 
 const LAYOUT_CONFIG = [
   { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-[7/4]" },

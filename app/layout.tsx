@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/src/components/layout/Navbar";
-import Footer from "@/src/components/layout/Footer";
 import { AOSProvider } from "@/src/providers/AOSProvider";
 import LoadingScreen from "@/src/components/common/LoadingScreen";
 import { Toaster } from "react-hot-toast";
@@ -48,11 +46,7 @@ export default function RootLayout({
         <Toaster position="top-right" reverseOrder={false} />
         <LoadingScreen />
         <AOSProvider>
-          <Navbar />
-          <div className="flex-grow overflow-x-hidden">
-            {children}
-            <Footer />
-          </div>
+          {children}
         </AOSProvider>
       </body>
     </html>

@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useImage } from "@/app/(features)/home/hooks/useImage";
-import { useImageAdmin } from "../hooks/useImage";
+import { useImage } from "@/app/(main)/(features)/home/hooks/useImage";
+import { useImageAdmin } from "../../hooks/useImage";
 import { FaUpload, FaSync } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
@@ -65,7 +65,7 @@ const AboutAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-32 pb-20 px-4 sm:px-6 md:px-12 lg:px-20">
+    <div className="min-h-screen bg-white pb-20 px-4 md:px-0">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 flex items-center justify-between border-b pb-4">
           <h1 className="text-xl font-medium text-black tracking-tight">About Section</h1>
@@ -77,7 +77,7 @@ const AboutAdminPage = () => {
             const img = images?.[slot];
             const preview = previews[slot];
             const file = slotFiles[slot];
-            
+
             return (
               <div key={slot} className="space-y-6">
                 <div className="flex items-center justify-between">
@@ -86,8 +86,8 @@ const AboutAdminPage = () => {
                     <button onClick={() => handleDelete(img._id)} className="text-[10px] text-red-500 hover:underline uppercase font-bold tracking-tighter">Remove</button>
                   )}
                 </div>
-                
-                <div 
+
+                <div
                   className="relative aspect-[16/9] rounded-xl overflow-hidden bg-gray-50 border border-gray-100 cursor-pointer group"
                   onClick={() => document.getElementById(`f-${slot}`)?.click()}
                 >
@@ -104,13 +104,13 @@ const AboutAdminPage = () => {
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
                       <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur p-2.5 rounded-full shadow-lg text-black transition-all hover:scale-110 active:scale-95">
-                         <FaSync size={12} className={loading ? "animate-spin" : ""} />
+                        <FaSync size={12} className={loading ? "animate-spin" : ""} />
                       </div>
                     </div>
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
-                       <FaUpload size={16} className="mb-2 opacity-20" />
-                       <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Ready</span>
+                      <FaUpload size={16} className="mb-2 opacity-20" />
+                      <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Ready</span>
                     </div>
                   )}
                 </div>

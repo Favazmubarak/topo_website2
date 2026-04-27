@@ -1,10 +1,10 @@
 "use client";
 
-import ProductCard from "@/app/(features)/products/components/ProductCard";
-import { useProduct } from "@/app/(features)/products/hooks/useProduct";
+import ProductCard from "@/app/(main)/(features)/products/components/ProductCard";
+import { useProduct } from "@/app/(main)/(features)/products/hooks/useProduct";
 
 
-export default function Products() {
+export default function Products() {  
   const { products, loading, error } = useProduct();
 
   return (

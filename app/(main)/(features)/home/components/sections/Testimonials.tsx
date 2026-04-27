@@ -131,7 +131,7 @@ export default function Testimonials() {
                   </div>
 
                   {/* review */}
-                  <p className="font-poppins text-[#2F2F2F] text-sm sm:text-[15px] lg:text-base leading-relaxed mb-14 flex-grow">
+                  <p className="font-poppins text-[#2F2F2F] text-sm sm:text-[15px] lg:text-base leading-relaxed mb-14 flex-grow line-clamp-6 break-words">
                     {testimonial.review}
                   </p>
 

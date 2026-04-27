@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useImage } from "@/app/(features)/home/hooks/useImage";
-import { useImageAdmin } from "../hooks/useImage";
+import { useImage } from "@/app/(main)/(features)/home/hooks/useImage";
+import { useImageAdmin } from "../../hooks/useImage";
 import { FaUpload, FaSync } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
@@ -70,7 +70,7 @@ const WhyChooseAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-32 pb-20 px-4 sm:px-6 md:px-12 lg:px-20">
+    <div className="min-h-screen bg-white pb-20 px-4 md:px-0">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 flex items-center justify-between border-b pb-4">
           <h1 className="text-xl font-medium text-black tracking-tight">Why Choose Section</h1>
@@ -80,7 +80,7 @@ const WhyChooseAdminPage = () => {
         </div>
 
         <div className="space-y-8">
-          <div 
+          <div
             className="relative aspect-[21/9] rounded-xl overflow-hidden bg-gray-50 border border-gray-100 cursor-pointer group"
             onClick={() => document.getElementById("file-input")?.click()}
           >
@@ -97,17 +97,17 @@ const WhyChooseAdminPage = () => {
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
                 <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-3 rounded-full shadow-lg text-black transition-all hover:scale-110 active:scale-95">
-                   <FaSync size={14} className={loading ? "animate-spin" : ""} />
+                  <FaSync size={14} className={loading ? "animate-spin" : ""} />
                 </div>
               </div>
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
-                 <FaUpload size={20} className="mb-3 opacity-20" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Ready for Upload</span>
+                <FaUpload size={20} className="mb-3 opacity-20" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Ready for Upload</span>
               </div>
             )}
           </div>
-          
+
           <input type="file" id="file-input" className="hidden" accept="image/*" onChange={handleFileChange} />
 
           {selectedFile && (
@@ -120,7 +120,7 @@ const WhyChooseAdminPage = () => {
             </button>
           )}
         </div>
-        
+
         {!selectedFile && currentImage && (
           <p className="text-[9px] text-gray-300 mt-8 text-center font-mono opacity-50">NODE: {currentImage._id}</p>
         )}
