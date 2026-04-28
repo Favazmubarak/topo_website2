@@ -40,14 +40,16 @@ const LoadingScreen = () => {
     >
       <div className="relative flex items-center justify-center h-48 w-48">
 
-        <div className={`relative z-10 transition-all duration-400 ease-out ${isFading ? "scale-90 opacity-0" : "scale-100 opacity-100"
-          }`}>
+        <div
+          className={`relative z-10 flex items-center justify-center w-[130px] h-[130px] transition-all duration-400 ease-out ${isFading ? "scale-90 opacity-0" : "scale-100 opacity-100"
+            }`}
+        >
           <Image
             src="/logo-blue.png"
             alt="Logo"
             width={130}
             height={130}
-            className="object-contain"
+            className="w-full h-full object-contain"
             priority
           />
         </div>
