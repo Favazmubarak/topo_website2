@@ -16,6 +16,7 @@ interface ImageState {
     successMessage: string | null;
 
     fetchImage: (section: Section) => Promise<void>;
+    refetchImage: (section: Section) => Promise<void>;
     addImage: (formData: FormData) => Promise<void>;
     updateImage: (id: string, formData: FormData) => Promise<void>;
     deleteImage: (id: string) => Promise<void>;
@@ -52,6 +53,13 @@ const useImageAdminStore = create<ImageState>((set, get) => ({
                 loading: false,
             });
         }
+    },
+
+    refetchImage: async (section) => {
+        set((state) => ({
+            isFetched: { ...state.isFetched, [section]: false },
+        }));
+        await get().fetchImage(section);
     },
 
     addImage: async (formData) => {
@@ -101,6 +109,7 @@ export const useImageAdmin = (section?: Section) => {
     const error = useImageAdminStore((state) => state.error);
     const successMessage = useImageAdminStore((state) => state.successMessage);
     const fetchImage = useImageAdminStore((state) => state.fetchImage);
+    const refetchImage = useImageAdminStore((state) => state.refetchImage);
     const addImage = useImageAdminStore((state) => state.addImage);
     const updateImage = useImageAdminStore((state) => state.updateImage);
     const deleteImage = useImageAdminStore((state) => state.deleteImage);
@@ -113,6 +122,7 @@ export const useImageAdmin = (section?: Section) => {
         error,
         successMessage,
         fetchImage,
+        refetchImage,
         addImage,
         updateImage,
         deleteImage,

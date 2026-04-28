@@ -1,7 +1,7 @@
 "use client";
 
-import AdminSidebar from "@/src/components/admin/AdminSidebar";
-import ProtectedRoute from "@/src/components/admin/ProtectedRoute";
+import AdminSidebar from "./components/AdminSidebar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { useUIStore } from "@/app/admin/(dashboard)/hooks/useUIStore";
 import { FaBars } from "react-icons/fa";
 
