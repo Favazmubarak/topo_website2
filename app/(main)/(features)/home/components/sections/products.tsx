@@ -48,7 +48,7 @@ export default function Products() {
             
           ) : (
             <div
-              className="flex md:grid md:grid-cols-2 lg:grid-cols-3 
+              className="flex pb-5 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 
 gap-3 md:gap-6 lg:gap-8 
 overflow-x-auto md:overflow-visible pb-2 
 no-scrollbar scrollbar-hide snap-x snap-mandatory"
