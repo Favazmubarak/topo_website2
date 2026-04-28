@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { 
   FaBoxes, 
@@ -9,12 +9,9 @@ import {
   FaPlus, 
   FaArrowRight 
 } from "react-icons/fa";
-
-const stats = [
-  { name: "Total Products", value: "12", icon: FaBoxes, color: "bg-blue-50 text-blue-600" },
-  { name: "Client Reviews", value: "24", icon: FaQuoteLeft, color: "bg-purple-50 text-purple-600" },
-  { name: "Gallery Images", value: "48", icon: FaImage, color: "bg-amber-50 text-amber-600" },
-];
+import { useProductAdminStore } from "./hooks/useProductAdmin";
+import { useTestimonialAdminStore } from "./hooks/useTestimonialAdmin";
+import { useGalleryAdminStore } from "./hooks/useGalleryAdmin";
 
 const quickActions = [
   { name: "Add New Product", href: "/admin/products", icon: FaPlus },
@@ -22,7 +19,35 @@ const quickActions = [
   { name: "Update Hero CMS", href: "/admin/hero", icon: FaArrowRight },
 ];
 
+function StatSkeleton() {
+  return (
+    <div className="bg-white p-4 sm:p-5 md:p-8 rounded-xl md:rounded-2xl border border-gray-100 shadow-sm animate-pulse">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-100 rounded-lg md:rounded-xl mb-3 md:mb-6" />
+      <div className="h-2 bg-gray-100 rounded w-2/3 mb-3" />
+      <div className="h-8 bg-gray-100 rounded w-1/2" />
+    </div>
+  );
+}
+
 export default function AdminDashboardPage() {
+  const { products, fetchProducts, loading: loadingProducts } = useProductAdminStore();
+  const { testimonials, fetchTestimonials, loading: loadingTestimonials } = useTestimonialAdminStore();
+  const { images, fetchImages, loading: loadingGallery } = useGalleryAdminStore();
+
+  useEffect(() => {
+    fetchProducts();
+    fetchTestimonials();
+    fetchImages();
+  }, [fetchProducts, fetchTestimonials, fetchImages]);
+
+  const isLoading = loadingProducts || loadingTestimonials || loadingGallery;
+
+  const stats = [
+    { name: "Total Products", value: products.length, icon: FaBoxes, color: "bg-blue-50 text-blue-600" },
+    { name: "Client Reviews", value: testimonials.length, icon: FaQuoteLeft, color: "bg-purple-50 text-purple-600" },
+    { name: "Gallery Images", value: images.length, icon: FaImage, color: "bg-amber-50 text-amber-600" },
+  ];
+
   return (
     <div className="space-y-6 md:space-y-10 lg:space-y-12">
       {/* Heading */}
@@ -33,17 +58,20 @@ export default function AdminDashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
-        {stats.map((stat) => (
-          <div key={stat.name} className="bg-white p-4 sm:p-5 md:p-8 rounded-xl md:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-            <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${stat.color} rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6`}>
-              <stat.icon size={14} className="sm:hidden" />
-              <stat.icon size={18} className="hidden sm:block md:hidden" />
-              <stat.icon size={20} className="hidden md:block" />
+        {isLoading && products.length === 0 && testimonials.length === 0 && images.length === 0
+          ? Array.from({ length: 3 }).map((_, i) => <StatSkeleton key={i} />)
+          : stats.map((stat) => (
+            <div key={stat.name} className="bg-white p-4 sm:p-5 md:p-8 rounded-xl md:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${stat.color} rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6`}>
+                <stat.icon size={14} className="sm:hidden" />
+                <stat.icon size={18} className="hidden sm:block md:hidden" />
+                <stat.icon size={20} className="hidden md:block" />
+              </div>
+              <p className="text-[8px] sm:text-[9px] md:text-sm font-bold text-gray-400 uppercase tracking-widest leading-tight">{stat.name}</p>
+              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-black mt-1">{stat.value}</p>
             </div>
-            <p className="text-[8px] sm:text-[9px] md:text-sm font-bold text-gray-400 uppercase tracking-widest leading-tight">{stat.name}</p>
-            <p className="text-xl sm:text-2xl md:text-4xl font-bold text-black mt-1">{stat.value}</p>
-          </div>
-        ))}
+          ))
+        }
       </div>
 
       {/* Bottom grid */}
