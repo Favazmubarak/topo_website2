@@ -34,20 +34,29 @@ export const ReelItem = ({ reel, onEdit, onDelete }: ReelItemProps) => {
                 </div>
             </div>
 
-            <div className="mt-4 md:mt-6 space-y-1 md:space-y-2">
-                <h3 className="text-sm md:text-base font-bold tracking-tight line-clamp-1">{reel.title}</h3>
-                <a
-                    href={reel.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-800 transition-colors"
-                >
-                    <FaExternalLinkAlt size={8} /> View Source
-                </a>
+            <div className="relative mt-4 md:mt-6 aspect-[9/16] w-full bg-black rounded-lg md:rounded-xl overflow-hidden shadow-inner group-hover:shadow-2xl transition-all duration-500">
+                <img 
+                    src={reel.thumbnail} 
+                    alt="Reel Thumbnail" 
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                    <a
+                        href={reel.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[9px] md:text-[10px] font-bold text-white hover:bg-white/20 transition-all border border-white/20"
+                    >
+                        <FaExternalLinkAlt size={8} /> VIEW ON INSTAGRAM
+                    </a>
+                </div>
             </div>
 
-            <div className="mt-3 md:mt-4 text-[8px] md:text-[9px] text-gray-400 font-medium italic">
-                Updated: {new Date(reel.updatedAt).toLocaleDateString()}
+            <div className="mt-3 md:mt-4 flex items-center justify-between text-[8px] md:text-[9px] text-gray-400 font-medium font-mono uppercase tracking-tighter">
+                <span>REEL #{reel._id.slice(-4)}</span>
+                <span>{new Date(reel.updatedAt).toLocaleDateString()}</span>
             </div>
         </div>
     );

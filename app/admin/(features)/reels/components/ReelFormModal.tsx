@@ -1,5 +1,5 @@
-import React from "react";
-import { FaTimes, FaSpinner } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaTimes, FaSpinner, FaCloudUploadAlt } from "react-icons/fa";
 import { FieldError } from "./FieldError";
 
 interface ReelFormModalProps {
@@ -7,10 +7,10 @@ interface ReelFormModalProps {
     onClose: () => void;
     onSubmit: (e: React.FormEvent) => void;
     editingId: string | null;
-    formData: { title: string; link: string };
-    setFormData: (data: { title: string; link: string }) => void;
+    formData: { thumbnail: File | null; thumbnailPreview?: string; link: string };
+    setFormData: (data: any) => void;
     loading: boolean;
-    fieldErrors: Partial<Record<"title" | "link" | "general", string>>;
+    fieldErrors: Partial<Record<"thumbnail" | "link" | "general", string>>;
 }
 
 export const ReelFormModal = ({
@@ -23,6 +23,25 @@ export const ReelFormModal = ({
     loading,
     fieldErrors,
 }: ReelFormModalProps) => {
+    const [previewUrl, setPreviewUrl] = useState<string | null>(formData.thumbnailPreview || null);
+
+    useEffect(() => {
+        if (formData.thumbnailPreview) {
+            setPreviewUrl(formData.thumbnailPreview);
+        } else {
+            setPreviewUrl(null);
+        }
+    }, [formData.thumbnailPreview]);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setFormData({ ...formData, thumbnail: file });
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+        }
+    };
+
     if (!isOpen) return null;
 
     return (
@@ -49,20 +68,38 @@ export const ReelFormModal = ({
                     )}
 
                     <form onSubmit={onSubmit} className="space-y-4">
-                        {/* Title */}
+                        {/* Thumbnail Upload */}
                         <div className="space-y-1">
-                            <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Reel Title</label>
-                            <input
-                                type="text"
-                                placeholder="E.G. SUMMER COLLECTION"
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value.toUpperCase() })}
-                                className={`w-full bg-gray-50 px-3 py-3 md:p-4 rounded-lg md:rounded-xl text-[11px] md:text-xs font-bold tracking-tight focus:ring-2 outline-none transition-all text-black ${
-                                    fieldErrors.title ? "ring-2 ring-red-400 bg-red-50" : "ring-black"
-                                }`}
-                                required
-                            />
-                            <FieldError msg={fieldErrors.title} />
+                            <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Reel Thumbnail</label>
+                            <div className="relative group">
+                                <div 
+                                    className={`relative w-full h-40 md:h-48 rounded-lg md:rounded-xl border-2 border-dashed transition-all flex flex-col items-center justify-center overflow-hidden bg-gray-50 ${
+                                        fieldErrors.thumbnail ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-black"
+                                    }`}
+                                >
+                                    {previewUrl ? (
+                                        <>
+                                            <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                <FaCloudUploadAlt className="text-white text-3xl" />
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className="flex flex-col items-center text-gray-400">
+                                            <FaCloudUploadAlt size={30} className="mb-2" />
+                                            <span className="text-[10px] md:text-xs">UPLODAD THUMBNAIL</span>
+                                        </div>
+                                    )}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        className="absolute inset-0 opacity-0 cursor-pointer"
+                                        required={!editingId}
+                                    />
+                                </div>
+                            </div>
+                            <FieldError msg={fieldErrors.thumbnail} />
                         </div>
 
                         {/* Link */}

@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import AdminSidebar from "./components/AdminSidebar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useUIStore } from "@/app/admin/components/hooks/useUIStore";
@@ -11,6 +12,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { toggleSidebar } = useUIStore();
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/admin/login";
+
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
 
   return (
     <ProtectedRoute>

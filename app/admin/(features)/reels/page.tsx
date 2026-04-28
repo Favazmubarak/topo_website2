@@ -26,7 +26,11 @@ const ReelsAdminPage = () => {
 
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [formData, setFormData] = useState({ title: "", link: "" });
+    const [formData, setFormData] = useState<{ 
+        thumbnail: File | null; 
+        thumbnailPreview?: string; 
+        link: string 
+    }>({ thumbnail: null, link: "" });
 
     useEffect(() => {
         fetchReels();
@@ -50,23 +54,34 @@ const ReelsAdminPage = () => {
     const closeForm = () => {
         setIsFormOpen(false);
         setEditingId(null);
-        setFormData({ title: "", link: "" });
+        setFormData({ thumbnail: null, link: "" });
         clearStatus();
     };
 
     const handleEdit = (reel: Reel) => {
         setEditingId(reel._id);
-        setFormData({ title: reel.title, link: reel.link });
+        setFormData({ 
+            thumbnail: null, 
+            thumbnailPreview: reel.thumbnail, 
+            link: reel.link 
+        });
         setIsFormOpen(true);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         clearStatus();
+
+        const data = new FormData();
+        data.append("link", formData.link);
+        if (formData.thumbnail) {
+            data.append("thumbnail", formData.thumbnail);
+        }
+
         if (editingId) {
-            await updateReel(editingId, formData);
+            await updateReel(editingId, data);
         } else {
-            await createReel(formData);
+            await createReel(data);
         }
     };
 

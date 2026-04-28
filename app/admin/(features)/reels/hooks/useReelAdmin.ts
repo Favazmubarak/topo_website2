@@ -2,7 +2,7 @@ import { create } from "zustand";
 import * as reelApi from "../api/reelApi";
 import { Reel } from "../api/reelApi";
 
-export type FieldErrors = Partial<Record<"title" | "link" | "general", string>>;
+export type FieldErrors = Partial<Record<"thumbnail" | "link" | "general", string>>;
 
 const extractFieldErrors = (err: any): FieldErrors => {
   const data = err?.response?.data;
@@ -18,8 +18,8 @@ interface ReelAdminState {
   successMessage: string | null;
 
   fetchReels: () => Promise<void>;
-  createReel: (data: { title: string; link: string }) => Promise<void>;
-  updateReel: (id: string, data: { title: string; link: string }) => Promise<void>;
+  createReel: (data: FormData) => Promise<void>;
+  updateReel: (id: string, data: FormData) => Promise<void>;
   deleteReel: (id: string) => Promise<void>;
   clearStatus: () => void;
 }

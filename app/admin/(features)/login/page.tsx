@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/app/admin/(dashboard)/(features)/login/hooks/useAuthStore";
+import { useAuthStore } from "@/app/admin/(features)/login/hooks/useAuthStore";
 import { toast } from "react-hot-toast";
 import { FaSpinner, FaExclamationCircle } from "react-icons/fa";
 
