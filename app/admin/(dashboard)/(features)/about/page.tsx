@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useImage } from "@/app/(main)/(features)/home/hooks/useImage";
-import { useImageAdmin } from "../../hooks/useImage";
+import { useImageAdmin } from "../../hooks/useImageAdmin";
 import { FaUpload, FaSync } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 

@@ -37,3 +37,8 @@ export const deleteSectionImage = async (id: string): Promise<{ message: string,
     const response = await axiosInstance.delete(`/cms/images/${id}`);
     return response.data;
 };
+
+export const getImageBySection = async (section: Section): Promise<SectionImage[]> => {
+    const response = await axiosInstance.get(`/cms/images/${section}`);
+    return response.data;
+};
