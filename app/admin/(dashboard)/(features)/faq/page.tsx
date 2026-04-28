@@ -2,19 +2,25 @@
 
 import React, { useState, useEffect } from "react";
 import { useFaqAdmin } from "../../hooks/useFaqAdmin";
-import { FaPlus, FaTrash, FaEdit, FaSync, FaTimes, FaQuestionCircle, FaSpinner } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaTimes, FaQuestionCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
-const FaqAdminPage = () => {
-  const { faqs, fetchFAQs, createFAQ, updateFAQ, deleteFAQ, loading, error, successMessage, clearStatus } = useFaqAdmin();
+const FieldError = ({ msg }: { msg?: string }) =>
+  msg ? (
+    <p className="flex items-center gap-1 text-[9px] text-red-500 font-semibold mt-1 animate-in fade-in duration-200">
+      <FaExclamationCircle size={8} />{msg}
+    </p>
+  ) : null;
 
-  // Form state
+const FaqAdminPage = () => {
+  const { faqs, fetchFAQs, createFAQ, updateFAQ, deleteFAQ, loading, error, fieldErrors, successMessage, clearStatus } = useFaqAdmin();
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    question: "",
-    answer: "",
-  });
+  const [formData, setFormData] = useState({ question: "", answer: "" });
+  const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
+
+  const errors = { ...localErrors, ...fieldErrors };
 
   useEffect(() => {
     fetchFAQs();
@@ -29,29 +35,42 @@ const FaqAdminPage = () => {
   }, [successMessage, clearStatus]);
 
   useEffect(() => {
-    if (error) {
+    if (error && Object.keys(fieldErrors).length === 0) {
       toast.error(error);
       clearStatus();
     }
-  }, [error, clearStatus]);
+  }, [error]);
 
   const closeForm = () => {
     setIsFormOpen(false);
     setEditingId(null);
     setFormData({ question: "", answer: "" });
+    setLocalErrors({});
+    clearStatus();
   };
 
   const handleEdit = (faq: any) => {
     setEditingId(faq._id);
-    setFormData({
-      question: faq.question,
-      answer: faq.answer,
-    });
+    setFormData({ question: faq.question, answer: faq.answer });
+    setLocalErrors({});
+    clearStatus();
     setIsFormOpen(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const errs: Record<string, string> = {};
+    if (!formData.question.trim()) errs.question = "Question is required";
+    else if (formData.question.trim().length < 8) errs.question = "Question must be at least 8 characters";
+    if (!formData.answer.trim()) errs.answer = "Answer is required";
+    else if (formData.answer.trim().length < 3) errs.answer = "Answer must be at least 3 characters";
+
+    if (Object.keys(errs).length > 0) {
+      setLocalErrors(errs);
+      toast.error("Please fix the errors below before saving");
+      return;
+    }
+    setLocalErrors({});
     if (editingId) {
       await updateFAQ(editingId, formData);
     } else {
@@ -134,10 +153,14 @@ const FaqAdminPage = () => {
                         type="text"
                         placeholder="Ex: What are your shipping times?"
                         value={formData.question}
-                        onChange={(e) => setFormData({ ...formData, question: e.target.value })}
-                        className="w-full bg-gray-50 border-none px-3 py-3 md:p-4 rounded-lg text-xs md:text-sm font-bold tracking-tight focus:ring-2 ring-black outline-none"
-                        required
+                        onChange={(e) => {
+                          setFormData({ ...formData, question: e.target.value });
+                          if (localErrors.question) setLocalErrors(p => { const { question, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 border-none px-3 py-3 md:p-4 rounded-lg text-xs md:text-sm font-bold tracking-tight focus:outline-none focus:ring-2 outline-none transition-all
+                          ${errors.question ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
                       />
+                      <FieldError msg={errors.question} />
                     </div>
                     <div className="space-y-1">
                       <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Answer</label>
@@ -145,10 +168,14 @@ const FaqAdminPage = () => {
                         placeholder="Provide a clear and concise answer..."
                         rows={5}
                         value={formData.answer}
-                        onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
-                        className="w-full bg-gray-50 border-none px-3 py-3 md:p-4 rounded-lg text-[10px] md:text-xs leading-relaxed text-gray-500 focus:ring-2 ring-black resize-none outline-none"
-                        required
+                        onChange={(e) => {
+                          setFormData({ ...formData, answer: e.target.value });
+                          if (localErrors.answer) setLocalErrors(p => { const { answer, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 border-none px-3 py-3 md:p-4 rounded-lg text-[10px] md:text-xs leading-relaxed text-gray-500 focus:outline-none focus:ring-2 resize-none outline-none transition-all
+                          ${errors.answer ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
                       />
+                      <FieldError msg={errors.answer} />
                     </div>
                   </div>
 
@@ -159,7 +186,7 @@ const FaqAdminPage = () => {
                   >
                     {loading
                       ? <><FaSpinner size={12} className="animate-spin" /> Saving…</>
-                      : editingId ? "Update" : "Save"
+                      : <><FaCheckCircle size={12} /> {editingId ? "Update FAQ" : "Save FAQ"}</>
                     }
                   </button>
                 </form>

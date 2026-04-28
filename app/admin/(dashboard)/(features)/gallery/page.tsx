@@ -2,12 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { useGalleryAdmin } from "../../hooks/useGalleryAdmin";
-import { FaPlus, FaTrash, FaEdit, FaSync, FaTimes, FaImage, FaSpinner } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaTimes, FaImage, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 
+const FieldError = ({ msg }: { msg?: string }) =>
+  msg ? (
+    <p className="flex items-center gap-1 text-[9px] text-red-500 font-semibold mt-1.5 animate-in fade-in duration-200">
+      <FaExclamationCircle size={8} />{msg}
+    </p>
+  ) : null;
+
 const GalleryAdminPage = () => {
-  const { images, fetchImages, createImage, updateImage, deleteImage, loading, error, successMessage, clearStatus } = useGalleryAdmin();
+  const { images, fetchImages, createImage, updateImage, deleteImage, loading, error, fieldErrors, successMessage, clearStatus } = useGalleryAdmin();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -29,17 +36,19 @@ const GalleryAdminPage = () => {
   }, [successMessage, clearStatus]);
 
   useEffect(() => {
-    if (error) {
+    if (error && Object.keys(fieldErrors).length === 0) {
       toast.error(error);
       clearStatus();
     }
-  }, [error, clearStatus]);
+  }, [error]);
 
   const closeForm = () => {
     setIsFormOpen(false);
     setEditingId(null);
     setSelectedFile(null);
+    if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
+    clearStatus();
   };
 
   const handleEdit = (img: any) => {
@@ -49,12 +58,20 @@ const GalleryAdminPage = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-      setPreviewReady(false);
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image is too large. Maximum allowed size is 10MB.");
+      return;
     }
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload a valid image file (jpeg, jpg, png, webp)");
+      return;
+    }
+    if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    setPreviewReady(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,7 +83,6 @@ const GalleryAdminPage = () => {
       toast.error("Please select an image");
       return;
     }
-
     if (editingId) {
       await updateImage(editingId, formData);
     } else {
@@ -181,7 +197,7 @@ const GalleryAdminPage = () => {
                   >
                     {loading
                       ? <><FaSpinner size={12} className="animate-spin" /> Uploading…</>
-                      : editingId ? "Update" : "Save"
+                      : <><FaCheckCircle size={12} /> {editingId ? "Update Image" : "Save to Gallery"}</>
                     }
                   </button>
                 </form>

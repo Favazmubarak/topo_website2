@@ -9,7 +9,7 @@ interface AuthState {
   error: string | null;
 
   login: (credentials: any) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   checkAuth: () => void;
   setAccessToken: (token: string | null) => void;
 }
@@ -48,11 +48,16 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed";
       set({ error: errorMessage, isLoading: false });
-      throw new Error(errorMessage);
+      throw error; // re-throw original so page can read .response.data.errors
     }
   },
 
-  logout: () => {
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+    } catch {
+      // proceed with client-side cleanup regardless
+    }
     localStorage.removeItem("accessToken");
     set({ user: null, accessToken: null, isAuthenticated: false });
     if (typeof window !== "undefined") {

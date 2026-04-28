@@ -29,16 +29,11 @@ const ReelsAdminPage = () => {
   }, [successMessage]);
 
   useEffect(() => {
-    if (error) {
-      if (isFormOpen) {
-        if (!Object.keys(fieldErrors || {}).length) {
-          setFormError(error);
-        }
-      } else {
-        toast.error(error);
-      }
+    if (error && Object.keys(fieldErrors || {}).length === 0) {
+      toast.error(error);
+      clearStatus();
     }
-  }, [error, isFormOpen]);
+  }, [error]);
 
   const closeForm = () => {
     setIsFormOpen(false);

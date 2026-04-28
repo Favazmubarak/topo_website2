@@ -41,7 +41,12 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Don't attempt refresh for auth endpoints themselves
+    const skipRefresh = ["/auth/login", "/auth/refresh", "/auth/logout"].some(
+      (path) => originalRequest?.url?.includes(path)
+    );
+
+    if (error.response?.status === 401 && !originalRequest._retry && !skipRefresh) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -57,33 +62,21 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // ✅ use same instance
         const refreshResponse = await axiosInstance.post("/auth/refresh", {});
-
         const { accessToken } = refreshResponse.data;
 
         if (accessToken) {
-          // ✅ update store
           useAuthStore.getState().setAccessToken(accessToken);
-
-          // ✅ retry queued requests
           processQueue(null, accessToken);
-
-          // ✅ retry original request
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           return axiosInstance(originalRequest);
         }
       } catch (refreshError) {
         processQueue(refreshError, null);
-
-        // ✅ logout
         useAuthStore.getState().logout();
-
-        // ✅ redirect safely
         if (typeof window !== "undefined") {
           window.location.href = "/admin/login";
         }
-
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
