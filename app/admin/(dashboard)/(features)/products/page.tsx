@@ -3,28 +3,85 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useProductAdmin } from "../../hooks/useProductAdmin";
-import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaSpinner } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaUpload, FaTimes, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
-const ProductAdminPage = () => {
-  const { products, fetchProducts, createProduct, updateProduct, deleteProduct, loading, error, successMessage, clearStatus } = useProductAdmin();
+// ─────────────────────────────────────────────
+// Tiny inline helpers
+// ─────────────────────────────────────────────
 
-  // Form state
+const FieldError = ({ msg }: { msg?: string }) =>
+  msg ? (
+    <p className="flex items-center gap-1 text-[9px] text-red-500 font-semibold mt-1 animate-in fade-in slide-in-from-top-1 duration-200">
+      <FaExclamationCircle size={8} />
+      {msg}
+    </p>
+  ) : null;
+
+// Client-side validation (mirrors server Zod rules)
+const validate = (
+  formData: { productName: string; title: string; description: string },
+  isCreate: boolean,
+  hasFile: boolean
+) => {
+  const errs: Record<string, string> = {};
+
+  if (!formData.productName.trim()) {
+    errs.productName = "Product name is required";
+  } else if (formData.productName.trim().length < 2) {
+    errs.productName = "Product name must be at least 2 characters";
+  } else if (formData.productName.trim().length > 60) {
+    errs.productName = "Product name must be 60 characters or less";
+  } else if (!/^[a-zA-Z0-9\s\-]+$/.test(formData.productName)) {
+    errs.productName = "Only letters, numbers, spaces and hyphens allowed";
+  }
+
+  if (!formData.title.trim()) {
+    errs.title = "Title is required";
+  } else if (formData.title.trim().length < 3) {
+    errs.title = "Title must be at least 3 characters";
+  } else if (formData.title.trim().length > 100) {
+    errs.title = "Title must be 100 characters or less";
+  }
+
+  if (!formData.description.trim()) {
+    errs.description = "Description is required";
+  } else if (formData.description.trim().length < 10) {
+    errs.description = "Description must be at least 10 characters";
+  } else if (formData.description.trim().length > 500) {
+    errs.description = "Description must be 500 characters or less";
+  }
+
+  if (isCreate && !hasFile) {
+    errs.image = "A product image is required";
+  }
+
+  return errs;
+};
+
+// ─────────────────────────────────────────────
+// Page Component
+// ─────────────────────────────────────────────
+
+const ProductAdminPage = () => {
+  const {
+    products, fetchProducts, createProduct, updateProduct, deleteProduct,
+    loading, error, fieldErrors, successMessage, clearStatus,
+  } = useProductAdmin();
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    productName: "",
-    title: "",
-    description: "",
-  });
+  const [formData, setFormData] = useState({ productName: "", title: "", description: "" });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [previewReady, setPreviewReady] = useState(false);
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
+  const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
 
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+  // Merged errors: server errors win in case of conflict
+  const errors = { ...localErrors, ...fieldErrors };
+
+  useEffect(() => { fetchProducts(); }, [fetchProducts]);
 
   useEffect(() => {
     if (successMessage) {
@@ -32,20 +89,22 @@ const ProductAdminPage = () => {
       clearStatus();
       closeForm();
     }
-  }, [successMessage, clearStatus]);
+  }, [successMessage]);
 
   useEffect(() => {
-    if (error) {
+    if (error && Object.keys(fieldErrors).length === 0) {
+      // Only show toast for non-field errors (field errors are shown inline)
       toast.error(error);
       clearStatus();
     }
-  }, [error, clearStatus]);
+  }, [error]);
 
   const closeForm = () => {
     setIsFormOpen(false);
     setEditingId(null);
     setFormData({ productName: "", title: "", description: "" });
     setSelectedFile(null);
+    setLocalErrors({});
     if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
   };
@@ -58,6 +117,8 @@ const ProductAdminPage = () => {
       description: product.description,
     });
     setPreviewUrl(product.imageUrl);
+    setLocalErrors({});
+    clearStatus();
     setIsFormOpen(true);
   };
 
@@ -68,33 +129,48 @@ const ProductAdminPage = () => {
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
       setPreviewReady(false);
+      // Clear image error immediately on valid selection
+      setLocalErrors((prev) => { const { image, ...rest } = prev; return rest; });
+    } else if (file) {
+      setLocalErrors((prev) => ({ ...prev, image: "Please upload a valid image file" }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const clientErrs = validate(formData, !editingId, !!selectedFile);
+
+    if (Object.keys(clientErrs).length > 0) {
+      setLocalErrors(clientErrs);
+      toast.error("Please fix the errors below before saving");
+      return;
+    }
+
+    setLocalErrors({});
     const data = new FormData();
-    data.append("productName", formData.productName);
-    data.append("title", formData.title);
-    data.append("description", formData.description);
+    data.append("productName", formData.productName.trim().toUpperCase());
+    data.append("title", formData.title.trim());
+    data.append("description", formData.description.trim());
     if (selectedFile) data.append("image", selectedFile);
 
     if (editingId) {
       await updateProduct(editingId, data);
     } else {
-      if (!selectedFile) {
-        toast.error("Please select an image");
-        return;
-      }
       await createProduct(data);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Delete this product?")) {
+    if (window.confirm("Are you sure you want to delete this product?")) {
       await deleteProduct(id);
     }
   };
+
+  const charCount = (val: string, max: number) => (
+    <span className={`text-[8px] float-right ${val.length > max ? "text-red-500" : "text-gray-300"}`}>
+      {val.length}/{max}
+    </span>
+  );
 
   return (
     <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0 text-black">
@@ -104,7 +180,9 @@ const ProductAdminPage = () => {
         <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
           <div>
             <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Products Catalog</h1>
-            <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">Manage Topo portfolio items</p>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">
+              Manage Topo portfolio items
+            </p>
           </div>
           <button
             onClick={() => setIsFormOpen(true)}
@@ -147,65 +225,67 @@ const ProductAdminPage = () => {
           </div>
         )}
 
-        {/* Empty State */}
-
         {/* Modal Form */}
         {isFormOpen && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-4">
 
             {/* Overlay */}
-            <div
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-              onClick={closeForm}
-            />
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeForm} />
 
             {/* Modal */}
             <div className="relative bg-white w-full max-w-full sm:max-w-xl max-h-[90vh] overflow-y-auto rounded-xl sm:rounded-2xl shadow-2xl animate-in fade-in zoom-in duration-300">
-
               <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
 
-                {/* Header */}
+                {/* Modal Header */}
                 <div className="flex items-center justify-between border-b pb-3 sm:pb-4">
                   <h2 className="text-lg sm:text-xl font-medium tracking-tight">
                     {editingId ? "Edit Product" : "New Creation"}
                   </h2>
-                  <button
-                    onClick={closeForm}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                  >
+                  <button onClick={closeForm} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                     <FaTimes />
                   </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+                {/* Server-level field errors banner (only for non-field or "general" key) */}
+                {fieldErrors.general && (
+                  <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-lg px-3 py-2.5 text-red-600 text-[10px] font-semibold">
+                    <FaExclamationCircle className="mt-0.5 shrink-0" size={11} />
+                    {fieldErrors.general}
+                  </div>
+                )}
 
-                  {/* Image Upload Area */}
-                  <div
-                    className="relative aspect-[3/4] sm:aspect-video rounded-lg sm:rounded-xl bg-gray-50 border border-gray-100 overflow-hidden cursor-pointer group"
-                    onClick={() => document.getElementById("prod-upload")?.click()}
-                  >
-                    {previewUrl ? (
-                      <Image
-                        src={previewUrl}
-                        alt="Preview"
-                        fill
-                        className={`object-cover transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}
-                        onLoad={() => setPreviewReady(true)}
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 text-center px-2">
-                        <FaUpload size={18} className="mb-2 opacity-50" />
-                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest opacity-50">
-                          Upload Hero Image
+                <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" noValidate>
+
+                  {/* Image Upload */}
+                  <div>
+                    <div
+                      className={`relative aspect-[3/4] sm:aspect-video rounded-lg sm:rounded-xl bg-gray-50 border overflow-hidden cursor-pointer group
+                        ${errors.image ? "border-red-300 ring-1 ring-red-300" : "border-gray-100"}`}
+                      onClick={() => document.getElementById("prod-upload")?.click()}
+                    >
+                      {previewUrl ? (
+                        <Image
+                          src={previewUrl}
+                          alt="Preview"
+                          fill
+                          className={`object-cover transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}
+                          onLoad={() => setPreviewReady(true)}
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 text-center px-2">
+                          <FaUpload size={18} className="mb-2 opacity-50" />
+                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest opacity-50">
+                            Upload Product Image
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                        <span className="opacity-0 group-hover:opacity-100 bg-white/90 backdrop-blur px-3 sm:px-4 py-2 rounded text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all">
+                          Select Image
                         </span>
                       </div>
-                    )}
-
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                      <span className="opacity-0 group-hover:opacity-100 bg-white/90 backdrop-blur px-3 sm:px-4 py-2 rounded text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition-all">
-                        Select Image
-                      </span>
                     </div>
+                    <FieldError msg={errors.image} />
                   </div>
 
                   <input
@@ -217,36 +297,67 @@ const ProductAdminPage = () => {
                   />
 
                   {/* Inputs */}
-                  <div className="space-y-3 sm:space-y-4">
-                    <input
-                      type="text"
-                      placeholder="PRODUCT NAME (E.G. TOPO SLIM)"
-                      value={formData.productName}
-                      onChange={(e) => setFormData({ ...formData, productName: e.target.value.toUpperCase() })}
-                      className="w-full bg-gray-50 p-3 sm:p-4 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest focus:ring-2 ring-black"
-                      required
-                    />
+                  <div className="space-y-4">
 
-                    <input
-                      type="text"
-                      placeholder="DISPLAY TITLE"
-                      value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      className="w-full bg-gray-50 p-3 sm:p-4 rounded-lg text-sm font-bold tracking-tight focus:ring-2 ring-black"
-                      required
-                    />
+                    {/* Product Name */}
+                    <div>
+                      <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
+                        Product Name {charCount(formData.productName, 60)}
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="E.G. TOPO SLIM"
+                        value={formData.productName}
+                        onChange={(e) => {
+                          setFormData({ ...formData, productName: e.target.value.toUpperCase() });
+                          if (localErrors.productName) setLocalErrors(p => { const { productName, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 p-3 sm:p-4 rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 transition-all
+                          ${errors.productName ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
+                      />
+                      <FieldError msg={errors.productName} />
+                    </div>
 
-                    <textarea
-                      placeholder="PRODUCT DESCRIPTION"
-                      rows={4}
-                      value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      className="w-full bg-gray-50 p-3 sm:p-4 rounded-lg text-[10px] sm:text-[11px] leading-relaxed text-gray-500 focus:ring-2 ring-black resize-none"
-                      required
-                    />
+                    {/* Display Title */}
+                    <div>
+                      <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
+                        Display Title {charCount(formData.title, 100)}
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="E.G. Topo Slim Trail Runner"
+                        value={formData.title}
+                        onChange={(e) => {
+                          setFormData({ ...formData, title: e.target.value });
+                          if (localErrors.title) setLocalErrors(p => { const { title, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 p-3 sm:p-4 rounded-lg text-sm font-bold tracking-tight focus:outline-none focus:ring-2 transition-all
+                          ${errors.title ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
+                      />
+                      <FieldError msg={errors.title} />
+                    </div>
+
+                    {/* Description */}
+                    <div>
+                      <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
+                        Description {charCount(formData.description, 500)}
+                      </label>
+                      <textarea
+                        placeholder="Brief product description…"
+                        rows={4}
+                        value={formData.description}
+                        onChange={(e) => {
+                          setFormData({ ...formData, description: e.target.value });
+                          if (localErrors.description) setLocalErrors(p => { const { description, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 p-3 sm:p-4 rounded-lg text-[10px] sm:text-[11px] leading-relaxed text-gray-500 focus:outline-none focus:ring-2 resize-none transition-all
+                          ${errors.description ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
+                      />
+                      <FieldError msg={errors.description} />
+                    </div>
                   </div>
 
-                  {/* Submit Button */}
+                  {/* Submit */}
                   <button
                     type="submit"
                     disabled={loading}
@@ -254,7 +365,7 @@ const ProductAdminPage = () => {
                   >
                     {loading
                       ? <><FaSpinner size={12} className="animate-spin" /> Saving…</>
-                      : editingId ? "Update" : "Save"
+                      : <><FaCheckCircle size={12} /> {editingId ? "Update Product" : "Save Product"}</>
                     }
                   </button>
                 </form>
