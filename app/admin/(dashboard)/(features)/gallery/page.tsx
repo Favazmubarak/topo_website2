@@ -114,6 +114,15 @@ const GalleryAdminPage = () => {
           </button>
         </div>
 
+        {/* Loading Skeleton */}
+        {loading && images.length === 0 && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="aspect-square rounded-xl md:rounded-2xl bg-gray-100 animate-pulse" />
+            ))}
+          </div>
+        )}
+
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {images.map((img) => (
