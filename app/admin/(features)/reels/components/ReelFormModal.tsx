@@ -67,13 +67,13 @@ export const ReelFormModal = ({
                         </div>
                     )}
 
-                    <form onSubmit={onSubmit} className="space-y-4">
+                    <form onSubmit={onSubmit} className="space-y-4 md:space-y-6">
                         {/* Thumbnail Upload */}
-                        <div className="space-y-1">
+                        <div className="space-y-1 md:space-y-2">
                             <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Reel Thumbnail</label>
                             <div className="relative group">
                                 <div 
-                                    className={`relative w-full h-40 md:h-48 rounded-lg md:rounded-xl border-2 border-dashed transition-all flex flex-col items-center justify-center overflow-hidden bg-gray-50 ${
+                                    className={`relative w-full h-36 sm:h-44 md:h-48 rounded-xl md:rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center overflow-hidden bg-gray-50 ${
                                         fieldErrors.thumbnail ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-black"
                                     }`}
                                 >
@@ -86,8 +86,8 @@ export const ReelFormModal = ({
                                         </>
                                     ) : (
                                         <div className="flex flex-col items-center text-gray-400">
-                                            <FaCloudUploadAlt size={30} className="mb-2" />
-                                            <span className="text-[10px] md:text-xs">UPLODAD THUMBNAIL</span>
+                                            <FaCloudUploadAlt size={24} className="mb-2 md:size-[30px]" />
+                                            <span className="text-[9px] md:text-xs font-bold uppercase tracking-tight">Tap to Upload</span>
                                         </div>
                                     )}
                                     <input
@@ -103,35 +103,41 @@ export const ReelFormModal = ({
                         </div>
 
                         {/* Link */}
-                        <div className="space-y-1">
+                        <div className="space-y-1 md:space-y-2">
                             <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Video Link</label>
                             <input
                                 type="url"
                                 placeholder="https://instagram.com/reel/..."
                                 value={formData.link}
                                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                                className={`w-full bg-gray-50 px-3 py-3 md:p-4 rounded-lg md:rounded-xl text-[11px] md:text-xs font-medium focus:ring-2 outline-none transition-all text-black ${
-                                    fieldErrors.link ? "ring-2 ring-red-400 bg-red-50" : "ring-black"
-                                }`}
+                                className={`w-full bg-gray-50 px-4 py-3.5 md:p-5 rounded-xl md:rounded-2xl text-[11px] md:text-xs font-semibold focus:ring-2 outline-none transition-all text-black ${
+                                    fieldErrors.link ? "ring-2 ring-red-400 bg-red-50" : "ring-black border-transparent"
+                                } shadow-sm hover:bg-white`}
                                 required
                             />
                             <FieldError msg={fieldErrors.link} />
                         </div>
 
                         {/* Submit */}
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-black text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-gray-800 transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-2 disabled:opacity-60"
-                        >
-                            {loading ? (
-                                <>
-                                    <FaSpinner size={11} className="animate-spin" /> Processing…
-                                </>
-                            ) : (
-                                editingId ? "Update" : "Save"
-                            )}
-                        </button>
+                        <div className="pt-2 md:pt-4">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="group relative w-full bg-black text-white py-3.5 md:py-5 rounded-xl md:rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-gray-800 transition-all active:scale-[0.98] shadow-xl overflow-hidden disabled:opacity-60"
+                            >
+                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                    {loading ? (
+                                        <>
+                                            <FaSpinner size={11} className="animate-spin" /> Working…
+                                        </>
+                                    ) : (
+                                        <>
+                                            {editingId ? "Update Reel" : "Create Reel"}
+                                        </>
+                                    )}
+                                </span>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

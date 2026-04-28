@@ -1,5 +1,5 @@
 import React from "react";
-import { FaPlay, FaEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
+import { FaVideo, FaEdit, FaTrash, FaExternalLinkAlt } from "react-icons/fa";
 import { Reel } from "../api/reelApi";
 
 interface ReelItemProps {
@@ -10,31 +10,31 @@ interface ReelItemProps {
 
 export const ReelItem = ({ reel, onEdit, onDelete }: ReelItemProps) => {
     return (
-        <div className="group relative bg-gray-50 rounded-xl md:rounded-2xl border border-gray-100 p-4 md:p-6 hover:shadow-xl transition-all duration-300">
-            <div className="flex items-start justify-between">
-                <div className="p-2 md:p-3 bg-black text-white rounded-lg md:rounded-xl shadow-md">
-                    <FaPlay size={12} className="md:hidden" />
-                    <FaPlay size={14} className="hidden md:block" />
+        <div className="group bg-white rounded-xl sm:rounded-3xl border border-gray-100 p-2 sm:p-4 hover:shadow-xl transition-all duration-500 flex flex-col h-full">
+            <div className="flex items-center justify-between">
+                <div className="p-1.5 sm:p-2.5 bg-gray-50 rounded-lg sm:rounded-2xl text-gray-400 group-hover:text-black transition-colors">
+                    <FaVideo size={12} className="sm:hidden" />
+                    <FaVideo size={18} className="hidden sm:block" />
                 </div>
-                <div className="flex gap-1">
+                <div className="flex items-center gap-1 sm:gap-1.5 sm:translate-y-1 sm:group-hover:translate-y-0 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300">
                     <button
                         onClick={() => onEdit(reel)}
-                        className="p-1.5 md:p-2 text-gray-400 hover:text-black hover:bg-white rounded-lg transition-all"
+                        className="p-1 sm:p-2 bg-gray-100 hover:bg-black hover:text-white rounded-lg sm:rounded-xl transition-all shadow-sm active:scale-95"
                     >
-                        <FaEdit size={13} className="md:hidden" />
-                        <FaEdit size={15} className="hidden md:block" />
+                        <FaEdit size={10} className="sm:hidden" />
+                        <FaEdit size={14} className="hidden sm:block" />
                     </button>
                     <button
                         onClick={() => onDelete(reel._id)}
-                        className="p-1.5 md:p-2 text-gray-400 hover:text-red-500 hover:bg-white rounded-lg transition-all"
+                        className="p-1 sm:p-2 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg sm:rounded-xl transition-all shadow-sm active:scale-95"
                     >
-                        <FaTrash size={13} className="md:hidden" />
-                        <FaTrash size={15} className="hidden md:block" />
+                        <FaTrash size={10} className="sm:hidden" />
+                        <FaTrash size={14} className="hidden sm:block" />
                     </button>
                 </div>
             </div>
 
-            <div className="relative mt-4 md:mt-6 aspect-[9/16] w-full bg-black rounded-lg md:rounded-xl overflow-hidden shadow-inner group-hover:shadow-2xl transition-all duration-500">
+            <div className="relative mt-2 sm:mt-4 aspect-[9/16] w-full bg-black rounded-lg sm:rounded-2xl overflow-hidden shadow-inner group-hover:shadow-2xl transition-all duration-500 text-[8px] sm:text-[10px]">
                 <img 
                     src={reel.thumbnail} 
                     alt="Reel Thumbnail" 
@@ -42,21 +42,22 @@ export const ReelItem = ({ reel, onEdit, onDelete }: ReelItemProps) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                 
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-center">
                     <a
                         href={reel.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-[9px] md:text-[10px] font-bold text-white hover:bg-white/20 transition-all border border-white/20"
+                        className="w-full flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2.5 bg-white/10 backdrop-blur-md rounded-full font-bold text-white hover:bg-white/20 transition-all border border-white/40 sm:border-white/20 shadow-lg active:scale-95 truncate"
                     >
-                        <FaExternalLinkAlt size={8} /> VIEW ON INSTAGRAM
+                        <FaExternalLinkAlt size={7} className="sm:size-[8px] shrink-0" /> 
+                        <span className="truncate uppercase tracking-tight sm:tracking-widest">VIEW</span>
                     </a>
                 </div>
             </div>
 
-            <div className="mt-3 md:mt-4 flex items-center justify-between text-[8px] md:text-[9px] text-gray-400 font-medium font-mono uppercase tracking-tighter">
-                <span>REEL #{reel._id.slice(-4)}</span>
-                <span>{new Date(reel.updatedAt).toLocaleDateString()}</span>
+            <div className="mt-3 flex items-center justify-between text-[7px] sm:text-[9px] text-gray-400 font-medium font-mono uppercase tracking-tighter mt-auto pt-2 sm:pt-4 border-t border-gray-50">
+                <span>#{reel._id.slice(-4)}</span>
+                <span>{new Date(reel.updatedAt).toLocaleDateString([], { month: 'numeric', day: 'numeric' })}</span>
             </div>
         </div>
     );

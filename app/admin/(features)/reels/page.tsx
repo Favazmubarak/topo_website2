@@ -38,7 +38,7 @@ const ReelsAdminPage = () => {
 
     useEffect(() => {
         if (successMessage) {
-            toast.success(successMessage);
+            toast.success(successMessage, { id: "admin-success" });
             clearStatus();
             closeForm();
         }
@@ -46,7 +46,7 @@ const ReelsAdminPage = () => {
 
     useEffect(() => {
         if (error && Object.keys(fieldErrors || {}).length === 0) {
-            toast.error(error);
+            toast.error(error, { id: "admin-error" });
             clearStatus();
         }
     }, [error]);

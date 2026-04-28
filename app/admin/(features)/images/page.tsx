@@ -44,7 +44,7 @@ const ImagesAdminPage = () => {
   // Toasts
   useEffect(() => {
     if (successMessage) {
-      toast.success(successMessage);
+      toast.success(successMessage, { id: "admin-success" });
       clearStatus();
       refetchImage(activeSection);
       closeForm();
@@ -53,7 +53,7 @@ const ImagesAdminPage = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      toast.error(error, { id: "admin-error" });
       clearStatus();
     }
   }, [error]);

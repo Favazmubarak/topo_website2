@@ -58,7 +58,7 @@ export default function WhyChooseTopo() {
                   <div className="animate-pulse bg-gray-200 w-full h-full rounded-[16px] sm:rounded-[20px]" />
               ): error?(
                 <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
-                      <p className="text-red-500 text-xs">Failed to load</p>
+                      <p className="text-red-500 text-xs">Error: {error}</p>
                     </div>
               ): (
                 <Image

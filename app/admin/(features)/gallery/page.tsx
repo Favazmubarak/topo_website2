@@ -29,7 +29,7 @@ const GalleryAdminPage = () => {
 
   useEffect(() => {
     if (successMessage) {
-      toast.success(successMessage);
+      toast.success(successMessage, { id: "admin-success" });
       clearStatus();
       closeForm();
     }
@@ -37,7 +37,7 @@ const GalleryAdminPage = () => {
 
   useEffect(() => {
     if (error && Object.keys(fieldErrors).length === 0) {
-      toast.error(error);
+      toast.error(error, { id: "admin-error" });
       clearStatus();
     }
   }, [error]);

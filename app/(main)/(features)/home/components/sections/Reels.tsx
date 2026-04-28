@@ -1,48 +1,43 @@
 "use client";
 
 import { useRef } from "react";
+import { FaPlay } from "react-icons/fa";
 import { useReels } from "../../hooks/useReels";
+import { Reel } from "../../api/reelApi";
 
-function InstagramReel({ link, index }: { link: string; index: number }) {
-  // Extract reel ID from link
-  // Formats: 
-  // https://www.instagram.com/reels/CODE/
-  // https://www.instagram.com/p/CODE/
-  // https://www.instagram.com/reel/CODE/
-
-  const getEmbedUrl = (url: string) => {
-    try {
-      const urlObj = new URL(url);
-      let pathname = urlObj.pathname;
-
-      // Ensure it ends with /
-      if (!pathname.endsWith('/')) {
-        pathname += '/';
-      }
-
-      // Check if it's already an embed URL
-      if (pathname.includes('/embed/')) {
-        return url;
-      }
-
-      return `https://www.instagram.com${pathname}embed`;
-    } catch (e) {
-      return url;
-    }
-  };
-
+function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
   return (
-    <div
-      className="relative h-[550px] w-[310px] rounded-2xl overflow-hidden bg-gray-50 snap-center sm:snap-start shrink-0 group/card shadow-sm border border-gray-100"
+    <a
+      href={reel.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative h-[480px] sm:h-[550px] w-[270px] sm:w-[310px] rounded-2xl overflow-hidden bg-gray-50 snap-center sm:snap-start shrink-0 group/card shadow-sm border border-gray-100 block transition-transform duration-500 hover:scale-[1.02]"
       data-aos="fade-up"
       data-aos-delay={index * 100}
     >
-      <iframe
-        src={getEmbedUrl(link)}
-        className="w-full h-full border-none"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      <img
+        src={reel.thumbnail}
+        alt="Reel Thumbnail"
+        className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
       />
-    </div>
+      
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/20 group-hover/card:bg-black/40 transition-colors duration-300" />
+      
+      {/* Play Button Overlay */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white scale-90 group-hover/card:scale-100 transition-transform duration-500 border border-white/40">
+          <FaPlay size={18} className="translate-x-0.5" />
+        </div>
+      </div>
+
+      {/* Button at bottom */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)]">
+        <div className="bg-white py-3 rounded-full text-black text-[10px] font-bold text-center uppercase tracking-widest opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 transition-all duration-500 shadow-xl">
+          Watch on Instagram
+        </div>
+      </div>
+    </a>
   );
 }
 
@@ -66,6 +61,15 @@ export default function Reels() {
   }
 
   if (!loading && reels.length === 0) {
+    if (error) {
+      return (
+        <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
+          <div className="max-w-[1400px] mx-auto flex justify-center items-center py-10">
+            <h2 className="text-red-500 font-montserrat">Error: {error}</h2>
+          </div>
+        </section>
+      );
+    }
     return null; // Or show a placeholder if needed
   }
 
@@ -87,7 +91,7 @@ export default function Reels() {
             className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
           >
             {reels.map((reel, index) => (
-              <InstagramReel key={reel._id} link={reel.link} index={index} />
+              <InstagramReel key={reel._id} reel={reel} index={index} />
             ))}
           </div>
         </div>

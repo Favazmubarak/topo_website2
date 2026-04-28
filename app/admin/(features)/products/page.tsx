@@ -85,7 +85,7 @@ const ProductAdminPage = () => {
 
   useEffect(() => {
     if (successMessage) {
-      toast.success(successMessage);
+      toast.success(successMessage, { id: "admin-success" });
       clearStatus();
       closeForm();
     }
@@ -94,7 +94,7 @@ const ProductAdminPage = () => {
   useEffect(() => {
     if (error && Object.keys(fieldErrors).length === 0) {
       // Only show toast for non-field errors (field errors are shown inline)
-      toast.error(error);
+      toast.error(error, { id: "admin-error" });
       clearStatus();
     }
   }, [error]);

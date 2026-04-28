@@ -17,7 +17,7 @@ export default function Hero() {
         </div>
       ) : error ? (
         <div className="w-full h-full flex items-center justify-center">
-          <p className="text-red-500">Failed to load</p>
+          <p className="text-red-500">Error: {error}</p>
         </div>
       ) : (
         <>

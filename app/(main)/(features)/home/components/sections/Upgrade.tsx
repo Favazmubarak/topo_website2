@@ -18,7 +18,7 @@ export default function Upgrade() {
           </div>
         ) : error ? (
           <div className="w-full h-full flex items-center justify-center bg-gray-200 ">
-            <p className="text-red-500 text-sm">Failed to load</p>
+            <p className="text-red-500 text-sm">Error: {error}</p>
           </div>
         ) : (
           <>

@@ -2,7 +2,7 @@ import axiosInstance from "@/src/lib/axiosInstance";
 
 export interface Reel {
     _id: string;
-    title: string;
+    thumbnail: string;
     link: string;
     createdAt: string;
     updatedAt: string;

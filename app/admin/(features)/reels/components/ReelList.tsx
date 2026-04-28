@@ -26,7 +26,7 @@ export const ReelList = ({ reels, loading, onEdit, onDelete }: ReelListProps) =>
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 md:gap-6">
             {reels.map((reel) => (
                 <ReelItem key={reel._id} reel={reel} onEdit={onEdit} onDelete={onDelete} />
             ))}

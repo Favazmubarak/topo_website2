@@ -237,19 +237,19 @@ export default function Navbar() {
 
         <div className="flex-1 flex justify-end">
           <button
-            className={`md:hidden z-50 p-2 focus:outline-none ${isWhiteHeader ? "text-white" : "text-black"}`}
+            className="md:hidden z-50 p-2 focus:outline-none text-black"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             <div className="w-8 h-6 flex flex-col justify-between items-end relative">
               <span
-                className={`h-0.5 transition-all duration-500 rounded-full ${isWhiteHeader ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
+                className={`h-0.5 transition-all duration-500 rounded-full bg-black ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
               />
               <span
-                className={`h-0.5 transition-all duration-500 rounded-full ${isWhiteHeader ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
+                className={`h-0.5 transition-all duration-500 rounded-full bg-black ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
               />
               <span
-                className={`h-0.5 transition-all duration-500 rounded-full ${isWhiteHeader ? "bg-white" : "bg-black"} ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
+                className={`h-0.5 transition-all duration-500 rounded-full bg-black ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
               />
             </div>
           </button>
