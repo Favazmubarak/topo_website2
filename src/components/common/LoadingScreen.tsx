@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import AOS from "aos";
 
 const LoadingScreen = () => {
@@ -13,6 +12,9 @@ const LoadingScreen = () => {
   const fixedOffset = circumference * (1 - 0.35);
 
   useEffect(() => {
+    // Prevent layout repaint flicker
+    document.body.style.overflow = "hidden";
+
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
 
@@ -25,11 +27,13 @@ const LoadingScreen = () => {
 
     const removeTimer = setTimeout(() => {
       setShouldRender(false);
+      document.body.style.overflow = "";
     }, 1800);
 
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
+      document.body.style.overflow = "";
     };
   }, []);
 
@@ -37,33 +41,48 @@ const LoadingScreen = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-all duration-700 ease-out ${isFading
-          ? "opacity-0 scale-[1.03] pointer-events-none"
-          : "opacity-100 scale-100"
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-linear ${isFading ? "opacity-0" : "opacity-100"
         }`}
+      style={{
+        willChange: "opacity",
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+      }}
     >
-      {/* Fixed Container */}
-      <div className="relative flex items-center justify-center w-[190px] h-[190px] min-w-[190px] min-h-[190px] max-w-[190px] max-h-[190px] overflow-hidden">
+      <div className="relative w-[190px] h-[190px] flex items-center justify-center">
 
-        {/* Logo */}
+        {/* LOGO */}
         <div
-          className={`relative z-10 flex items-center justify-center w-[130px] h-[130px] min-w-[130px] min-h-[130px] max-w-[130px] max-h-[130px] transition-all duration-500 ease-out ${isFading
-              ? "opacity-0 scale-90"
-              : "opacity-100 scale-100"
+          className={`absolute z-10 transition-opacity duration-500 ${isFading ? "opacity-0" : "opacity-100"
             }`}
+          style={{
+            width: 130,
+            height: 130,
+            minWidth: 130,
+            minHeight: 130,
+            maxWidth: 130,
+            maxHeight: 130,
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
+          }}
         >
-          <Image
+          <img
             src="/logo-blue.png"
             alt="Logo"
+            draggable={false}
             width={130}
             height={130}
-            priority
-            className="object-contain select-none pointer-events-none"
+            className="w-[130px] h-[130px] object-contain select-none pointer-events-none"
+            style={{
+              imageRendering: "auto",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden",
+            }}
           />
         </div>
 
-        {/* Rotating Circle */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+        {/* ROTATING RINGS */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
           <div className="relative w-[130px] h-[130px] animate-smooth-rotate">
 
             {/* Background Ring */}
@@ -97,7 +116,7 @@ const LoadingScreen = () => {
                 strokeDasharray={circumference}
                 strokeDashoffset={fixedOffset}
                 strokeLinecap="round"
-                className="text-slate-300 drop-shadow-[0_0_10px_rgba(203,213,225,0.8)]"
+                className="text-slate-300"
               />
             </svg>
 
@@ -105,6 +124,7 @@ const LoadingScreen = () => {
             <div className="absolute inset-0 rounded-full animate-smooth-rotate-reverse opacity-40">
               <div className="w-full h-full rounded-full border-[2px] border-transparent border-t-slate-400" />
             </div>
+
           </div>
         </div>
       </div>
