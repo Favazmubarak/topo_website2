@@ -3,28 +3,77 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTestimonialAdmin } from "../../hooks/useTestimonialAdmin";
-import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaStar, FaSpinner } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaStar, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
-const TestimonialsAdminPage = () => {
-  const { testimonials, fetchTestimonials, createTestimonial, updateTestimonial, deleteTestimonial, loading, error, successMessage, clearStatus } = useTestimonialAdmin();
+// ─────────────────────────────────────────────
+// Helpers
+// ─────────────────────────────────────────────
 
-  // Form state
+const FieldError = ({ msg }: { msg?: string }) =>
+  msg ? (
+    <p className="flex items-center gap-1 text-[9px] text-red-500 font-semibold mt-1 animate-in fade-in slide-in-from-top-1 duration-200">
+      <FaExclamationCircle size={8} />
+      {msg}
+    </p>
+  ) : null;
+
+const validate = (
+  formData: { name: string; rating: number; review: string },
+  isCreate: boolean,
+  hasFile: boolean
+) => {
+  const errs: Record<string, string> = {};
+
+  if (!formData.name.trim()) {
+    errs.name = "Client name is required";
+  } else if (formData.name.trim().length < 2) {
+    errs.name = "Name must be at least 2 characters";
+  } else if (formData.name.trim().length > 50) {
+    errs.name = "Name cannot exceed 50 characters";
+  }
+
+  if (formData.rating < 1 || formData.rating > 5) {
+    errs.rating = "Rating must be between 1 and 5";
+  }
+
+  if (!formData.review.trim()) {
+    errs.review = "Review is required";
+  } else if (formData.review.trim().length < 10) {
+    errs.review = "Review must be at least 10 characters";
+  } else if (formData.review.trim().length > 300) {
+    errs.review = "Review cannot exceed 300 characters";
+  }
+
+  if (isCreate && !hasFile) {
+    errs.avatar = "Profile image is required";
+  }
+
+  return errs;
+};
+
+// ─────────────────────────────────────────────
+// Page Component
+// ─────────────────────────────────────────────
+
+const TestimonialsAdminPage = () => {
+  const {
+    testimonials, fetchTestimonials, createTestimonial, updateTestimonial, deleteTestimonial,
+    loading, error, fieldErrors, successMessage, clearStatus,
+  } = useTestimonialAdmin();
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    rating: 5,
-    review: "",
-  });
+  const [formData, setFormData] = useState({ name: "", rating: 5, review: "" });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [previewReady, setPreviewReady] = useState(false);
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
+  const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
 
-  useEffect(() => {
-    fetchTestimonials();
-  }, [fetchTestimonials]);
+  const errors = { ...localErrors, ...fieldErrors };
+
+  useEffect(() => { fetchTestimonials(); }, [fetchTestimonials]);
 
   useEffect(() => {
     if (successMessage) {
@@ -32,66 +81,81 @@ const TestimonialsAdminPage = () => {
       clearStatus();
       closeForm();
     }
-  }, [successMessage, clearStatus]);
+  }, [successMessage]);
 
   useEffect(() => {
-    if (error) {
+    if (error && Object.keys(fieldErrors).length === 0) {
       toast.error(error);
       clearStatus();
     }
-  }, [error, clearStatus]);
+  }, [error]);
 
   const closeForm = () => {
     setIsFormOpen(false);
     setEditingId(null);
     setFormData({ name: "", rating: 5, review: "" });
     setSelectedFile(null);
+    setLocalErrors({});
     if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
   };
 
-  const handleEdit = (testimonial: any) => {
-    setEditingId(testimonial._id);
-    setFormData({
-      name: testimonial.name,
-      rating: testimonial.rating,
-      review: testimonial.review,
-    });
-    setPreviewUrl(testimonial.avatar);
+  const handleEdit = (t: any) => {
+    setEditingId(t._id);
+    setFormData({ name: t.name, rating: t.rating, review: t.review });
+    setPreviewUrl(t.avatar);
+    setLocalErrors({});
+    clearStatus();
     setIsFormOpen(true);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-      setPreviewReady(false);
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setLocalErrors((prev) => ({ ...prev, avatar: "Image is too large. Maximum allowed size is 10MB." }));
+      return;
     }
+
+    if (!file.type.startsWith("image/")) {
+      setLocalErrors((prev) => ({ ...prev, avatar: "Please upload a valid image file (jpeg, jpg, png, webp)" }));
+      return;
+    }
+
+    if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    setPreviewReady(false);
+    setLocalErrors((prev) => { const { avatar, ...rest } = prev; return rest; });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const clientErrs = validate(formData, !editingId, !!selectedFile);
+
+    if (Object.keys(clientErrs).length > 0) {
+      setLocalErrors(clientErrs);
+      toast.error("Please fix the errors below before saving");
+      return;
+    }
+
+    setLocalErrors({});
     const data = new FormData();
-    data.append("name", formData.name);
+    data.append("name", formData.name.trim());
     data.append("rating", formData.rating.toString());
-    data.append("review", formData.review);
+    data.append("review", formData.review.trim());
     if (selectedFile) data.append("avatar", selectedFile);
 
     if (editingId) {
       await updateTestimonial(editingId, data);
     } else {
-      if (!selectedFile) {
-        toast.error("Please select a profile image");
-        return;
-      }
       await createTestimonial(data);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Delete this testimonial?")) {
+    if (window.confirm("Are you sure you want to delete this testimonial?")) {
       await deleteTestimonial(id);
     }
   };
@@ -104,7 +168,9 @@ const TestimonialsAdminPage = () => {
         <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
           <div>
             <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Client Testimonials</h1>
-            <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">Manage feedback and social proof</p>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">
+              Manage feedback and social proof
+            </p>
           </div>
           <button
             onClick={() => setIsFormOpen(true)}
@@ -155,26 +221,38 @@ const TestimonialsAdminPage = () => {
           </div>
         )}
 
-        {/* Empty State */}
-
         {/* Modal Form */}
         {isFormOpen && (
           <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={closeForm} />
             <div className="relative bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
-              <div className="p-5 sm:p-6 md:p-8 space-y-5 md:space-y-8">
+              <div className="p-5 sm:p-6 md:p-8 space-y-5 md:space-y-6">
+
+                {/* Header */}
                 <div className="flex items-center justify-between border-b pb-3 md:pb-4">
                   <h2 className="text-base md:text-xl font-medium tracking-tight">
                     {editingId ? "Edit Feedback" : "Add Testimonial"}
                   </h2>
-                  <button onClick={closeForm} className="p-1.5 md:p-2 hover:bg-gray-100 rounded-full transition-colors"><FaTimes size={15} /></button>
+                  <button onClick={closeForm} className="p-1.5 md:p-2 hover:bg-gray-100 rounded-full transition-colors">
+                    <FaTimes size={15} />
+                  </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                {/* General server error banner */}
+                {fieldErrors.general && (
+                  <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-lg px-3 py-2.5 text-red-600 text-[10px] font-semibold">
+                    <FaExclamationCircle className="mt-0.5 shrink-0" size={11} />
+                    {fieldErrors.general}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+
                   {/* Avatar Upload */}
                   <div className="flex flex-col items-center">
                     <div
-                      className="relative w-24 h-24 rounded-full bg-gray-50 border border-gray-100 overflow-hidden cursor-pointer group mb-2"
+                      className={`relative w-24 h-24 rounded-full bg-gray-50 border overflow-hidden cursor-pointer group mb-1
+                        ${errors.avatar ? "border-red-300 ring-2 ring-red-300" : "border-gray-100"}`}
                       onClick={() => document.getElementById("avatar-upload")?.click()}
                     >
                       {previewUrl ? (
@@ -195,25 +273,38 @@ const TestimonialsAdminPage = () => {
                       </div>
                     </div>
                     <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">Profile Image</span>
+                    <FieldError msg={errors.avatar} />
                     <input type="file" id="avatar-upload" className="hidden" accept="image/*" onChange={handleFileChange} />
                   </div>
 
                   <div className="space-y-4">
-                    <div className="space-y-1">
-                      <label className="text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Client Name</label>
+
+                    {/* Name */}
+                    <div>
+                      <label className="block text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1 ml-1">
+                        Client Name
+                        <span className={`float-right font-bold ${formData.name.length > 45 ? "text-red-500" : "text-gray-300"}`}>
+                          {formData.name.length}/50
+                        </span>
+                      </label>
                       <input
                         type="text"
                         placeholder="John Doe"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full bg-gray-50 border-none p-4 rounded-lg text-sm font-bold tracking-tight focus:ring-2 ring-black"
-                        required
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value });
+                          if (localErrors.name) setLocalErrors(p => { const { name, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 p-4 rounded-lg text-sm font-bold tracking-tight focus:outline-none focus:ring-2 transition-all
+                          ${errors.name ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
                       />
+                      <FieldError msg={errors.name} />
                     </div>
 
-                    <div className="space-y-1">
-                      <label className="text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Rating</label>
-                      <div className="flex gap-2 bg-gray-50 p-4 rounded-lg">
+                    {/* Rating */}
+                    <div>
+                      <label className="block text-[9px] font-black uppercase tracking-widest text-gray-400 mb-1 ml-1">Rating</label>
+                      <div className={`flex gap-2 bg-gray-50 p-4 rounded-lg ${errors.rating ? "ring-2 ring-red-400 bg-red-50" : ""}`}>
                         {[1, 2, 3, 4, 5].map((star) => (
                           <button
                             key={star}
@@ -225,13 +316,15 @@ const TestimonialsAdminPage = () => {
                           </button>
                         ))}
                       </div>
+                      <FieldError msg={errors.rating} />
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="flex justify-between items-end ml-1">
+                    {/* Review */}
+                    <div>
+                      <div className="flex justify-between items-end ml-1 mb-1">
                         <label className="text-[9px] font-black uppercase tracking-widest text-gray-400">Review Statement</label>
-                        <span className={`text-[9px] font-bold ${formData.review.length > 280 ? 'text-red-500' : 'text-gray-400'}`}>
-                          {formData.review.length} / 300
+                        <span className={`text-[9px] font-bold ${formData.review.length > 280 ? "text-red-500" : "text-gray-300"}`}>
+                          {formData.review.length}/300
                         </span>
                       </div>
                       <textarea
@@ -239,13 +332,18 @@ const TestimonialsAdminPage = () => {
                         rows={4}
                         maxLength={300}
                         value={formData.review}
-                        onChange={(e) => setFormData({ ...formData, review: e.target.value })}
-                        className="w-full bg-gray-50 border-none p-4 rounded-lg text-xs leading-relaxed text-gray-500 focus:ring-2 ring-black resize-none italic"
-                        required
+                        onChange={(e) => {
+                          setFormData({ ...formData, review: e.target.value });
+                          if (localErrors.review) setLocalErrors(p => { const { review, ...r } = p; return r; });
+                        }}
+                        className={`w-full bg-gray-50 p-4 rounded-lg text-xs leading-relaxed text-gray-500 focus:outline-none focus:ring-2 resize-none italic transition-all
+                          ${errors.review ? "ring-2 ring-red-400 bg-red-50" : "ring-black"}`}
                       />
+                      <FieldError msg={errors.review} />
                     </div>
                   </div>
 
+                  {/* Submit */}
                   <button
                     type="submit"
                     disabled={loading}
@@ -253,7 +351,7 @@ const TestimonialsAdminPage = () => {
                   >
                     {loading
                       ? <><FaSpinner size={12} className="animate-spin" /> Saving…</>
-                      : editingId ? "Update" : "Save"
+                      : <><FaCheckCircle size={12} /> {editingId ? "Update Testimonial" : "Save Testimonial"}</>
                     }
                   </button>
                 </form>

@@ -124,16 +124,23 @@ const ProductAdminPage = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-      setPreviewReady(false);
-      // Clear image error immediately on valid selection
-      setLocalErrors((prev) => { const { image, ...rest } = prev; return rest; });
-    } else if (file) {
-      setLocalErrors((prev) => ({ ...prev, image: "Please upload a valid image file" }));
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      setLocalErrors((prev) => ({ ...prev, image: "Image is too large. Maximum allowed size is 10MB." }));
+      return;
     }
+
+    if (!file.type.startsWith("image/")) {
+      setLocalErrors((prev) => ({ ...prev, image: "Please upload a valid image file (jpeg, jpg, png, webp)" }));
+      return;
+    }
+
+    if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    setPreviewReady(false);
+    setLocalErrors((prev) => { const { image, ...rest } = prev; return rest; });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
