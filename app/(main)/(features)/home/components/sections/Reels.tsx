@@ -1,71 +1,73 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { FaPlay, FaPause } from "react-icons/fa";
+import { useRef } from "react";
+import { useReels } from "../../hooks/useReels";
 
-const reels = [
-  { id: 1, videoUrl: "/q.mp4" },
-  { id: 2, videoUrl: "/a.mp4" },
-  { id: 3, videoUrl: "/c.mp4" },
-  { id: 4, videoUrl: "/d.mp4" },
-  { id: 5, videoUrl: "/q.mp4" },
-  { id: 6, videoUrl: "/a.mp4" },
-  { id: 7, videoUrl: "/c.mp4" },
-];
-
-function VideoCard({ reel, index }: { reel: any; index: number }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-      } else {
-        videoRef.current.pause();
+function InstagramReel({ link, index }: { link: string; index: number }) {
+  // Extract reel ID from link
+  // Formats: 
+  // https://www.instagram.com/reels/CODE/
+  // https://www.instagram.com/p/CODE/
+  // https://www.instagram.com/reel/CODE/
+  
+  const getEmbedUrl = (url: string) => {
+    try {
+      const urlObj = new URL(url);
+      let pathname = urlObj.pathname;
+      
+      // Ensure it ends with /
+      if (!pathname.endsWith('/')) {
+          pathname += '/';
       }
+      
+      // Check if it's already an embed URL
+      if (pathname.includes('/embed/')) {
+          return url;
+      }
+
+      return `https://www.instagram.com${pathname}embed`;
+    } catch (e) {
+      return url;
     }
   };
 
   return (
     <div
-      className="relative h-[45vh] sm:h-[50vh] md:h-[55vh] aspect-[9/16] rounded-2xl overflow-hidden bg-gray-100 snap-center sm:snap-start shrink-0 group/card"
+      className="relative h-[550px] w-[310px] rounded-2xl overflow-hidden bg-gray-50 snap-center sm:snap-start shrink-0 group/card shadow-sm border border-gray-100"
       data-aos="fade-up"
       data-aos-delay={index * 100}
     >
-      <video
-        ref={videoRef}
-        src={reel.videoUrl}
-        className="w-full h-full object-cover cursor-pointer"
-        loop
-        muted
-        playsInline
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onClick={togglePlay}
+      <iframe
+        src={getEmbedUrl(link)}
+        className="w-full h-full border-none"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
       />
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover/card:bg-black/10 transition-colors duration-300">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            togglePlay();
-          }}
-          className={`w-14 h-14 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto hover:scale-110 transition-all duration-300 ${isPlaying ? "opacity-0 group-hover/card:opacity-100" : "opacity-100"
-            }`}
-        >
-          {isPlaying ? (
-            <FaPause className="w-5 h-5" />
-          ) : (
-            <FaPlay className="w-5 h-5 ml-1" />
-          )}
-        </button>
-      </div>
     </div>
   );
 }
 
 export default function Reels() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { reels, loading, error } = useReels();
+
+  if (loading && reels.length === 0) {
+      return (
+          <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
+              <div className="max-w-[1400px] mx-auto">
+                  <div className="h-12 w-48 bg-gray-100 animate-pulse rounded-lg mb-10" />
+                  <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+                      {[1, 2, 3, 4].map((i) => (
+                          <div key={i} className="h-[550px] w-[310px] bg-gray-100 animate-pulse rounded-2xl shrink-0" />
+                      ))}
+                  </div>
+              </div>
+          </section>
+      );
+  }
+
+  if (!loading && reels.length === 0) {
+      return null; // Or show a placeholder if needed
+  }
 
   return (
     <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
@@ -82,10 +84,10 @@ export default function Reels() {
         <div className="relative group">
           <div
             ref={scrollRef}
-            className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-[20vw] sm:px-0"
+            className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
           >
             {reels.map((reel, index) => (
-              <VideoCard key={reel.id} reel={reel} index={index} />
+              <InstagramReel key={reel._id} link={reel.link} index={index} />
             ))}
           </div>
         </div>
