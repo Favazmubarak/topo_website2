@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useProductAdmin } from "../../hooks/useProductAdmin";
-import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaSpinner } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
 const ProductAdminPage = () => {
@@ -19,6 +19,8 @@ const ProductAdminPage = () => {
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewReady, setPreviewReady] = useState(false);
+  const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     fetchProducts();
@@ -65,6 +67,7 @@ const ProductAdminPage = () => {
       if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
+      setPreviewReady(false);
     }
   };
 
@@ -94,20 +97,20 @@ const ProductAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 px-4 md:px-0 text-black">
+    <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0 text-black">
       <div className="max-w-[1400px] mx-auto">
 
         {/* Header */}
-        <div className="mb-12 flex items-center justify-between border-b pb-6">
+        <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
           <div>
-            <h1 className="text-2xl font-medium tracking-tight">Products Catalog</h1>
-            <p className="text-[10px] uppercase font-black tracking-widest text-gray-400 mt-1">Manage Topo portfolio items</p>
+            <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Products Catalog</h1>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">Manage Topo portfolio items</p>
           </div>
           <button
             onClick={() => setIsFormOpen(true)}
-            className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition-all shadow-xl active:scale-95"
+            className="flex items-center gap-1.5 bg-black text-white px-3 sm:px-5 md:px-6 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition-all shadow-lg active:scale-95"
           >
-            <FaPlus size={10} /> Add New
+            <FaPlus size={8} /> <span className="hidden sm:inline">Add New</span><span className="sm:hidden">Add</span>
           </button>
         </div>
 
@@ -116,7 +119,13 @@ const ProductAdminPage = () => {
           {products.map((product) => (
             <div key={product._id} className="group flex flex-col space-y-4">
               <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-gray-50 border border-gray-100 group-hover:shadow-2xl transition-all duration-500">
-                <Image src={product.imageUrl} alt={product.productName} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                <Image
+                  src={product.imageUrl}
+                  alt={product.productName}
+                  fill
+                  className={`object-cover group-hover:scale-105 transition-all duration-700 ${readyImages[product._id] ? "opacity-100" : "opacity-0"}`}
+                  onLoad={() => setReadyImages(prev => ({ ...prev, [product._id]: true }))}
+                />
                 <div className="absolute top-4 right-4 flex gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 bg-white/50 lg:bg-transparent p-1 rounded-lg backdrop-blur-sm lg:backdrop-blur-none">
                   <button onClick={() => handleEdit(product)} className="p-2 text-black/40 hover:text-black transition-colors"><FaEdit size={14} /></button>
                   <button onClick={() => handleDelete(product._id)} className="p-2 text-black/40 hover:text-red-500 transition-colors"><FaTrash size={14} /></button>
@@ -133,8 +142,8 @@ const ProductAdminPage = () => {
 
         {/* Empty State */}
         {products.length === 0 && !loading && (
-          <div className="text-center py-20 border-2 border-dashed border-gray-100 rounded-2xl">
-            <p className="text-gray-300 font-medium italic">Empty catalog. Start by adding your first product.</p>
+          <div className="text-center py-16 md:py-20 border-2 border-dashed border-gray-100 rounded-xl md:rounded-2xl">
+            <p className="text-sm text-gray-300 font-medium italic">Empty catalog. Start by adding your first product.</p>
           </div>
         )}
 
@@ -180,7 +189,8 @@ const ProductAdminPage = () => {
                         src={previewUrl}
                         alt="Preview"
                         fill
-                        className="object-cover sm:object-cover"
+                        className={`object-cover transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}
+                        onLoad={() => setPreviewReady(true)}
                       />
                     ) : (
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 text-center px-2">
@@ -240,9 +250,12 @@ const ProductAdminPage = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-black text-white py-3 sm:py-4 rounded-lg sm:rounded-xl font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] hover:bg-gray-800 transition-all active:scale-[0.98] shadow-2xl flex items-center justify-center gap-2"
+                    className="w-full bg-black text-white py-3 sm:py-4 rounded-lg sm:rounded-xl font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] hover:bg-gray-800 transition-all active:scale-[0.98] shadow-2xl flex items-center justify-center gap-2 disabled:opacity-60"
                   >
-                    {editingId ? "Commit Updates" : "Publish to Catalog"}
+                    {loading
+                      ? <><FaSpinner size={12} className="animate-spin" /> Saving…</>
+                      : editingId ? "Update" : "Save"
+                    }
                   </button>
                 </form>
               </div>

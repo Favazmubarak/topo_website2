@@ -25,10 +25,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white font-montserrat">
-      <div className="w-full max-w-sm px-8">
-        <div className="mb-12 flex flex-col items-center">
-          <div className="relative w-80 h-24 mb-6">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white font-montserrat px-4">
+      <div className="w-full max-w-sm">
+        <div className="mb-8 sm:mb-12 flex flex-col items-center">
+          <div className="relative w-48 sm:w-64 md:w-80 h-16 sm:h-20 md:h-24 mb-4 md:mb-6">
             <Image
               src="/logo-blue.png"
               alt="Topo Logo"
@@ -37,7 +37,7 @@ export default function LoginPage() {
               priority
             />
           </div>
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Administration Portal</p>
+          <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400">Administration Portal</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
@@ -76,8 +76,8 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-20 text-center border-t border-gray-100 pt-10">
-          <p className="text-gray-400 text-[10px] font-bold tracking-[0.2em] uppercase">
+        <div className="mt-12 sm:mt-20 text-center border-t border-gray-100 pt-6 sm:pt-10">
+          <p className="text-gray-400 text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase">
             &copy; {new Date().getFullYear()} Topo Aluminum Solutions
           </p>
         </div>

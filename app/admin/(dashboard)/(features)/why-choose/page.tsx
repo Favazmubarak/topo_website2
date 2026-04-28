@@ -70,12 +70,12 @@ const WhyChooseAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 px-4 md:px-0">
+    <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0">
       <div className="max-w-[1400px] mx-auto">
-        <div className="mb-10 flex items-center justify-between border-b pb-4">
-          <h1 className="text-xl font-medium text-black tracking-tight">Why Choose Section</h1>
+        <div className="mb-6 md:mb-10 flex items-center justify-between border-b pb-3 md:pb-4">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-medium text-black tracking-tight">Why Choose Section</h1>
           {currentImage && (
-            <button onClick={handleDelete} className="text-xs text-red-500 hover:underline">Delete Current</button>
+            <button onClick={handleDelete} className="text-[9px] md:text-xs text-red-500 hover:underline">Delete Current</button>
           )}
         </div>
 
@@ -114,9 +114,9 @@ const WhyChooseAdminPage = () => {
             <button
               onClick={handleSave}
               disabled={loading}
-              className="w-full bg-black text-white py-4 rounded-lg font-black text-[10px] uppercase tracking-[0.2em] hover:bg-gray-800 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-black text-white py-3 md:py-4 rounded-lg font-black text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-gray-800 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
             >
-              {loading ? <FaSync className="animate-spin" /> : "Commit Changes"}
+              {loading ? <FaSync className="animate-spin" /> : "Save"}
             </button>
           )}
         </div>

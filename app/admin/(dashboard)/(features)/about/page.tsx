@@ -65,14 +65,14 @@ const AboutAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 px-4 md:px-0">
+    <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0">
       <div className="max-w-[1400px] mx-auto">
-        <div className="mb-10 flex items-center justify-between border-b pb-4">
-          <h1 className="text-xl font-medium text-black tracking-tight">About Section</h1>
-          <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Inventory: {images?.length || 0} / 2</p>
+        <div className="mb-6 md:mb-10 flex items-center justify-between border-b pb-3 md:pb-4">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-medium text-black tracking-tight">About Section</h1>
+          <p className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-400">Inventory: {images?.length || 0} / 2</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
           {[0, 1].map((slot) => {
             const img = images?.[slot];
             const preview = previews[slot];
@@ -121,9 +121,9 @@ const AboutAdminPage = () => {
                   <button
                     onClick={() => handleSave(slot, img?._id)}
                     disabled={loading}
-                    className="w-full bg-black text-white py-3 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] hover:bg-gray-800 transition-all flex items-center justify-center gap-2"
+                    className="w-full bg-black text-white py-2.5 md:py-3 rounded-lg font-black text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-gray-800 transition-all flex items-center justify-center gap-2 disabled:opacity-60"
                   >
-                    {loading ? <FaSync className="animate-spin" /> : "Commit Slot"}
+                    {loading ? <FaSync className="animate-spin" /> : "Save"}
                   </button>
                 )}
               </div>

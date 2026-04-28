@@ -213,7 +213,7 @@ const ReelsAdminPage = () => {
                   >
                     {loading
                       ? <><FaSpinner size={11} className="animate-spin" /> Processing…</>
-                      : editingId ? "Save Changes" : "Create Reel"
+                      : editingId ? "Update" : "Save"
                     }
                   </button>
                 </form>

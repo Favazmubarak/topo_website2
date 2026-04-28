@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTestimonialAdmin } from "../../hooks/useTestimonialAdmin";
-import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaStar } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaStar, FaSpinner } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
 const TestimonialsAdminPage = () => {
@@ -19,6 +19,8 @@ const TestimonialsAdminPage = () => {
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewReady, setPreviewReady] = useState(false);
+  const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     fetchTestimonials();
@@ -65,6 +67,7 @@ const TestimonialsAdminPage = () => {
       if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
       setSelectedFile(file);
       setPreviewUrl(URL.createObjectURL(file));
+      setPreviewReady(false);
     }
   };
 
@@ -94,55 +97,61 @@ const TestimonialsAdminPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 px-4 md:px-0 text-black font-montserrat">
+    <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0 text-black font-montserrat">
       <div className="max-w-[1400px] mx-auto">
 
         {/* Header */}
-        <div className="mb-12 flex items-center justify-between border-b pb-6">
+        <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
           <div>
-            <h1 className="text-2xl font-medium tracking-tight">Client Testimonials</h1>
-            <p className="text-[10px] uppercase font-black tracking-widest text-gray-400 mt-1">Manage feedback and social proof</p>
+            <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Client Testimonials</h1>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">Manage feedback and social proof</p>
           </div>
           <button
             onClick={() => setIsFormOpen(true)}
-            className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition-all shadow-xl active:scale-95"
+            className="flex items-center gap-1.5 bg-black text-white px-3 sm:px-5 md:px-6 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-gray-800 transition-all shadow-lg active:scale-95"
           >
-            <FaPlus size={10} /> Add New
+            <FaPlus size={8} /> <span className="hidden sm:inline">Add New</span><span className="sm:hidden">Add</span>
           </button>
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {testimonials.map((t) => (
-            <div key={t._id} className="group relative bg-gray-50/50 p-8 rounded-2xl border border-gray-100/50 hover:bg-white hover:shadow-2xl transition-all duration-500">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
-                    <Image src={t.avatar} alt={t.name} fill className="object-cover" />
+            <div key={t._id} className="group relative bg-gray-50/50 p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl border border-gray-100/50 hover:bg-white hover:shadow-2xl transition-all duration-500">
+              <div className="flex items-start justify-between mb-4 md:mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
+                    <Image
+                      src={t.avatar}
+                      alt={t.name}
+                      fill
+                      className={`object-cover transition-opacity duration-500 ${readyImages[t._id] ? "opacity-100" : "opacity-0"}`}
+                      onLoad={() => setReadyImages(prev => ({ ...prev, [t._id]: true }))}
+                    />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold tracking-tight">{t.name}</h3>
+                    <h3 className="text-xs sm:text-sm font-bold tracking-tight">{t.name}</h3>
                     <div className="flex gap-0.5 mt-1">
                       {[...Array(5)].map((_, i) => (
-                        <FaStar key={i} size={8} className={i < t.rating ? "text-yellow-400" : "text-gray-200"} />
+                        <FaStar key={i} size={7} className={i < t.rating ? "text-yellow-400" : "text-gray-200"} />
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 bg-white/80 lg:bg-transparent p-1 rounded-lg backdrop-blur-sm lg:backdrop-blur-none">
-                  <button onClick={() => handleEdit(t)} className="p-2 text-gray-400 hover:text-black transition-colors"><FaEdit size={13} /></button>
-                  <button onClick={() => handleDelete(t._id)} className="p-2 text-gray-400 hover:text-red-500 transition-colors"><FaTrash size={13} /></button>
+                <div className="flex gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 bg-white/80 lg:bg-transparent p-1 rounded-lg backdrop-blur-sm lg:backdrop-blur-none">
+                  <button onClick={() => handleEdit(t)} className="p-1.5 md:p-2 text-gray-400 hover:text-black transition-colors"><FaEdit size={12} /></button>
+                  <button onClick={() => handleDelete(t._id)} className="p-1.5 md:p-2 text-gray-400 hover:text-red-500 transition-colors"><FaTrash size={12} /></button>
                 </div>
               </div>
-              <p className="text-[11px] leading-relaxed text-gray-500 italic line-clamp-6 break-words">"{t.review}"</p>
+              <p className="text-[10px] md:text-[11px] leading-relaxed text-gray-500 italic line-clamp-6 break-words">"{t.review}"</p>
             </div>
           ))}
         </div>
 
         {/* Empty State */}
         {testimonials.length === 0 && !loading && (
-          <div className="text-center py-20 border-2 border-dashed border-gray-100 rounded-2xl">
-            <p className="text-gray-300 font-medium italic">No testimonials yet. Share what your clients say.</p>
+          <div className="text-center py-16 md:py-20 border-2 border-dashed border-gray-100 rounded-xl md:rounded-2xl">
+            <p className="text-sm md:text-base text-gray-300 font-medium italic">No testimonials yet. Share what your clients say.</p>
           </div>
         )}
 
@@ -150,15 +159,15 @@ const TestimonialsAdminPage = () => {
 
         {/* Modal Form */}
         {isFormOpen && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={closeForm} />
-            <div className="relative bg-white w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
-              <div className="p-8 space-y-8">
-                <div className="flex items-center justify-between border-b pb-4">
-                  <h2 className="text-xl font-medium tracking-tight">
+            <div className="relative bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
+              <div className="p-5 sm:p-6 md:p-8 space-y-5 md:space-y-8">
+                <div className="flex items-center justify-between border-b pb-3 md:pb-4">
+                  <h2 className="text-base md:text-xl font-medium tracking-tight">
                     {editingId ? "Edit Feedback" : "Add Testimonial"}
                   </h2>
-                  <button onClick={closeForm} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><FaTimes /></button>
+                  <button onClick={closeForm} className="p-1.5 md:p-2 hover:bg-gray-100 rounded-full transition-colors"><FaTimes size={15} /></button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -169,7 +178,13 @@ const TestimonialsAdminPage = () => {
                       onClick={() => document.getElementById("avatar-upload")?.click()}
                     >
                       {previewUrl ? (
-                        <Image src={previewUrl} alt="Preview" fill className="object-cover" />
+                        <Image
+                          src={previewUrl}
+                          alt="Preview"
+                          fill
+                          className={`object-cover transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}
+                          onLoad={() => setPreviewReady(true)}
+                        />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-gray-300">
                           <FaUpload size={20} />
@@ -234,9 +249,12 @@ const TestimonialsAdminPage = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-black text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-gray-800 transition-all active:scale-[0.98] shadow-2xl flex items-center justify-center gap-2"
+                    className="w-full bg-black text-white py-3 md:py-4 rounded-lg md:rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-gray-800 transition-all active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 disabled:opacity-60"
                   >
-                    {editingId ? "Update Testimonial" : "Post Testimonial"}
+                    {loading
+                      ? <><FaSpinner size={12} className="animate-spin" /> Saving…</>
+                      : editingId ? "Update" : "Save"
+                    }
                   </button>
                 </form>
               </div>

@@ -59,8 +59,8 @@ export default function AdminSidebar() {
         className={`w-64 h-screen bg-gray-200 border-r border-gray-100 flex flex-col fixed left-0 top-0 z-50 transition-transform duration-300 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           }`}
       >
-        <div className="p-8 border-b border-gray-50 flex items-center justify-between">
-          <div className="relative w-48 h-14">
+        <div className="p-5 md:p-8 border-b border-gray-50 flex items-center justify-between">
+          <div className="relative w-36 md:w-48 h-10 md:h-14">
             <Image
               src="/logo-blue.png"
               alt="Topo Logo"
@@ -73,7 +73,7 @@ export default function AdminSidebar() {
             onClick={closeSidebar}
             className="p-2 text-gray-400 hover:text-black lg:hidden"
           >
-            <FaTimes size={18} />
+            <FaTimes size={16} />
           </button>
         </div>
 
@@ -97,13 +97,13 @@ export default function AdminSidebar() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-50">
+        <div className="p-3 md:p-4 border-t border-gray-50">
           <button
             onClick={logout}
-            className="flex items-center gap-4 w-full px-6 py-4 text-gray-400 hover:text-black hover:bg-gray-100 transition-all rounded-xl mt-auto border-t border-gray-50"
+            className="flex items-center gap-3 w-full px-4 md:px-6 py-3 md:py-4 text-gray-400 hover:text-black hover:bg-gray-100 transition-all rounded-xl"
           >
-            <FaSignOutAlt size={16} />
-            <span className="text-xs font-bold uppercase tracking-widest">Logout</span>
+            <FaSignOutAlt size={14} />
+            <span className="text-[10px] font-bold uppercase tracking-widest">Logout</span>
           </button>
         </div>
       </div>

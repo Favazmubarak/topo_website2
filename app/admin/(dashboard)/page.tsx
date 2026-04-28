@@ -24,54 +24,62 @@ const quickActions = [
 
 export default function AdminDashboardPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-6 md:space-y-10 lg:space-y-12">
+      {/* Heading */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-black">Dashboard</h1>
-        <p className="text-gray-500 mt-2 font-medium text-sm">Welcome back. Here's what's happening with your site.</p>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-black">Dashboard</h1>
+        <p className="text-gray-500 mt-1 font-medium text-xs sm:text-sm">Welcome back. Here's what's happening with your site.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
         {stats.map((stat) => (
-          <div key={stat.name} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-            <div className={`w-12 h-12 ${stat.color} rounded-xl flex items-center justify-center mb-6`}>
-              <stat.icon size={20} />
+          <div key={stat.name} className="bg-white p-4 sm:p-5 md:p-8 rounded-xl md:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 ${stat.color} rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6`}>
+              <stat.icon size={14} className="sm:hidden" />
+              <stat.icon size={18} className="hidden sm:block md:hidden" />
+              <stat.icon size={20} className="hidden md:block" />
             </div>
-            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">{stat.name}</p>
-            <p className="text-4xl font-bold text-black mt-1">{stat.value}</p>
+            <p className="text-[8px] sm:text-[9px] md:text-sm font-bold text-gray-400 uppercase tracking-widest leading-tight">{stat.name}</p>
+            <p className="text-xl sm:text-2xl md:text-4xl font-bold text-black mt-1">{stat.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-gray-50/50 p-8 rounded-2xl border border-gray-100">
-          <h2 className="text-lg font-bold text-black mb-6">Quick Actions</h2>
-          <div className="space-y-4">
+      {/* Bottom grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+        {/* Quick Actions */}
+        <div className="bg-gray-50/50 p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl border border-gray-100">
+          <h2 className="text-sm md:text-lg font-bold text-black mb-3 md:mb-6">Quick Actions</h2>
+          <div className="space-y-2 md:space-y-4">
             {quickActions.map((action) => (
               <Link
                 key={action.name}
                 href={action.href}
-                className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-100 hover:border-black/10 hover:shadow-sm transition-all group"
+                className="flex items-center justify-between p-3 md:p-4 bg-white rounded-lg md:rounded-xl border border-gray-100 hover:border-black/10 hover:shadow-sm transition-all group"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400 group-hover:text-black transition-colors">
-                    <action.icon size={16} />
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400 group-hover:text-black transition-colors">
+                    <action.icon size={13} className="md:hidden" />
+                    <action.icon size={16} className="hidden md:block" />
                   </div>
-                  <span className="text-sm font-bold text-black">{action.name}</span>
+                  <span className="text-xs md:text-sm font-bold text-black">{action.name}</span>
                 </div>
-                <FaArrowRight size={12} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                <FaArrowRight size={10} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
               </Link>
             ))}
           </div>
         </div>
 
-        <div className="bg-black text-white p-8 rounded-2xl flex flex-col justify-between">
+        {/* System Status */}
+        <div className="bg-black text-white p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl flex flex-col justify-between min-h-[140px] md:min-h-0">
           <div>
-            <h2 className="text-xl font-bold mb-2">System Status</h2>
-            <p className="text-gray-400 text-sm font-medium">All systems are running smoothly.</p>
+            <h2 className="text-sm md:text-xl font-bold mb-1 md:mb-2">System Status</h2>
+            <p className="text-gray-400 text-xs md:text-sm font-medium">All systems are running smoothly.</p>
           </div>
-          <div className="mt-8 flex items-center gap-2">
+          <div className="mt-6 md:mt-8 flex items-center gap-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-ping" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Live & Connected</span>
+            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-gray-400">Live &amp; Connected</span>
           </div>
         </div>
       </div>

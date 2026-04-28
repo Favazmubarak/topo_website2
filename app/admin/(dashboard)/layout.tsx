@@ -28,7 +28,7 @@ export default function DashboardLayout({
 
         <AdminSidebar />
 
-        <main className="flex-1 lg:ml-64 p-4 pt-20 md:p-8 lg:p-12 md:pt-24 lg:pt-12 overflow-x-hidden">
+        <main className="flex-1 lg:ml-64 overflow-x-hidden px-4 sm:px-5 md:px-8 lg:px-12 pt-20 sm:pt-20 md:pt-20 lg:pt-12 pb-6 sm:pb-6 md:pb-10 lg:pb-12">
           {children}
         </main>
       </div>
