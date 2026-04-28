@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/admin/(features)/login/hooks/useAuthStore";
@@ -38,8 +38,14 @@ export default function LoginPage() {
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({});
 
-  const { login, isLoading } = useAuthStore();
+  const { login, isLoading, isAuthenticated } = useAuthStore();
   const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/admin");
+    }
+  }, [isAuthenticated, router]);
 
   const errors = { ...localErrors, ...serverErrors };
 
