@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "../../app/admin/(auth)/useAuthStore";
+import { useAuthStore } from "../../app/admin/(features)/login/hooks/useAuthStore";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
@@ -20,9 +20,7 @@ const processQueue = (error: any, token: string | null = null) => {
   failedQueue = [];
 };
 
-//
-// ✅ REQUEST INTERCEPTOR (FIXED)
-//
+
 axiosInstance.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
 
@@ -33,15 +31,13 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-//
-// ✅ RESPONSE INTERCEPTOR (IMPROVED)
-//
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Don't attempt refresh for auth endpoints themselves
+
     const skipRefresh = ["/auth/login", "/auth/refresh", "/auth/logout"].some(
       (path) => originalRequest?.url?.includes(path)
     );

@@ -16,7 +16,7 @@ import {
   FaVideo,
 } from "react-icons/fa";
 import { useUIStore } from "./hooks/useUIStore";
-import { useAuthStore } from "@/app/admin/(auth)/useAuthStore";
+import { useAuthStore } from "@/app/admin/(features)/login/hooks/useAuthStore";
 
 const menuItems = [
   { name: "Dashboard", href: "/admin", icon: FaHome },

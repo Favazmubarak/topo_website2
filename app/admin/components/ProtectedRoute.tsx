@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/app/admin/(auth)/useAuthStore";
+import { useAuthStore } from "@/app/admin/(features)/login/hooks/useAuthStore";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, checkAuth } = useAuthStore();

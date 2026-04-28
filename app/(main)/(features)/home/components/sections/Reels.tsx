@@ -9,20 +9,20 @@ function InstagramReel({ link, index }: { link: string; index: number }) {
   // https://www.instagram.com/reels/CODE/
   // https://www.instagram.com/p/CODE/
   // https://www.instagram.com/reel/CODE/
-  
+
   const getEmbedUrl = (url: string) => {
     try {
       const urlObj = new URL(url);
       let pathname = urlObj.pathname;
-      
+
       // Ensure it ends with /
       if (!pathname.endsWith('/')) {
-          pathname += '/';
+        pathname += '/';
       }
-      
+
       // Check if it's already an embed URL
       if (pathname.includes('/embed/')) {
-          return url;
+        return url;
       }
 
       return `https://www.instagram.com${pathname}embed`;
@@ -51,22 +51,22 @@ export default function Reels() {
   const { reels, loading, error } = useReels();
 
   if (loading && reels.length === 0) {
-      return (
-          <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
-              <div className="max-w-[1400px] mx-auto">
-                  <div className="h-12 w-48 bg-gray-100 animate-pulse rounded-lg mb-10" />
-                  <div className="flex gap-6 overflow-x-auto scrollbar-hide">
-                      {[1, 2, 3, 4].map((i) => (
-                          <div key={i} className="h-[550px] w-[310px] bg-gray-100 animate-pulse rounded-2xl shrink-0" />
-                      ))}
-                  </div>
-              </div>
-          </section>
-      );
+    return (
+      <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="h-12 w-48 bg-gray-100 animate-pulse rounded-lg mb-10" />
+          <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-[550px] w-[310px] bg-gray-100 animate-pulse rounded-2xl shrink-0" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
   if (!loading && reels.length === 0) {
-      return null; // Or show a placeholder if needed
+    return null; // Or show a placeholder if needed
   }
 
   return (
