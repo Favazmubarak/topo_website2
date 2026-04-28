@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useGalleryAdmin } from "../../hooks/useGalleryAdmin";
+import { useGalleryAdmin } from "./hooks/useGalleryAdmin";
 import { FaPlus, FaTrash, FaEdit, FaTimes, FaImage, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import Image from "next/image";

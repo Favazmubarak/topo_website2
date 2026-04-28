@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useTestimonialAdmin } from "../../hooks/useTestimonialAdmin";
+import { useTestimonialAdmin } from "./hooks/useTestimonialAdmin";
 import { FaPlus, FaTrash, FaEdit, FaSync, FaUpload, FaTimes, FaStar, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 

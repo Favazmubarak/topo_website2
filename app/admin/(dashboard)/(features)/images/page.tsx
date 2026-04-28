@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useImageAdmin } from "../../hooks/useImageAdmin";
-import { Section } from "../../api/imageApi";
+import { useImageAdmin } from "./hooks/useImageAdmin";
+import { Section } from "./api/imageApi";
 import {
   FaPlus,
   FaTrash,

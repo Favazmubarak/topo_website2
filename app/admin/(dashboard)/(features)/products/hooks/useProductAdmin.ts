@@ -2,7 +2,6 @@ import { create } from "zustand";
 import * as productApi from "../api/productApi";
 import { Product } from "../api/productApi";
 
-// Field-level validation errors from the server Zod response
 export type FieldErrors = Partial<Record<"productName" | "title" | "description" | "image" | "general", string>>;
 
 interface ProductAdminState {
@@ -19,7 +18,6 @@ interface ProductAdminState {
   clearStatus: () => void;
 }
 
-/** Extract a { field: message } map from an Axios error response */
 const extractFieldErrors = (err: any): FieldErrors => {
   const data = err?.response?.data;
   if (data?.errors && typeof data.errors === "object") {

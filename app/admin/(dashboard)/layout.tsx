@@ -2,7 +2,7 @@
 
 import AdminSidebar from "./components/AdminSidebar";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useUIStore } from "@/app/admin/(dashboard)/hooks/useUIStore";
+import { useUIStore } from "@/app/admin/(dashboard)/components/hooks/useUIStore";
 import { FaBars } from "react-icons/fa";
 
 export default function DashboardLayout({

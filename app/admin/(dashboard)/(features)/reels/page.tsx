@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
-import { useReelAdmin } from "../../hooks/useReelAdmin";
+import { useReelAdmin } from "./hooks/useReelAdmin";
+import { Reel } from "./api/reelApi";
 import { FaPlus, FaTrash, FaEdit, FaSpinner, FaTimes, FaExternalLinkAlt, FaPlay, FaVideo, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { Reel } from "../../api/reelApi";
 
 const ReelsAdminPage = () => {
   const {

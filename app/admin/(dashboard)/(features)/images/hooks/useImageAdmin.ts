@@ -98,10 +98,6 @@ const useImageAdminStore = create<ImageState>((set, get) => ({
     clearStatus: () => set({ error: null, successMessage: null }),
 }));
 
-// =====================
-// CUSTOM HOOK
-// =====================
-
 export const useImageAdmin = (section?: Section) => {
     const images = useImageAdminStore((state) => section ? state.images[section] : undefined);
     const isFetched = useImageAdminStore((state) => section ? state.isFetched[section] : false);

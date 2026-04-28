@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axiosInstance from "../../../../src/lib/axiosInstance";
+import axiosInstance from "@/src/lib/axiosInstance";
 
 interface AuthState {
   user: any | null;

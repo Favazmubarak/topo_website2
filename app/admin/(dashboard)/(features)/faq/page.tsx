@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useFaqAdmin } from "../../hooks/useFaqAdmin";
+import { useFaqAdmin } from "./hooks/useFaqAdmin";
 import { FaPlus, FaTrash, FaEdit, FaTimes, FaQuestionCircle, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
