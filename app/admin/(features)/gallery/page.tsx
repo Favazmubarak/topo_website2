@@ -14,7 +14,7 @@ const FieldError = ({ msg }: { msg?: string }) =>
   ) : null;
 
 const GalleryAdminPage = () => {
-  const { images, fetchImages, createImage, updateImage, deleteImage, loading, error, fieldErrors, successMessage, clearStatus } = useGalleryAdmin();
+  const { images, fetchImages, createImage, updateImage, deleteImage, loading, error, fieldErrors, successMessage, clearStatus, hasMore, page } = useGalleryAdmin();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -24,8 +24,14 @@ const GalleryAdminPage = () => {
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    fetchImages();
+    fetchImages(1);
   }, [fetchImages]);
+
+  const handleLoadMore = () => {
+    if (!loading && hasMore) {
+      fetchImages(page + 1);
+    }
+  };
 
   useEffect(() => {
     if (successMessage) {
@@ -151,6 +157,19 @@ const GalleryAdminPage = () => {
             </div>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {hasMore && (
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={handleLoadMore}
+              disabled={loading}
+              className="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 text-[10px] font-black uppercase tracking-widest rounded-full transition-colors disabled:opacity-50 flex items-center gap-2"
+            >
+              {loading && images.length > 0 ? <><FaSpinner size={12} className="animate-spin" /> Loading...</> : "Load More"}
+            </button>
+          </div>
+        )}
 
         {/* Empty State */}
         {images.length === 0 && !loading && (

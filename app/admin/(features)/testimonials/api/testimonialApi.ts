@@ -10,8 +10,15 @@ export interface Testimonial {
   updatedAt: string;
 }
 
-export const getAllTestimonials = async (): Promise<Testimonial[]> => {
-  const response = await axiosInstance.get("/testimonials");
+export interface TestimonialsResponse {
+  testimonials: Testimonial[];
+  totalPages: number;
+  currentPage: number;
+  total: number;
+}
+
+export const getAllTestimonials = async (page: number = 1, limit: number = 15): Promise<TestimonialsResponse> => {
+  const response = await axiosInstance.get(`/testimonials?page=${page}&limit=${limit}`);
   return response.data;
 };
 

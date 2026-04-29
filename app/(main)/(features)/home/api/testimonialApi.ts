@@ -10,7 +10,14 @@ export interface Testimonial {
     updatedAt: string;
 }
 
-export const getAllTestimonials = async (): Promise<Testimonial[]> => {
-    const res = await axiosInstance.get<Testimonial[]>("/testimonials");
+export interface TestimonialsResponse {
+    testimonials: Testimonial[];
+    totalPages: number;
+    currentPage: number;
+    total: number;
+}
+
+export const getAllTestimonials = async (): Promise<TestimonialsResponse> => {
+    const res = await axiosInstance.get<TestimonialsResponse>("/testimonials?limit=20");
     return res.data;
 };

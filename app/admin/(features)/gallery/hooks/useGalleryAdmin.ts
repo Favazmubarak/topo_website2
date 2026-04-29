@@ -16,8 +16,10 @@ interface GalleryAdminState {
   error: string | null;
   fieldErrors: FieldErrors;
   successMessage: string | null;
+  hasMore: boolean;
+  page: number;
 
-  fetchImages: () => Promise<void>;
+  fetchImages: (page?: number) => Promise<void>;
   createImage: (formData: FormData) => Promise<void>;
   updateImage: (id: string, formData: FormData) => Promise<void>;
   deleteImage: (id: string) => Promise<void>;
@@ -30,12 +32,19 @@ export const useGalleryAdminStore = create<GalleryAdminState>((set, get) => ({
   error: null,
   fieldErrors: {},
   successMessage: null,
+  hasMore: false,
+  page: 1,
 
-  fetchImages: async () => {
+  fetchImages: async (page = 1) => {
     set({ loading: true, error: null });
     try {
-      const images = await galleryApi.getAllGalleryImages();
-      set({ images, loading: false });
+      const response = await galleryApi.getAllGalleryImages(page);
+      set((state) => ({ 
+        images: page === 1 ? response.data : [...state.images, ...response.data], 
+        hasMore: response.hasMore,
+        page,
+        loading: false 
+      }));
     } catch (err: any) {
       set({ error: err.response?.data?.message || "Failed to fetch images", loading: false });
     }
@@ -45,7 +54,7 @@ export const useGalleryAdminStore = create<GalleryAdminState>((set, get) => ({
     set({ loading: true, error: null, fieldErrors: {}, successMessage: null });
     try {
       await galleryApi.createGalleryImage(formData);
-      await get().fetchImages();
+      await get().fetchImages(1);
       set({ loading: false, successMessage: "Image added successfully!" });
     } catch (err: any) {
       const fieldErrors = extractFieldErrors(err);
@@ -59,7 +68,7 @@ export const useGalleryAdminStore = create<GalleryAdminState>((set, get) => ({
     set({ loading: true, error: null, fieldErrors: {}, successMessage: null });
     try {
       await galleryApi.updateGalleryImage(id, formData);
-      await get().fetchImages();
+      await get().fetchImages(1);
       set({ loading: false, successMessage: "Image updated successfully!" });
     } catch (err: any) {
       const fieldErrors = extractFieldErrors(err);
@@ -73,7 +82,7 @@ export const useGalleryAdminStore = create<GalleryAdminState>((set, get) => ({
     set({ loading: true, error: null, fieldErrors: {}, successMessage: null });
     try {
       await galleryApi.deleteGalleryImage(id);
-      await get().fetchImages();
+      await get().fetchImages(1);
       set({ loading: false, successMessage: "Image deleted successfully!" });
     } catch (err: any) {
       set({ error: err.response?.data?.message || "Failed to delete image", loading: false });

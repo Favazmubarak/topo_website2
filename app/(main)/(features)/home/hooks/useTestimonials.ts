@@ -23,7 +23,7 @@ const useTestimonialStore = create<TestimonialState>((set, get) => ({
             const data = await getAllTestimonials();
 
             set({
-                testimonials: data,
+                testimonials: data.testimonials || [],
             });
         } catch (err: any) {
             const message =

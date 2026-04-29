@@ -75,11 +75,11 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Bottom grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 lg:gap-8">
         {/* Quick Actions */}
         <div className="bg-gray-50/50 p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl border border-gray-100">
           <h2 className="text-sm md:text-lg font-bold text-black mb-3 md:mb-6">Quick Actions</h2>
-          <div className="space-y-2 md:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
             {quickActions.map((action) => (
               <Link
                 key={action.name}
@@ -96,18 +96,6 @@ export default function AdminDashboardPage() {
                 <FaArrowRight size={10} className="text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
               </Link>
             ))}
-          </div>
-        </div>
-
-        {/* System Status */}
-        <div className="bg-black text-white p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl flex flex-col justify-between min-h-[140px] md:min-h-0">
-          <div>
-            <h2 className="text-sm md:text-xl font-bold mb-1 md:mb-2">System Status</h2>
-            <p className="text-gray-400 text-xs md:text-sm font-medium">All systems are running smoothly.</p>
-          </div>
-          <div className="mt-6 md:mt-8 flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-ping" />
-            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-gray-400">Live &amp; Connected</span>
           </div>
         </div>
       </div>

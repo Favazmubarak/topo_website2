@@ -7,8 +7,16 @@ export interface GalleryImage {
   updatedAt: string;
 }
 
-export const getAllGalleryImages = async (): Promise<GalleryImage[]> => {
-  const response = await axiosInstance.get("/gallery");
+export interface GalleryResponse {
+  data: GalleryImage[];
+  total: number;
+  page: number;
+  limit: number;
+  hasMore: boolean;
+}
+
+export const getAllGalleryImages = async (page: number = 1, limit: number = 15): Promise<GalleryResponse> => {
+  const response = await axiosInstance.get(`/gallery?page=${page}&limit=${limit}`);
   return response.data;
 };
 

@@ -14,12 +14,14 @@ const extractFieldErrors = (err: any): FieldErrors => {
 
 interface TestimonialAdminState {
   testimonials: Testimonial[];
+  totalPages: number;
+  currentPage: number;
   loading: boolean;
   error: string | null;
   fieldErrors: FieldErrors;
   successMessage: string | null;
 
-  fetchTestimonials: () => Promise<void>;
+  fetchTestimonials: (page?: number) => Promise<void>;
   createTestimonial: (formData: FormData) => Promise<void>;
   updateTestimonial: (id: string, formData: FormData) => Promise<void>;
   deleteTestimonial: (id: string) => Promise<void>;
@@ -28,16 +30,23 @@ interface TestimonialAdminState {
 
 export const useTestimonialAdminStore = create<TestimonialAdminState>((set, get) => ({
   testimonials: [],
+  totalPages: 1,
+  currentPage: 1,
   loading: false,
   error: null,
   fieldErrors: {},
   successMessage: null,
 
-  fetchTestimonials: async () => {
+  fetchTestimonials: async (page = 1) => {
     set({ loading: true, error: null });
     try {
-      const testimonials = await testimonialApi.getAllTestimonials();
-      set({ testimonials, loading: false });
+      const response = await testimonialApi.getAllTestimonials(page, 15);
+      set({ 
+        testimonials: response.testimonials,
+        totalPages: response.totalPages,
+        currentPage: response.currentPage,
+        loading: false 
+      });
     } catch (err: any) {
       set({ error: err.response?.data?.message || "Failed to fetch testimonials", loading: false });
     }
@@ -47,7 +56,7 @@ export const useTestimonialAdminStore = create<TestimonialAdminState>((set, get)
     set({ loading: true, error: null, fieldErrors: {}, successMessage: null });
     try {
       await testimonialApi.createTestimonial(formData);
-      await get().fetchTestimonials();
+      await get().fetchTestimonials(get().currentPage);
       set({ loading: false, successMessage: "Testimonial created successfully!" });
     } catch (err: any) {
       const fieldErrors = extractFieldErrors(err);
@@ -61,7 +70,7 @@ export const useTestimonialAdminStore = create<TestimonialAdminState>((set, get)
     set({ loading: true, error: null, fieldErrors: {}, successMessage: null });
     try {
       await testimonialApi.updateTestimonial(id, formData);
-      await get().fetchTestimonials();
+      await get().fetchTestimonials(get().currentPage);
       set({ loading: false, successMessage: "Testimonial updated successfully!" });
     } catch (err: any) {
       const fieldErrors = extractFieldErrors(err);
@@ -75,7 +84,7 @@ export const useTestimonialAdminStore = create<TestimonialAdminState>((set, get)
     set({ loading: true, error: null, fieldErrors: {}, successMessage: null });
     try {
       await testimonialApi.deleteTestimonial(id);
-      await get().fetchTestimonials();
+      await get().fetchTestimonials(get().currentPage);
       set({ loading: false, successMessage: "Testimonial deleted successfully!" });
     } catch (err: any) {
       set({ error: err.response?.data?.message || "Failed to delete testimonial", loading: false });

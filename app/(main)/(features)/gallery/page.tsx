@@ -47,8 +47,14 @@ function ErrorState({ error }: { error: string }) {
 }
 
 export default function GalleryPage() {
-  const { galleryImages, loading, error } = useGallery();
+  const { galleryImages, loading, loadingMore, error, hasMore, page, fetchGalleryImages } = useGallery();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const handleLoadMore = () => {
+    if (!loading && !loadingMore && hasMore) {
+      fetchGalleryImages(page + 1);
+    }
+  };
 
   return (
     <main className="pt-40 sm:pt-32 md:pt-40 lg:pt-40 xl:pt-52 pb-16">
@@ -109,6 +115,26 @@ export default function GalleryPage() {
                   </div>
                 );
               })}
+            </div>
+          )}
+
+          {/* Load More Button */}
+          {hasMore && galleryImages?.length > 0 && (
+            <div className="mt-12 flex justify-center">
+              <button
+                onClick={handleLoadMore}
+                disabled={loadingMore}
+                className="px-8 py-3 bg-[#0066B2] text-white hover:bg-[#005299] text-sm font-semibold rounded-full transition-colors disabled:opacity-50 flex items-center gap-2 shadow-lg"
+              >
+                {loadingMore ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Loading...
+                  </>
+                ) : (
+                  "Load More"
+                )}
+              </button>
             </div>
           )}
         </div>
