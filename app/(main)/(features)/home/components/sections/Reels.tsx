@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import { FaPlay } from "react-icons/fa";
 import { useReels } from "../../hooks/useReels";
 import { Reel } from "../../api/reelApi";
@@ -11,14 +10,14 @@ function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
       href={reel.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="relative h-[480px] sm:h-[550px] w-[270px] sm:w-[310px] rounded-2xl overflow-hidden bg-gray-50 snap-center sm:snap-start shrink-0 group/card shadow-sm border border-gray-100 block transition-transform duration-500 hover:scale-[1.02]"
+      className="relative h-[440px] sm:h-[550px] w-[260px] sm:w-full max-w-[350px] mx-auto rounded-2xl overflow-hidden bg-gray-50 group/card shadow-sm border border-gray-100 block transition-transform duration-500 shrink-0 md:shrink snap-center"
       data-aos="fade-up"
-      data-aos-delay={index * 100}
+      data-aos-delay={(index % 4) * 100}
     >
       <img
         src={reel.thumbnail}
         alt="Reel Thumbnail"
-        className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
+        className="w-full h-full object-cover transition-transform duration-700"
       />
       
       {/* Overlay */}
@@ -26,7 +25,7 @@ function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
       
       {/* Play Button Overlay */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white scale-90 group-hover/card:scale-100 transition-transform duration-500 border border-white/40">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-transform duration-500 border border-white/40">
           <FaPlay size={18} className="translate-x-0.5" />
         </div>
       </div>
@@ -42,17 +41,16 @@ function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
 }
 
 export default function Reels() {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const { reels, loading, error } = useReels();
 
   if (loading && reels.length === 0) {
     return (
-      <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
+      <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
           <div className="h-12 w-48 bg-gray-100 animate-pulse rounded-lg mb-10" />
-          <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-hidden">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-[550px] w-[310px] bg-gray-100 animate-pulse rounded-2xl shrink-0" />
+              <div key={i} className="h-[440px] sm:h-[550px] w-[260px] md:w-full bg-gray-100 animate-pulse rounded-2xl shrink-0" />
             ))}
           </div>
         </div>
@@ -70,11 +68,11 @@ export default function Reels() {
         </section>
       );
     }
-    return null; // Or show a placeholder if needed
+    return null;
   }
 
   return (
-    <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
+    <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 sm:mb-14 md:mb-16">
           <h2
@@ -85,15 +83,11 @@ export default function Reels() {
           </h2>
         </div>
 
-        <div className="relative group">
-          <div
-            ref={scrollRef}
-            className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
-          >
-            {reels.map((reel, index) => (
-              <InstagramReel key={reel._id} reel={reel} index={index} />
-            ))}
-          </div>
+        {/* Horizontal scroll on mobile, Grid on desktop */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory pb-6 gap-6 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 md:overflow-visible">
+          {reels.map((reel, index) => (
+            <InstagramReel key={reel._id} reel={reel} index={index} />
+          ))}
         </div>
       </div>
     </section>

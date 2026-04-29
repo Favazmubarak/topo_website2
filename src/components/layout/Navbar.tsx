@@ -163,26 +163,25 @@ export default function Navbar() {
                 router.push("/");
               }
             }}
-            className="relative block w-[160px] h-12 md:h-20"
+            className="relative block w-[110px] sm:w-[130px] md:w-[160px] h-10 sm:h-12 md:h-20"
           >
+            {/* White Logo */}
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="topo logo white"
-              width={160}
-              height={64}
-              className={`absolute inset-0 w-auto h-full object-contain transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${
-                isWhiteHeader ? "opacity-100" : "opacity-0"
-              }`}
+              fill
+              className={`object-contain transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader ? "opacity-100" : "opacity-0"
+                }`}
               priority
             />
+
+            {/* Blue Logo */}
             <Image
-              src="/logo-blue.png"
+              src="/logo-blue.webp"
               alt="topo logo blue"
-              width={161}
-              height={64}
-              className={`absolute inset-0 w-auto h-full object-contain transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${
-                isWhiteHeader ? "opacity-0" : "opacity-100"
-              }`}
+              fill
+              className={`object-contain scale-[1.12] transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader ? "opacity-0" : "opacity-100"
+                }`}
               priority
             />
           </Link>

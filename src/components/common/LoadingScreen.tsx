@@ -41,8 +41,9 @@ const LoadingScreen = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-linear ${isFading ? "opacity-0" : "opacity-100"
-        }`}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-linear ${
+        isFading ? "opacity-0" : "opacity-100"
+      }`}
       style={{
         willChange: "opacity",
         transform: "translateZ(0)",
@@ -50,11 +51,11 @@ const LoadingScreen = () => {
       }}
     >
       <div className="relative w-[190px] h-[190px] flex items-center justify-center">
-
         {/* LOGO */}
         <div
-          className={`absolute z-10 transition-opacity duration-500 ${isFading ? "opacity-0" : "opacity-100"
-            }`}
+          className={`absolute z-10 transition-opacity duration-500 ${
+            isFading ? "opacity-0" : "opacity-100"
+          }`}
           style={{
             width: 130,
             height: 130,
@@ -68,7 +69,7 @@ const LoadingScreen = () => {
           }}
         >
           <img
-            src="/logo-blue.png"
+            src="/logo-blue.webp"
             alt="Logo"
             draggable={false}
             width={130}
@@ -86,7 +87,6 @@ const LoadingScreen = () => {
         {/* ROTATING RINGS */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
           <div className="relative w-[130px] h-[130px] animate-smooth-rotate">
-
             {/* Background Ring */}
             <svg
               className="absolute inset-0 w-full h-full"
@@ -126,7 +126,6 @@ const LoadingScreen = () => {
             <div className="absolute inset-0 rounded-full animate-smooth-rotate-reverse opacity-40">
               <div className="w-full h-full rounded-full border-[2px] border-transparent border-t-slate-400" />
             </div>
-
           </div>
         </div>
       </div>
