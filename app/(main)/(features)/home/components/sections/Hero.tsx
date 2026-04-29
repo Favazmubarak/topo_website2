@@ -19,6 +19,8 @@ export default function Hero() {
       id="hero"
       className="relative w-full h-[65vh] sm:h-[75vh] md:h-screen overflow-hidden px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50"
     >
+      {(loading || !imageLoaded) && <HeroSkeleton />}
+      
       {error ? (
         <div className="w-full h-full flex items-center justify-center">
           <p className="text-red-500">Error: {error}</p>
@@ -53,10 +55,8 @@ export default function Hero() {
           />
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16">
-            {loading ? (
-              <HeroSkeleton />
-            ) : (
+          <div className={`relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16 transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}>
+            {!loading && (
               <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
                 <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
                   <div
@@ -132,4 +132,4 @@ export default function Hero() {
       )}
     </section>
   );
-}
+}
