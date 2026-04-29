@@ -67,12 +67,18 @@ export const FaqFormModal = ({
                 <FieldError msg={errors.question} />
               </div>
               <div className="space-y-1">
-                <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">
-                  Answer
-                </label>
+                <div className="flex justify-between items-end ml-1">
+                  <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400">
+                    Answer
+                  </label>
+                  <span className={`text-[8px] md:text-[9px] font-bold ${formData.answer.length > 180 ? "text-red-500" : "text-gray-300"}`}>
+                    {formData.answer.length}/200
+                  </span>
+                </div>
                 <textarea
                   placeholder="Provide a clear and concise answer..."
                   rows={5}
+                  maxLength={200}
                   value={formData.answer}
                   onChange={(e) => {
                     onChange({ ...formData, answer: e.target.value });

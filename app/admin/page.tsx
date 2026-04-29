@@ -16,7 +16,7 @@ import { useGalleryAdminStore } from "./(features)/gallery/hooks/useGalleryAdmin
 const quickActions = [
   { name: "Add New Product", href: "/admin/products", icon: FaPlus },
   { name: "Manage Testimonials", href: "/admin/testimonials", icon: FaQuoteLeft },
-  { name: "Update Hero CMS", href: "/admin/hero", icon: FaArrowRight },
+  { name: "Update Hero Image", href: "/admin/images", icon: FaArrowRight },
 ];
 
 function StatSkeleton() {

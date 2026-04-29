@@ -124,14 +124,14 @@ export const TestimonialFormModal = ({
               <div>
                 <div className="flex justify-between items-end ml-1 mb-1">
                   <label className="text-[9px] font-black uppercase tracking-widest text-gray-400">Review Statement</label>
-                  <span className={`text-[9px] font-bold ${formData.review.length > 280 ? "text-red-500" : "text-gray-300"}`}>
-                    {formData.review.length}/300
+                  <span className={`text-[9px] font-bold ${formData.review.length > 180 ? "text-red-500" : "text-gray-300"}`}>
+                    {formData.review.length}/200
                   </span>
                 </div>
                 <textarea
                   placeholder="Ex: The quality of their aluminum windows is unmatched..."
                   rows={4}
-                  maxLength={300}
+                  maxLength={200}
                   value={formData.review}
                   onChange={(e) => onFormDataChange({ review: e.target.value })}
                   className={`w-full bg-gray-50 p-4 rounded-lg text-xs leading-relaxed text-gray-500 focus:outline-none focus:ring-2 resize-none italic transition-all
