@@ -30,7 +30,7 @@ function StatSkeleton() {
 }
 
 export default function AdminDashboardPage() {
-  const { products, fetchProducts, loading: loadingProducts } = useProductAdminStore();
+  const { products, totalProducts, fetchProducts, loading: loadingProducts } = useProductAdminStore();
   const { testimonials, fetchTestimonials, loading: loadingTestimonials } = useTestimonialAdminStore();
   const { images, fetchImages, loading: loadingGallery } = useGalleryAdminStore();
 
@@ -43,7 +43,7 @@ export default function AdminDashboardPage() {
   const isLoading = loadingProducts || loadingTestimonials || loadingGallery;
 
   const stats = [
-    { name: "Total Products", value: products.length, icon: FaBoxes, color: "bg-blue-50 text-blue-600" },
+    { name: "Total Products", value: totalProducts, icon: FaBoxes, color: "bg-blue-50 text-blue-600" },
     { name: "Client Reviews", value: testimonials.length, icon: FaQuoteLeft, color: "bg-purple-50 text-purple-600" },
     { name: "Gallery Images", value: images.length, icon: FaImage, color: "bg-amber-50 text-amber-600" },
   ];

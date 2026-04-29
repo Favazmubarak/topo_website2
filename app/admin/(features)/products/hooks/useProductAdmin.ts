@@ -10,8 +10,11 @@ interface ProductAdminState {
   error: string | null;
   fieldErrors: FieldErrors;
   successMessage: string | null;
+  totalProducts: number;
+  currentPage: number;
+  totalPages: number;
 
-  fetchProducts: () => Promise<void>;
+  fetchProducts: (page?: number) => Promise<void>;
   createProduct: (formData: FormData) => Promise<void>;
   updateProduct: (id: string, formData: FormData) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
@@ -32,14 +35,51 @@ export const useProductAdminStore = create<ProductAdminState>((set, get) => ({
   error: null,
   fieldErrors: {},
   successMessage: null,
+  totalProducts: 0,
+  currentPage: 1,
+  totalPages: 1,
 
-  fetchProducts: async () => {
+  fetchProducts: async (page: number = 1) => {
     set({ loading: true, error: null });
     try {
-      const products = await productApi.getAllProducts();
-      set({ products, loading: false });
+      const data = await productApi.getAllProducts(page, 12);
+      
+      // Robustly handle different response formats
+      if (data && data.products && Array.isArray(data.products)) {
+        set({ 
+          products: data.products, 
+          totalProducts: data.pagination?.total || data.products.length,
+          currentPage: data.pagination?.page || page,
+          totalPages: data.pagination?.totalPages || 1,
+          loading: false 
+        });
+      } else if (Array.isArray(data)) {
+        set({ 
+          products: data, 
+          totalProducts: data.length, 
+          currentPage: 1,
+          totalPages: 1,
+          loading: false 
+        });
+      } else {
+        set({ 
+          products: [], 
+          totalProducts: 0, 
+          currentPage: 1,
+          totalPages: 1,
+          loading: false, 
+          error: "Invalid response format" 
+        });
+      }
     } catch (err: any) {
-      set({ error: err.response?.data?.message || "Failed to fetch products", loading: false });
+      set({ 
+        error: err.response?.data?.message || "Failed to fetch products", 
+        loading: false,
+        products: [],
+        totalProducts: 0,
+        currentPage: 1,
+        totalPages: 1
+      });
     }
   },
 

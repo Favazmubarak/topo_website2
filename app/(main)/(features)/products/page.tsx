@@ -4,7 +4,12 @@ import { useProduct } from "./hooks/useProduct";
 import ProductCard from "./components/ProductCard";
 
 export default function ProductsPage() {
-  const { products, loading, error } = useProduct();
+  const { products, loading, error, currentPage, totalPages, fetchProducts } = useProduct();
+
+  const handlePageChange = (page: number) => {
+    fetchProducts(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <main className="pt-40 xl:pt-52 min-h-screen pb-20 md:pb-28">
@@ -40,29 +45,96 @@ export default function ProductsPage() {
             <div className="text-center py-20">
               <h1 className="text-xl text-red-500">{error}</h1>
             </div>
-          ) : !products.length ?(
+          ) : !products.length ? (
             <>
             <div className="flex justify-center items-center py-20">
               <h1 className="text-xl text-red-500">No Products Available</h1>
             </div>
             </>
-          ): (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-              {products.map((product, index) => (
-                <div
-                  key={product._id}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 80}
-                >
-                  <ProductCard
-                    productName={product.productName}
-                    title={product.title}
-                    description={product.description}
-                    image={product.imageUrl}
-                  />
+          ) : (
+            <>
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+                {products.map((product, index) => (
+                  <div
+                    key={product._id}
+                    data-aos="fade-up"
+                    data-aos-delay={index * 80}
+                  >
+                    <ProductCard
+                      productName={product.productName}
+                      title={product.title}
+                      description={product.description}
+                      image={product.imageUrl}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-16 flex justify-center items-center gap-2">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded-full border border-gray-200 hover:bg-[#0066B2] hover:text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-inherit transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"
+                      />
+                    </svg>
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <button
+                          key={page}
+                          onClick={() => handlePageChange(page)}
+                          className={`w-10 h-10 rounded-full font-poppins text-sm transition-all ${
+                            currentPage === page
+                              ? "bg-[#0066B2] text-white"
+                              : "text-gray-500 hover:bg-gray-100"
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      )
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded-full border border-gray-200 hover:bg-[#0066B2] hover:text-white disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-inherit transition-all"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
+                  </button>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
       </section>

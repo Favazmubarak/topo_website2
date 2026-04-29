@@ -10,7 +10,17 @@ export interface Product {
   updatedAt: string;
 }
 
-export const getAllProducts = async (): Promise<Product[]> => {
-  const response = await axiosInstance.get("/products");
+export interface PaginatedProducts {
+  products: Product[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export const getAllProducts = async (page: number = 1, limit: number = 9): Promise<PaginatedProducts> => {
+  const response = await axiosInstance.get(`/products?page=${page}&limit=${limit}`);
   return response.data;
 };
