@@ -49,8 +49,8 @@ const validate = (
     errs.description = "Description is required";
   } else if (formData.description.trim().length < 10) {
     errs.description = "Description must be at least 10 characters";
-  } else if (formData.description.trim().length > 500) {
-    errs.description = "Description must be 500 characters or less";
+  } else if (formData.description.trim().length > 200) {
+    errs.description = "Description must be 200 characters or less";
   }
 
   if (isCreate && !hasFile) {
@@ -413,11 +413,12 @@ const ProductAdminPage = () => {
                     {/* Description */}
                     <div>
                       <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
-                        Description {charCount(formData.description, 500)}
+                        Description {charCount(formData.description, 200)}
                       </label>
                       <textarea
                         placeholder="Brief product description…"
                         rows={4}
+                        maxLength={200}
                         value={formData.description}
                         onChange={(e) => {
                           setFormData({ ...formData, description: e.target.value });
