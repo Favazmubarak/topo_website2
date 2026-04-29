@@ -8,7 +8,7 @@ export default function Upgrade() {
 
   const { images, loading, error } = useImage("cta")
   const getSafeSrc = (url?: string) =>
-    url?.trim() || "/fallback.png";
+    url?.trim() || "/fallback/about1.jpg";
   return (
     <section className="w-full my-3 sm:my-6 md:my-12 lg:my-20 pb-3 sm:pb-6 md:pb-12 lg:pb-20">
       <div className="w-full h-[180px] sm:h-[240px] md:h-[360px] lg:h-[450px] relative overflow-hidden group shadow-xl">

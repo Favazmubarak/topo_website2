@@ -10,6 +10,9 @@ export default function Hero() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
 
+  const getSafeSrc = (url?: string) =>
+    url?.trim() || "/fallback/hero.jpeg";
+
   // Reset fade state when image changes
   useEffect(() => {
     setImageLoaded(false);
@@ -45,9 +48,9 @@ export default function Hero() {
       ) : (
         <>
           {/* Background Image with Fade Effect */}
-          {!loading && images?.[0]?.imageUrl && (
+          {!loading && (
             <Image
-              src={images[0].imageUrl.trim()}
+              src={getSafeSrc(images?.[0]?.imageUrl)}
               alt="Hero Background"
               fill
               priority

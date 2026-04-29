@@ -8,8 +8,8 @@ export default function About() {
 
   const { images, loading, error } = useImage("about");
 
-  const getSafeSrc = (url?: string) =>
-    url && url.trim() !== "" ? url : "/fallback.png";
+  const getSafeSrc = (url?: string, defaultPath: string = "/fallback/about.jpg") =>
+    url?.trim() || defaultPath;
 
   return (
     <section
@@ -108,7 +108,7 @@ export default function About() {
                     </div>
                   ) : (
                     <Image
-                      src={getSafeSrc(images[1]?.imageUrl)}
+                      src={getSafeSrc(images[1]?.imageUrl, "/fallback/about1.jpg")}
                       alt="Interior with premium windows"
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"

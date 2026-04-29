@@ -62,7 +62,7 @@ export default function WhyChooseTopo() {
                     </div>
               ): (
                 <Image
-                src={images[0]?.imageUrl?.trim() || "/fallback.png"}
+                src={images[0]?.imageUrl?.trim() || "/fallback/about.jpg"}
                 alt="Modern window solutions"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
