@@ -71,7 +71,7 @@ export default function AdminSidebar() {
           </button>
         </div>
 
-        <nav className="flex-grow p-4 space-y-1 overflow-y-auto no-scrollbar">
+        <nav className="p-4 space-y-1 overflow-y-auto no-scrollbar">
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -91,10 +91,10 @@ export default function AdminSidebar() {
           })}
         </nav>
 
-        <div className="p-3 md:p-4 border-t border-gray-50">
+        <div className="p-2 border-t border-gray-50">
           <button
             onClick={logout}
-            className="flex items-center gap-3 w-full px-4 md:px-6 py-3 md:py-4 text-gray-400 hover:text-black hover:bg-gray-100 transition-all rounded-xl"
+            className="flex items-center gap-3 w-full px-4 py-2.5 text-gray-400 hover:text-black hover:bg-gray-100 transition-all rounded-xl"
           >
             <FaSignOutAlt size={14} />
             <span className="text-[10px] font-bold uppercase tracking-widest">Logout</span>
