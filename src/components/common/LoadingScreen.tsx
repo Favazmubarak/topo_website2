@@ -14,36 +14,28 @@ const LoadingScreen = () => {
   const fixedOffset = circumference * (1 - 0.35);
 
   useEffect(() => {
-    // Prevent layout repaint flicker and handle scrollbar shift
+    // Prevent layout repaint flicker
     const originalOverflow = document.body.style.overflow;
-    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-    
     document.body.style.overflow = "hidden";
-    if (scrollBarWidth > 0) {
-      document.body.style.paddingRight = `${scrollBarWidth}px`;
-    }
 
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
-
       window.dispatchEvent(new Event("loaderFinished"));
-
-      setTimeout(() => {
-        AOS.refresh();
-      }, 50);
     }, 800);
 
     const removeTimer = setTimeout(() => {
       setShouldRender(false);
       document.body.style.overflow = originalOverflow;
-      document.body.style.paddingRight = "";
+
+      setTimeout(() => {
+        AOS.refresh();
+      }, 100);
     }, 1500);
 
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
       document.body.style.overflow = originalOverflow;
-      document.body.style.paddingRight = "";
     };
   }, []);
 
