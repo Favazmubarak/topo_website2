@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useGallery } from "@/app/(main)/(features)/gallery/hooks/useGallery";
 import { Skeleton } from "@/src/components/common/Skeleton";
+import { ImageModal } from "@/src/components/common/ImageModal";
+import { useState } from "react";
 
 const LAYOUT_CONFIG = [
   { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-[7/4]" },
@@ -39,6 +41,7 @@ function ErrorState({ error }: { error: string }) {
 
 export default function Gallery() {
   const { galleryImages, loading, error } = useGallery();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Show first 7 images
   const displayImages = galleryImages?.slice(0, 7) || [];
@@ -81,9 +84,10 @@ export default function Gallery() {
               return (
                 <div
                   key={image._id || index}
-                  className={`${layout.span} ${layout.aspect} relative overflow-hidden rounded-[15px] group`}
+                  className={`${layout.span} ${layout.aspect} relative overflow-hidden rounded-[15px] group cursor-pointer`}
                   data-aos="fade-up"
                   data-aos-delay={index * 80}
+                  onClick={() => setSelectedImage(image.imageUrl)}
                 >
                   <Image
                     src={image.imageUrl}
@@ -92,13 +96,23 @@ export default function Gallery() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium px-4 py-2 bg-white/20 backdrop-blur-md rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      View Full Size
+                    </span>
+                  </div>
                 </div>
               );
             })}
           </div>
         )}
       </div>
+
+      <ImageModal
+        isOpen={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+        imageUrl={selectedImage || ""}
+      />
     </section>
   );
 }
