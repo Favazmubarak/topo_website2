@@ -37,8 +37,8 @@ const validate = (
     errs.review = "Review is required";
   } else if (formData.review.trim().length < 10) {
     errs.review = "Review must be at least 10 characters";
-  } else if (formData.review.trim().length > 300) {
-    errs.review = "Review cannot exceed 300 characters";
+  } else if (formData.review.trim().length > 200) {
+    errs.review = "Review cannot exceed 200 characters";
   }
 
   if (isCreate && !hasFile) {
