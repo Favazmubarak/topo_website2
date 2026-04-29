@@ -5,12 +5,9 @@ interface ImageSkeletonProps {
 }
 
 export const ImageSkeleton = ({ activeSection }: ImageSkeletonProps) => {
-  const isWide = activeSection === "hero" || activeSection === "about";
-  const count = isWide ? 2 : 1;
-  const aspectClass = isWide ? "aspect-video" : "aspect-[21/9]";
-  const gridClass = isWide
-    ? "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6"
-    : "grid grid-cols-1 gap-3 sm:gap-4 md:gap-6";
+  const count = 3;
+  const aspectClass = "aspect-video";
+  const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6";
 
   return (
     <div className={gridClass}>
