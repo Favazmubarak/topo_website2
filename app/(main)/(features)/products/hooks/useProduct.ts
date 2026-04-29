@@ -24,7 +24,7 @@ const useProductStore = create<ProductState>((set, get) => ({
   fetchProducts: async (page: number = 1) => {
     try {
       set({ loading: true, error: null });
-      const data = await getAllProducts(page, 9);
+      const data = await getAllProducts(page, 12);
       
       if (data && data.products && Array.isArray(data.products)) {
         set({

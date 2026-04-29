@@ -50,11 +50,14 @@ export default function ProductsPage() {
               <h1 className="text-xl text-red-500">{error}</h1>
             </div>
           ) : !products.length ? (
-            <>
-            <div className="flex justify-center items-center py-20">
-              <h1 className="text-xl text-red-500">No Products Available</h1>
+            <div className="flex flex-col justify-center items-center py-24 text-center" data-aos="fade-up">
+              <p className="font-poppins text-gray-400 text-lg md:text-xl italic">
+                Our latest collection is currently being prepared.
+              </p>
+              <p className="font-poppins text-gray-300 text-sm mt-2">
+                Please check back soon for our high-performance window and door solutions.
+              </p>
             </div>
-            </>
           ) : (
             <>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
