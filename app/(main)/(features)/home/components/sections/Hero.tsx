@@ -8,18 +8,35 @@ import HeroSkeleton from "../skeletons/HeroSkeleton";
 export default function Hero() {
   const { images, loading, error } = useImage("hero");
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   // Reset fade state when image changes
   useEffect(() => {
     setImageLoaded(false);
+    setShowSkeleton(true);
   }, [images]);
+
+  useEffect(() => {
+    if (imageLoaded) {
+      const timer = setTimeout(() => setShowSkeleton(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [imageLoaded]);
 
   return (
     <section
       id="hero"
       className="relative w-full h-[65vh] sm:h-[75vh] md:h-screen overflow-hidden px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50"
     >
-      {(loading || !imageLoaded) && <HeroSkeleton />}
+      {showSkeleton && (
+        <div 
+          className={`absolute inset-0 z-50 transition-opacity duration-1000 ease-in-out ${
+            imageLoaded ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <HeroSkeleton />
+        </div>
+      )}
       
       {error ? (
         <div className="w-full h-full flex items-center justify-center">

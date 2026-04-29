@@ -56,7 +56,7 @@ const LoadingScreen = () => {
         {/* LOGO */}
         <div
           className={`absolute z-10 transition-opacity duration-500 ${
-            isFading || !imageLoaded ? "opacity-0" : "opacity-100"
+            isFading || !imageLoaded ? "opacity-100" : "opacity-100"
           }`}
           style={{
             width: 100,

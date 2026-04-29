@@ -31,6 +31,14 @@ export default function HeroSkeleton() {
           </div>
         </div>
       </div>
+      <div
+        className="
+              absolute bottom-0 left-0 w-full 
+              h-20 sm:h-24 md:h-28 lg:h-32 
+              bg-[linear-gradient(to_top,white_0%,white_25%,rgba(255,255,255,0.1)_70%,transparent_100%)]
+              z-20
+            "
+      />
     </div>
   );
 }
