@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 import Image from "next/image";
+import { Skeleton } from "@/src/components/common/Skeleton";
+
 
 type ProductCardProps = {
   productName: string;
@@ -20,6 +22,7 @@ export default function ProductCard({
   priority = false,
 }: ProductCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div
@@ -31,10 +34,15 @@ export default function ProductCard({
         alt={title}
         fill
         priority={priority}
-        className="object-cover transition-transform duration-700 group-hover:scale-110"
+        className={`object-cover transition-transform duration-700 group-hover:scale-110 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+        onLoad={() => setImageLoaded(true)}
         sizes="(max-width: 768px) 60vw, (max-width: 1024px) 40vw, 30vw"
         unoptimized
       />
+
+      {!imageLoaded && (
+        <Skeleton className="absolute inset-0 rounded-none" />
+      )}
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-60" />

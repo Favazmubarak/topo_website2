@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useImage } from "../../hooks/useImage";
+import { Skeleton } from "@/src/components/common/Skeleton";
 
 export default function Upgrade() {
 
@@ -12,10 +13,7 @@ export default function Upgrade() {
     <section className="w-full my-3 sm:my-6 md:my-12 lg:my-20 pb-3 sm:pb-6 md:pb-12 lg:pb-20">
       <div className="w-full h-[180px] sm:h-[240px] md:h-[360px] lg:h-[450px] relative overflow-hidden group shadow-xl">
         {loading ? (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200" >
-            <div className="animate-spin rounded-full md:h-32 md:w-32 h-16 w-16 border-t-2 border-b-2 border-[#0066B2]"></div>
-
-          </div>
+          <Skeleton className="w-full h-full rounded-none" />
         ) : error ? (
           <div className="w-full h-full flex items-center justify-center bg-gray-200 ">
             <p className="text-red-500 text-sm">Error: {error}</p>

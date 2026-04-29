@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useProductAdmin } from "./hooks/useProductAdmin";
 import { FaPlus, FaTrash, FaEdit, FaUpload, FaTimes, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import { Skeleton } from "@/src/components/common/Skeleton";
 
 // ─────────────────────────────────────────────
 // Tiny inline helpers
@@ -209,12 +210,12 @@ const ProductAdminPage = () => {
         {loading && products.length === 0 && (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="flex flex-col space-y-4 animate-pulse">
-                <div className="aspect-[4/5] rounded-xl bg-gray-100" />
+              <div key={i} className="flex flex-col space-y-4">
+                <Skeleton className="aspect-[4/5] rounded-xl" />
                 <div className="space-y-2">
-                  <div className="h-2 bg-gray-200 rounded w-1/3" />
-                  <div className="h-3 bg-gray-200 rounded w-2/3" />
-                  <div className="h-2 bg-gray-100 rounded w-full" />
+                  <Skeleton className="h-2 w-1/3" />
+                  <Skeleton className="h-3 w-2/3" />
+                  <Skeleton className="h-2 w-full" />
                 </div>
               </div>
             ))}
@@ -225,7 +226,7 @@ const ProductAdminPage = () => {
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
           {products.map((product) => (
             <div key={product._id} className="group flex flex-col space-y-4">
-              <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-gray-50 border border-gray-100 group-hover:shadow-2xl transition-all duration-500">
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-gray-100 group-hover:shadow-2xl transition-all duration-500">
                 <Image
                   src={product.imageUrl}
                   alt={product.productName}
@@ -233,6 +234,9 @@ const ProductAdminPage = () => {
                   className={`object-cover group-hover:scale-105 transition-all duration-700 ${readyImages[product._id] ? "opacity-100" : "opacity-0"}`}
                   onLoad={() => setReadyImages(prev => ({ ...prev, [product._id]: true }))}
                 />
+                {!readyImages[product._id] && (
+                  <Skeleton className="absolute inset-0 rounded-none" />
+                )}
                 <div className="absolute top-4 right-4 flex gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 bg-white/50 lg:bg-transparent p-1 rounded-lg backdrop-blur-sm lg:backdrop-blur-none">
                   <button onClick={() => handleEdit(product)} className="p-2 text-black/40 hover:text-black transition-colors"><FaEdit size={14} /></button>
                   <button onClick={() => handleDelete(product._id)} className="p-2 text-black/40 hover:text-red-500 transition-colors"><FaTrash size={14} /></button>

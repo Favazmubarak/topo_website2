@@ -5,6 +5,7 @@ import { useGalleryAdmin } from "./hooks/useGalleryAdmin";
 import { FaPlus, FaTrash, FaEdit, FaTimes, FaImage, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
+import { Skeleton } from "@/src/components/common/Skeleton";
 
 const FieldError = ({ msg }: { msg?: string }) =>
   msg ? (
@@ -124,7 +125,7 @@ const GalleryAdminPage = () => {
         {loading && images.length === 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="aspect-square rounded-xl md:rounded-2xl bg-gray-100 animate-pulse" />
+              <Skeleton key={i} className="aspect-square rounded-xl md:rounded-2xl" />
             ))}
           </div>
         )}
@@ -140,6 +141,9 @@ const GalleryAdminPage = () => {
                 className={`object-cover transition-all duration-700 group-hover:scale-110 ${readyImages[img._id] ? "opacity-100" : "opacity-0"}`}
                 onLoad={() => setReadyImages(prev => ({ ...prev, [img._id]: true }))}
               />
+              {!readyImages[img._id] && (
+                <Skeleton className="absolute inset-0 rounded-none" />
+              )}
               <div className="absolute inset-0 bg-black/20 lg:bg-black/40 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 md:gap-4 pointer-events-none lg:pointer-events-auto">
                 <button
                   onClick={() => handleEdit(img)}

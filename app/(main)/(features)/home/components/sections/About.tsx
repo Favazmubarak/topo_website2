@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useImage } from "../../hooks/useImage";
+import { Skeleton } from "@/src/components/common/Skeleton";
 
 export default function About() {
 
@@ -75,7 +76,7 @@ export default function About() {
               >
                 {
                   loading ? (
-                    <div className="animate-pulse bg-gray-200 w-full h-full rounded-[16px] sm:rounded-[20px]" />
+                    <Skeleton className="w-full h-full rounded-[16px] sm:rounded-[20px]" />
                   ) : error ? (
                     <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
                       <p className="text-red-500 text-xs">Error: {error}</p>
@@ -100,7 +101,7 @@ export default function About() {
                 {
 
                   loading ? (
-                    <div className="animate-pulse bg-gray-200 w-full h-full rounded-[16px] sm:rounded-[20px]" />
+                    <Skeleton className="w-full h-full rounded-[16px] sm:rounded-[20px]" />
                   ) : error ? (
                     <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
                       <p className="text-red-500 text-xs">Error: {error}</p>

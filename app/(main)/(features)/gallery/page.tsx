@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useGallery } from "./hooks/useGallery";
 import { ImageModal } from "@/src/components/common/ImageModal";
+import { Skeleton } from "@/src/components/common/Skeleton";
 import { useState } from "react";
 
 const LAYOUT_CONFIG = [
@@ -27,9 +28,9 @@ function LoadingSkeleton() {
   return (
     <div className="min-h-[400px] grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
       {[...Array(7)].map((_, i) => (
-        <div
+        <Skeleton
           key={i}
-          className={`${LAYOUT_CONFIG[i % LAYOUT_CONFIG.length].span} ${LAYOUT_CONFIG[i % LAYOUT_CONFIG.length].aspect} relative aspect-[4/3] rounded-[15px] bg-gray-200 animate-pulse`}
+          className={`${LAYOUT_CONFIG[i % LAYOUT_CONFIG.length].span} ${LAYOUT_CONFIG[i % LAYOUT_CONFIG.length].aspect} relative aspect-[4/3] rounded-[15px]`}
         />
       ))}
     </div>
