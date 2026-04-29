@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import Image from "next/image";
 
 type ProductCardProps = {
@@ -17,6 +19,8 @@ export default function ProductCard({
   image,
   priority = false,
 }: ProductCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div
       className="relative group overflow-hidden rounded-xl md:rounded-2xl 
@@ -37,10 +41,12 @@ export default function ProductCard({
 
       {/* Content */}
       <div
-        className="absolute bottom-2 left-2 right-2 
-        bg-white/70 p-3 sm:p-4 md:p-5 
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={`absolute bottom-2 left-2 right-2 
+        bg-white/80 backdrop-blur-sm p-3 sm:p-4 md:p-5 
         rounded-lg md:rounded-xl flex flex-col gap-1
-        transition-all duration-300 lg:min-h-[150px]"
+        transition-all duration-500 cursor-pointer
+        ${isExpanded ? "min-h-[37.5%] max-h-[90%] h-auto overflow-y-auto" : "h-[37.5%]"}`}
       >
         <h3
           className="font-poppins text-black 
@@ -53,15 +59,16 @@ export default function ProductCard({
         <p
           className="font-poppins 
             text-[10px] sm:text-xs md:text-sm lg:text-base 
-            tracking-wide text-black"
+            tracking-wide text-black transition-all duration-300"
         >
           {title}
         </p>
 
         <p
-          className="font-montserrat text-[#2F2F2F] 
+          className={`font-montserrat text-[#2F2F2F] 
           text-[10px] sm:text-[11px] md:text-[13px] lg:text-[15px]
-          leading-snug font-normal"
+          leading-snug font-normal transition-all duration-300
+          ${isExpanded ? "block" : "line-clamp-1 sm:line-clamp-2 md:line-clamp-3"}`}
         >
           {description}
         </p>
