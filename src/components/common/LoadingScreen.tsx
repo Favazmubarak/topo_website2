@@ -64,6 +64,7 @@ const LoadingScreen = () => {
             maxHeight: 130,
             transform: "translateZ(0)",
             backfaceVisibility: "hidden",
+            contain: "layout style paint",
           }}
         >
           <img
@@ -77,6 +78,7 @@ const LoadingScreen = () => {
               imageRendering: "auto",
               transform: "translateZ(0)",
               backfaceVisibility: "hidden",
+              contain: "layout style paint",
             }}
           />
         </div>

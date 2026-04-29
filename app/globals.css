@@ -47,28 +47,34 @@ body {
 
 @keyframes smooth-rotate {
   from {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translateZ(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translateZ(0);
   }
 }
 
 @keyframes smooth-rotate-reverse {
   from {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translateZ(0);
   }
   to {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translateZ(0);
   }
 }
 
 .animate-smooth-rotate {
   animation: smooth-rotate 3s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .animate-smooth-rotate-reverse {
   animation: smooth-rotate-reverse 1.5s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .blur-glow {
