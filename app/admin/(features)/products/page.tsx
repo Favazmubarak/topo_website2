@@ -185,8 +185,9 @@ const ProductAdminPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0 text-black">
-      <div className="max-w-[1400px] mx-auto">
+    <div className="flex-1 flex flex-col bg-white px-3 sm:px-4 md:px-0 text-black font-montserrat">
+      <div className="max-w-[1400px] mx-auto w-full flex-1 flex flex-col">
+        <div className="flex-1">
 
         {/* Header */}
         <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
@@ -246,9 +247,17 @@ const ProductAdminPage = () => {
           ))}
         </div>
 
+        {/* Empty State */}
+        {products.length === 0 && !loading && (
+          <div className="text-center py-16 md:py-20 border-2 border-dashed border-gray-100 rounded-xl md:rounded-2xl">
+            <p className="text-sm text-gray-300 font-medium italic">Empty catalog. Start by adding your first product.</p>
+          </div>
+        )}
+      </div>
+
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="mt-12 flex justify-center items-center gap-2">
+          <div className="mt-auto py-12 flex justify-center items-center gap-2">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
@@ -282,13 +291,6 @@ const ProductAdminPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
             </button>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {products.length === 0 && !loading && (
-          <div className="text-center py-16 md:py-20 border-2 border-dashed border-gray-100 rounded-xl md:rounded-2xl">
-            <p className="text-sm text-gray-300 font-medium italic">Empty catalog. Start by adding your first product.</p>
           </div>
         )}
 
