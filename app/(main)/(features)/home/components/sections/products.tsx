@@ -3,6 +3,7 @@
 import ProductCard from "@/app/(main)/(features)/products/components/ProductCard";
 import { useProduct } from "@/app/(main)/(features)/products/hooks/useProduct";
 
+import ProductCardSkeleton from "@/app/(main)/(features)/products/components/ProductCardSkeleton";
 
 export default function Products() {  
   const { products, loading, error } = useProduct();
@@ -33,19 +34,19 @@ export default function Products() {
         </div>
         {
           loading ? (
-            <div className="flex justify-center min-h-[400px] py-10 items-center">
-              <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-[#0066B2]"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-8 pb-5 md:pb-0">
+              {[1, 2, 3].map((i) => (
+                <ProductCardSkeleton key={i} />
+              ))}
             </div>
           ) : error ? (
             <div className="flex justify-center min-h-[400px] py-10 items-center">
               <h1 className="text-red-500">{error}</h1>
             </div>
           ) : !products.length ? (
-            
-              <div className="flex justify-center min-h-[400px] py-10 items-center">
-                <h1 className="text-red-500">No Products Available</h1>
-              </div>
-            
+            <div className="flex justify-center min-h-[400px] py-10 items-center">
+              <h1 className="text-red-500">No Products Available</h1>
+            </div>
           ) : (
             <div
               className="flex pb-5 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 

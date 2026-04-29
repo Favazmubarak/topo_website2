@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useGallery } from "@/app/(main)/(features)/gallery/hooks/useGallery";
+import { Skeleton } from "@/src/components/common/Skeleton";
 
 const LAYOUT_CONFIG = [
   { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-[7/4]" },
@@ -17,9 +18,9 @@ function LoadingSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-12 gap-4 sm:gap-6">
       {[...Array(7)].map((_, i) => (
-        <div
+        <Skeleton
           key={i}
-          className={`${LAYOUT_CONFIG[i].span} ${LAYOUT_CONFIG[i].aspect} rounded-[15px] bg-gray-200 animate-pulse`}
+          className={`${LAYOUT_CONFIG[i].span} ${LAYOUT_CONFIG[i].aspect} rounded-[15px]`}
         />
       ))}
     </div>

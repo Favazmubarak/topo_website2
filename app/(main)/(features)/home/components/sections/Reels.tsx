@@ -40,6 +40,8 @@ function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
   );
 }
 
+import { Skeleton } from "@/src/components/common/Skeleton";
+
 export default function Reels() {
   const { reels, loading, error } = useReels();
 
@@ -47,10 +49,10 @@ export default function Reels() {
     return (
       <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
-          <div className="h-12 w-48 bg-gray-100 animate-pulse rounded-lg mb-10" />
+          <Skeleton className="h-12 w-48 mb-10" />
           <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 overflow-hidden">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-[440px] sm:h-[550px] w-[260px] md:w-full bg-gray-100 animate-pulse rounded-2xl shrink-0" />
+              <Skeleton key={i} className="h-[440px] sm:h-[550px] w-[260px] md:w-full rounded-2xl shrink-0" />
             ))}
           </div>
         </div>

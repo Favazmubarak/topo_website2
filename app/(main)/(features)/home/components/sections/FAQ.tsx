@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useFAQ } from "../../hooks/useFaq";
+import FAQSkeleton from "../skeletons/FAQSkeleton";
 
 export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -33,9 +34,7 @@ export default function FAQ() {
         <div className="w-full lg:w-[60%] flex flex-col gap-4 sm:gap-6 lg:ml-auto">
 
           {loading ? (
-            <div className="flex justify-center items-center min-h-[400px]">
-              <div className="animate-spin h-16 w-16 md:h-36 md:w-36 border-t-2 border-b-2 border-[#0066B2] rounded-full"></div>
-            </div>
+            <FAQSkeleton />
           ) : error ? (
             <div className="flex justify-center items-center min-h-[400px] text-red-500">
               Error: {error}

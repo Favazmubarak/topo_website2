@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTestimonials } from "../../hooks/useTestimonials";
 import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+import TestimonialSkeleton from "../skeletons/TestimonialSkeleton";
 
 export default function Testimonials() {
   const { testimonials, loading, error } = useTestimonials();
@@ -25,8 +26,10 @@ export default function Testimonials() {
 
       {/* Content States */}
       {loading ? (
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="animate-spin h-16 w-16 md:h-20 md:w-20 border-t-2 border-b-2 border-[#0066B2] rounded-full"></div>
+        <div className="relative w-full">
+           <div className="absolute inset-y-0 left-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+           <div className="absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+           <TestimonialSkeleton />
         </div>
       ) : error ? (
         <div className="flex justify-center items-center min-h-[400px] text-red-500 text-center px-4">
