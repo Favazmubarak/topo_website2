@@ -2,18 +2,26 @@
 
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
+import Image from "next/image";
 
 const LoadingScreen = () => {
   const [isFading, setIsFading] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
   const fixedOffset = circumference * (1 - 0.35);
 
   useEffect(() => {
-    // Prevent layout repaint flicker
+    // Prevent layout repaint flicker and handle scrollbar shift
+    const originalOverflow = document.body.style.overflow;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
     document.body.style.overflow = "hidden";
+    if (scrollBarWidth > 0) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    }
 
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
@@ -23,17 +31,19 @@ const LoadingScreen = () => {
       setTimeout(() => {
         AOS.refresh();
       }, 50);
-    }, 1100);
+    }, 800);
 
     const removeTimer = setTimeout(() => {
       setShouldRender(false);
-      document.body.style.overflow = "";
-    }, 1800);
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = "";
+    }, 1500);
 
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = "";
     };
   }, []);
 
@@ -50,43 +60,34 @@ const LoadingScreen = () => {
         backfaceVisibility: "hidden",
       }}
     >
-      <div className="relative w-[190px] h-[190px] flex items-center justify-center">
+      <div className="relative w-[150px] h-[150px] flex items-center justify-center">
         {/* LOGO */}
         <div
           className={`absolute z-10 transition-opacity duration-500 ${
-            isFading ? "opacity-0" : "opacity-100"
+            isFading || !imageLoaded ? "opacity-0" : "opacity-100"
           }`}
           style={{
-            width: 130,
-            height: 130,
-            minWidth: 130,
-            minHeight: 130,
-            maxWidth: 130,
-            maxHeight: 130,
+            width: 100,
+            height: 100,
             transform: "translateZ(0)",
             backfaceVisibility: "hidden",
             contain: "layout style paint",
           }}
         >
-          <img
+          <Image
             src="/logo-blue.webp"
             alt="Logo"
-            draggable={false}
-            width={130}
-            height={130}
-            className="w-[130px] h-[130px] object-contain select-none pointer-events-none"
-            style={{
-              imageRendering: "auto",
-              transform: "translateZ(0)",
-              backfaceVisibility: "hidden",
-              contain: "layout style paint",
-            }}
+            width={100}
+            height={100}
+            priority
+            onLoad={() => setImageLoaded(true)}
+            className="w-full h-full object-contain select-none pointer-events-none"
           />
         </div>
 
         {/* ROTATING RINGS */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-          <div className="relative w-[130px] h-[130px] animate-smooth-rotate">
+          <div className="relative w-[100px] h-[100px] animate-smooth-rotate">
             {/* Background Ring */}
             <svg
               className="absolute inset-0 w-full h-full"
@@ -134,3 +135,4 @@ const LoadingScreen = () => {
 };
 
 export default LoadingScreen;
+
