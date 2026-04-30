@@ -17,36 +17,36 @@ export default function NotFound() {
     <main className="min-h-screen w-full flex items-center justify-center bg-white px-6 overflow-hidden">
       <div className="max-w-[1400px] w-full flex flex-col items-center text-center relative">
         {/* Background Decorative Element */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
-          <h1 className="font-highrise text-[20vw] md:text-[25vw] leading-none text-gray-50 opacity-[0.03] select-none uppercase">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-full overflow-hidden">
+          <h1 className="font-highrise text-[30vw] md:text-[25vw] leading-none text-gray-50 opacity-[0.03] select-none uppercase whitespace-nowrap">
             Not Found
           </h1>
         </div>
 
         {/* 404 Text */}
         <div data-aos="fade-down">
-          <h2 className="font-highrise text-[clamp(120px,20vw,280px)] leading-none text-[#0066B2] tracking-tighter">
+          <h2 className="font-highrise text-[clamp(80px,18vw,280px)] leading-none text-[#0066B2] tracking-tighter">
             404
           </h2>
         </div>
 
         {/* Message */}
         <div 
-          className="mt-4 md:mt-0 flex flex-col items-center gap-6"
+          className="mt-2 md:mt-0 flex flex-col items-center gap-4 md:gap-6"
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <h1 className="font-montserrat text-2xl md:text-4xl lg:text-5xl font-medium text-black tracking-tight">
+          <h1 className="font-montserrat text-xl md:text-4xl lg:text-5xl font-medium text-black tracking-tight px-4">
             Oops! Page not found
           </h1>
           
-          <p className="font-poppins text-gray-500 text-base md:text-lg max-w-[500px] leading-relaxed">
+          <p className="font-poppins text-gray-500 text-sm md:text-lg max-w-[320px] md:max-w-[500px] leading-relaxed px-4">
             The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
           </p>
 
           <Link
             href="/"
-            className="group relative mt-4 px-10 py-4 bg-[#0066B2] text-white rounded-full font-poppins font-medium text-lg overflow-hidden transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,102,178,0.3)] hover:-translate-y-1"
+            className="group relative mt-4 px-8 md:px-10 py-3 md:py-4 bg-[#0066B2] text-white rounded-full font-poppins font-medium text-base md:text-lg overflow-hidden transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,102,178,0.3)] hover:-translate-y-1"
           >
             <span className="relative z-10 flex items-center gap-3">
               <svg 
