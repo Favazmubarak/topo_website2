@@ -7,7 +7,7 @@ import { useAuthStore } from "@/app/admin/(features)/login/hooks/useAuthStore";
 import { toast } from "react-hot-toast";
 import { FaSpinner, FaExclamationCircle } from "react-icons/fa";
 
-// ─── Inline field error ───────────────────────────────────────────────────────
+
 const FieldError = ({ msg }: { msg?: string }) =>
   msg ? (
     <p className="flex items-center gap-1 text-[10px] text-red-500 font-semibold mt-1 ml-1 animate-in fade-in duration-200">
@@ -16,7 +16,7 @@ const FieldError = ({ msg }: { msg?: string }) =>
     </p>
   ) : null;
 
-// ─── Client-side validation ───────────────────────────────────────────────────
+
 const validate = (email: string, password: string) => {
   const errs: Record<string, string> = {};
   if (!email.trim()) {
@@ -33,8 +33,8 @@ const validate = (email: string, password: string) => {
 };
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("admin@gmail.com");
-  const [password, setPassword] = useState("admin@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({});
 
@@ -53,7 +53,7 @@ export default function LoginPage() {
     e.preventDefault();
     setServerErrors({});
 
-    // Client-side check first
+    
     const clientErrs = validate(email, password);
     if (Object.keys(clientErrs).length > 0) {
       setLocalErrors(clientErrs);
@@ -94,7 +94,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-6" noValidate>
           <div className="space-y-5">
-            {/* Email */}
+            {}
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Email Address</label>
               <input
@@ -115,7 +115,7 @@ export default function LoginPage() {
               <FieldError msg={errors.email} />
             </div>
 
-            {/* Password */}
+            {}
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Password</label>
               <input
