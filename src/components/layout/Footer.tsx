@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="lg:col-span-2 flex flex-col" data-aos="fade-up">
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="topo logo"
                 width={360}
                 height={144}

@@ -12,3 +12,17 @@ export const getAllFAQs = async (): Promise<FAQ[]> => {
     const res = await axiosInstance.get<FAQ[]>("/faqs");
     return res.data;
 };
+
+export const getAllFAQsServer = async (): Promise<FAQ[]> => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+    try {
+        const res = await fetch(`${baseUrl}/faqs`, {
+            next: { revalidate: 3600 }
+        });
+        if (!res.ok) return [];
+        return res.json();
+    } catch (error) {
+        console.error("Error fetching FAQs on server:", error);
+        return [];
+    }
+};

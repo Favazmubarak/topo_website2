@@ -21,7 +21,7 @@ const LoadingScreen = () => {
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
       window.dispatchEvent(new Event("loaderFinished"));
-    }, 300);
+    }, 150);
 
     const removeTimer = setTimeout(() => {
       setShouldRender(false);
@@ -29,8 +29,8 @@ const LoadingScreen = () => {
 
       setTimeout(() => {
         AOS.refresh();
-      }, 100);
-    }, 800);
+      }, 50);
+    }, 500);
 
     return () => {
       clearTimeout(fadeTimer);

@@ -4,10 +4,18 @@ import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useFAQ } from "../../hooks/useFaq";
 import FAQSkeleton from "../skeletons/FAQSkeleton";
+import { FAQ as FAQType } from "../../api/faqApi";
 
-export default function FAQ() {
+
+interface FAQProps {
+  initialFAQs?: FAQType[];
+}
+
+export default function FAQ({ initialFAQs }: FAQProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const { faqs, loading, error } = useFAQ();
+  const { faqs: fetchedFaqs, loading, error } = useFAQ();
+
+  const faqs = initialFAQs && initialFAQs.length > 0 ? initialFAQs : fetchedFaqs;
 
   const toggleFAQ = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);

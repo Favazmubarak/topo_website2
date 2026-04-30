@@ -1,22 +1,30 @@
+import dynamic from "next/dynamic";
 import Hero from "./(features)/home/components/sections/Hero";
 import About from "./(features)/home/components/sections/About";
 import Products from "./(features)/home/components/sections/products";
 import WhyChooseTopo from "./(features)/home/components/sections/WhyChooseTopo";
-import FAQ from "./(features)/home/components/sections/FAQ";
-import ProductFeatures from "./(features)/home/components/sections/ProductFeatures";
-import Testimonials from "./(features)/home/components/sections/Testimonials";
-import Gallery from "./(features)/home/components/sections/Gallery";
-import Upgrade from "./(features)/home/components/sections/Upgrade";
-import Reels from "./(features)/home/components/sections/Reels";
+
+const FAQ = dynamic(() => import("./(features)/home/components/sections/FAQ"));
+const ProductFeatures = dynamic(() => import("./(features)/home/components/sections/ProductFeatures"));
+const Testimonials = dynamic(() => import("./(features)/home/components/sections/Testimonials"));
+const Gallery = dynamic(() => import("./(features)/home/components/sections/Gallery"));
+const Upgrade = dynamic(() => import("./(features)/home/components/sections/Upgrade"));
+const Reels = dynamic(() => import("./(features)/home/components/sections/Reels"));
+
 import { getImageBySectionServer } from "./(features)/home/api/imageApi";
 import { getAllProductsServer } from "./(features)/products/api/productApi";
 
+import { getAllGalleryImagesServer } from "./(features)/gallery/api/galleryApi";
+import { getAllFAQsServer } from "./(features)/home/api/faqApi";
+
 export default async function Home() {
-  const [heroImages, aboutImages, whyChooseImages, initialProducts] = await Promise.all([
+  const [heroImages, aboutImages, whyChooseImages, initialProducts, galleryData, faqs] = await Promise.all([
     getImageBySectionServer("hero"),
     getImageBySectionServer("about"),
     getImageBySectionServer("why-choose"),
     getAllProductsServer(1, 12),
+    getAllGalleryImagesServer(1, 7),
+    getAllFAQsServer(),
   ]);
 
   return (
@@ -28,8 +36,8 @@ export default async function Home() {
       <WhyChooseTopo initialImages={whyChooseImages} />
       <Testimonials />
       <ProductFeatures />
-      <FAQ />
-      <Gallery />
+      <FAQ initialFAQs={faqs} />
+      <Gallery initialImages={galleryData?.data || []} />
       <Upgrade />
       <Reels />
     </main>

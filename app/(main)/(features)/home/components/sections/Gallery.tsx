@@ -5,6 +5,7 @@ import { useGallery } from "@/app/(main)/(features)/gallery/hooks/useGallery";
 import { Skeleton } from "@/src/components/common/Skeleton";
 import { ImageModal } from "@/src/components/common/ImageModal";
 import { useState } from "react";
+import { GalleryImage } from "@/app/(main)/(features)/gallery/api/galleryApi";
 
 const LAYOUT_CONFIG = [
   { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-[7/4]" },
@@ -39,10 +40,16 @@ function ErrorState({ error }: { error: string }) {
   );
 }
 
-export default function Gallery() {
-  const { galleryImages, loading, error } = useGallery();
+
+interface GalleryProps {
+  initialImages?: GalleryImage[];
+}
+
+export default function Gallery({ initialImages }: GalleryProps) {
+  const { galleryImages: fetchedImages, loading, error } = useGallery();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  const galleryImages = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
   
   const displayImages = galleryImages?.slice(0, 7) || [];
 
