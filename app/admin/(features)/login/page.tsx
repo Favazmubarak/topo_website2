@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/admin/(features)/login/hooks/useAuthStore";
 import { toast } from "react-hot-toast";
-import { FaSpinner, FaExclamationCircle } from "react-icons/fa";
+import { FaSpinner, FaExclamationCircle, FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const FieldError = ({ msg }: { msg?: string }) =>
@@ -37,6 +37,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login, isLoading, isAuthenticated } = useAuthStore();
   const router = useRouter();
@@ -115,21 +116,31 @@ export default function LoginPage() {
             </div>
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (localErrors.password) setLocalErrors(p => { const { password, ...r } = p; return r; });
-                  if (serverErrors.password) setServerErrors(p => { const { password, ...r } = p; return r; });
-                }}
-                placeholder="••••••••"
-                className={`w-full bg-gray-50 border text-black px-4 py-4 rounded-lg focus:outline-none focus:ring-1 transition-all text-sm placeholder:text-gray-400
-                  ${errors.password
-                    ? "border-red-300 ring-1 ring-red-300 bg-red-50"
-                    : "border-gray-200 focus:ring-black/20 focus:border-black/30"
-                  }`}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (localErrors.password) setLocalErrors(p => { const { password, ...r } = p; return r; });
+                    if (serverErrors.password) setServerErrors(p => { const { password, ...r } = p; return r; });
+                  }}
+                  placeholder="••••••••"
+                  className={`w-full bg-gray-50 border text-black px-4 py-4 rounded-lg focus:outline-none focus:ring-1 transition-all text-sm placeholder:text-gray-400 pr-12
+                    ${errors.password
+                      ? "border-red-300 ring-1 ring-red-300 bg-red-50"
+                      : "border-gray-200 focus:ring-black/20 focus:border-black/30"
+                    }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                </button>
+              </div>
               <FieldError msg={errors.password} />
             </div>
           </div>
