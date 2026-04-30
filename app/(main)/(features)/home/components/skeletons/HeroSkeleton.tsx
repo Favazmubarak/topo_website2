@@ -4,7 +4,7 @@ import { Skeleton } from "@/src/components/common/Skeleton";
 
 export default function HeroSkeleton() {
   return (
-    <div className="absolute inset-0 w-full h-full z-50">
+    <div className="absolute inset-0 w-full h-full z-40">
 
       <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-gray-200" />
 

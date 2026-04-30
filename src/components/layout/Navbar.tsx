@@ -145,10 +145,17 @@ export default function Navbar() {
       sessionStorage.setItem("scrollTarget", id);
     }
   };
+
+  useEffect(() => {
+    setIsScrolled(false);
+    setIsVisible(true);
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-500 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20 ${
+        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-500 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20 ${
           isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >

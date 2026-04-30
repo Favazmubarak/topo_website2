@@ -33,7 +33,7 @@ export default function Hero() {
     >
       {showSkeleton && (
         <div 
-          className={`absolute inset-0 z-50 transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 z-40 transition-opacity duration-1000 ease-in-out ${
             imageLoaded ? "opacity-0" : "opacity-100"
           }`}
         >
