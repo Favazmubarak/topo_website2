@@ -72,7 +72,7 @@ export default function Hero() {
           />
           <div className={`relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16 transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}>
             {!loading && (
-              <div className="flex bg-red-400 flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
+              <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
                   <div className="inline-block max-w-full overflow-hidden mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
                   <div
                     className="w-fit"
