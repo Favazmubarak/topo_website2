@@ -3,10 +3,17 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useImage } from "../../hooks/useImage";
+import { SectionImage } from "../../api/imageApi";
 import HeroSkeleton from "../skeletons/HeroSkeleton";
 
-export default function Hero() {
-  const { images, loading, error } = useImage("hero");
+interface HeroProps {
+  initialImages?: SectionImage[];
+}
+
+export default function Hero({ initialImages }: HeroProps) {
+  const { images: fetchedImages, loading, error } = useImage("hero");
+  const images = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
+  
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
 
@@ -21,8 +28,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (imageLoaded) {
-      const timer = setTimeout(() => setShowSkeleton(false), 1000);
-      return () => clearTimeout(timer);
+      setShowSkeleton(false);
     }
   }, [imageLoaded]);
 
@@ -53,7 +59,6 @@ export default function Hero() {
               alt="Hero Background"
               fill
               priority
-              unoptimized
               sizes="100vw"
               onLoad={() => setImageLoaded(true)}
               className={`

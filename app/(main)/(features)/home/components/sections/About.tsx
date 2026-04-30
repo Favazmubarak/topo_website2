@@ -4,9 +4,15 @@ import Image from "next/image";
 import { useImage } from "../../hooks/useImage";
 import { Skeleton } from "@/src/components/common/Skeleton";
 
-export default function About() {
+import { SectionImage } from "../../api/imageApi";
 
-  const { images, loading, error } = useImage("about");
+interface AboutProps {
+  initialImages?: SectionImage[];
+}
+
+export default function About({ initialImages }: AboutProps) {
+  const { images: fetchedImages, loading, error } = useImage("about");
+  const images = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
 
   const getSafeSrc = (url?: string, defaultPath: string = "/fallback/about.jpg") =>
     url?.trim() || defaultPath;

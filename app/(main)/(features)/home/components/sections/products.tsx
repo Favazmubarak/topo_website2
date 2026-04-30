@@ -4,9 +4,15 @@ import ProductCard from "@/app/(main)/(features)/products/components/ProductCard
 import { useProduct } from "@/app/(main)/(features)/products/hooks/useProduct";
 
 import ProductCardSkeleton from "@/app/(main)/(features)/products/components/ProductCardSkeleton";
+import { Product } from "@/app/(main)/(features)/products/api/productApi";
 
-export default function Products() {  
-  const { products, loading, error } = useProduct();
+interface ProductsProps {
+  initialProducts?: Product[];
+}
+
+export default function Products({ initialProducts }: ProductsProps) {  
+  const { products: fetchedProducts, loading, error } = useProduct();
+  const products = initialProducts && initialProducts.length > 0 ? initialProducts : fetchedProducts;
 
   return (
     <section

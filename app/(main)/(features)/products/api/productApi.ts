@@ -24,3 +24,17 @@ export const getAllProducts = async (page: number = 1, limit: number = 9): Promi
   const response = await axiosInstance.get(`/products?page=${page}&limit=${limit}`);
   return response.data;
 };
+
+export const getAllProductsServer = async (page: number = 1, limit: number = 12): Promise<PaginatedProducts | null> => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  try {
+    const res = await fetch(`${baseUrl}/products?page=${page}&limit=${limit}`, {
+      next: { revalidate: 3600 }
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching products on server:", error);
+    return null;
+  }
+};

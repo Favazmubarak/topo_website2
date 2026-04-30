@@ -8,15 +8,24 @@ import Testimonials from "./(features)/home/components/sections/Testimonials";
 import Gallery from "./(features)/home/components/sections/Gallery";
 import Upgrade from "./(features)/home/components/sections/Upgrade";
 import Reels from "./(features)/home/components/sections/Reels";
+import { getImageBySectionServer } from "./(features)/home/api/imageApi";
+import { getAllProductsServer } from "./(features)/products/api/productApi";
 
-export default function Home() {
+export default async function Home() {
+  const [heroImages, aboutImages, whyChooseImages, initialProducts] = await Promise.all([
+    getImageBySectionServer("hero"),
+    getImageBySectionServer("about"),
+    getImageBySectionServer("why-choose"),
+    getAllProductsServer(1, 12),
+  ]);
+
   return (
     <main>
-      <Hero />
+      <Hero initialImages={heroImages} />
 
-      <About />
-      <Products />
-      <WhyChooseTopo />
+      <About initialImages={aboutImages} />
+      <Products initialProducts={initialProducts?.products || []} />
+      <WhyChooseTopo initialImages={whyChooseImages} />
       <Testimonials />
       <ProductFeatures />
       <FAQ />

@@ -7,6 +7,9 @@ import { SlEnergy } from "react-icons/sl";
 import { TbCloudPlus } from "react-icons/tb";
 import { useImage } from "../../hooks/useImage";
 
+import { SectionImage } from "../../api/imageApi";
+import { Skeleton } from "@/src/components/common/Skeleton";
+
 const features = [
   {
     title: "High Durability",
@@ -30,9 +33,13 @@ const features = [
   },
 ];
 
-export default function WhyChooseTopo() {
+interface WhyChooseTopoProps {
+  initialImages?: SectionImage[];
+}
 
-  const {images, loading, error} = useImage("why-choose")
+export default function WhyChooseTopo({ initialImages }: WhyChooseTopoProps) {
+  const { images: fetchedImages, loading, error } = useImage("why-choose");
+  const images = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
 
 
   return (
