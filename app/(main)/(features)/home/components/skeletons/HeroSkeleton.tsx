@@ -17,14 +17,14 @@ export default function HeroSkeleton() {
           <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
             {/* First line skeleton - Mimicking "FRAMING THE FUTURE OF" */}
             <div className="w-fit" data-aos="fade-right" data-aos-delay="200">
-              <h1 className="font-highrise font-black text-transparent bg-white/20 backdrop-blur-sm rounded-lg scale-y-120 origin-left animate-pulse uppercase leading-[0.9] text-[44px] sm:text-[56px] md:text-[70px] lg:text-[90px] xl:text-[120px] whitespace-nowrap">
+              <h1 className="font-highrise font-black text-transparent bg-white/20 backdrop-blur-sm rounded-full scale-y-120 origin-left animate-pulse uppercase leading-[0.9] text-[44px] sm:text-[56px] md:text-[70px] lg:text-[90px] xl:text-[120px] whitespace-nowrap">
                 FRAMING THE FUTURE OF
               </h1>
             </div>
 
             {/* Second line skeleton - Mimicking "MODERN LIVING" */}
             <div className="flex justify-end w-full mt-3 sm:mt-5 md:mt-6 lg:mt-7 xl:mt-8" data-aos="fade-left" data-aos-delay="400">
-              <h2 className="font-highrise font-black text-transparent bg-white/20 backdrop-blur-sm rounded-lg scale-y-120 origin-right animate-pulse uppercase leading-[0.9] text-[44px] sm:text-[56px] md:text-[70px] lg:text-[90px] xl:text-[120px] whitespace-nowrap text-right">
+              <h2 className="font-highrise font-black text-transparent bg-white/20 backdrop-blur-sm rounded-full scale-y-120 origin-right animate-pulse uppercase leading-[0.9] text-[44px] sm:text-[56px] md:text-[70px] lg:text-[90px] xl:text-[120px] whitespace-nowrap text-right">
                 MODERN LIVING
               </h2>
             </div>

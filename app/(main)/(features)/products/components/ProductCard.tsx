@@ -54,20 +54,20 @@ export default function ProductCard({
         bg-white/80 backdrop-blur-sm p-3 sm:p-4 md:p-5 
         rounded-lg md:rounded-xl flex flex-col gap-1
         transition-all duration-500 cursor-pointer
-        ${isExpanded ? "min-h-[37.5%] max-h-[90%] h-auto overflow-y-auto" : "h-[37.5%]"}`}
+        ${isExpanded ? "min-h-[37.5%] max-h-[90%] h-auto overflow-y-auto" : "h-[37.5%] overflow-hidden"}`}
       >
         <h3
-          className="font-poppins text-black 
+          className={`font-poppins text-black 
           text-[12px] sm:text-[14px] md:text-[18px] lg:text-[20px]
-          leading-snug font-medium"
+          leading-snug font-medium ${isExpanded ? "" : "line-clamp-1"}`}
         >
           {productName}
         </h3>
 
         <p
-          className="font-poppins 
+          className={`font-poppins 
             text-[10px] sm:text-xs md:text-sm lg:text-base 
-            tracking-wide text-black transition-all duration-300"
+            tracking-wide text-black transition-all duration-300 ${isExpanded ? "" : "line-clamp-1"}`}
         >
           {title}
         </p>
