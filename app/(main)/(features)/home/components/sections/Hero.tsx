@@ -90,7 +90,8 @@ export default function Hero() {
                         sm:text-[56px]
                         md:text-[70px]
                         lg:text-[90px]
-                        xl:text-[120px]
+                        xl:text-[110px]
+                        2xl:text-[120px]
                         whitespace-nowrap
                         [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
                         scale-y-120

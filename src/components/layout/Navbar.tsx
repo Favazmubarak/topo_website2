@@ -155,7 +155,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-3 md:py-4 transition-all duration-500 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20 ${
+        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-2 md:py-2.5 transition-all duration-500 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20 ${
           isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -170,7 +170,7 @@ export default function Navbar() {
                 router.push("/");
               }
             }}
-            className="relative block w-[110px] sm:w-[130px] md:w-[160px] h-10 sm:h-12 md:h-20"
+            className="relative block w-[90px] sm:w-[110px] md:w-[130px] h-8 sm:h-10 md:h-14"
           >
             <Image
               src="/logo.webp"
@@ -260,7 +260,7 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed top-[72px] left-0 w-full bg-white/10 backdrop-blur-sm z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/20 ${isMobileMenuOpen 
+        className={`fixed top-[56px] left-0 w-full bg-white/10 backdrop-blur-sm z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/20 ${isMobileMenuOpen 
           ? "translate-y-0 opacity-100 visible" 
           : "-translate-y-full opacity-0 invisible"
         }`}
