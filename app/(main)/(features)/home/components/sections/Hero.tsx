@@ -72,8 +72,8 @@ export default function Hero() {
           />
           <div className={`relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16 transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}>
             {!loading && (
-              <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
-                <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
+              <div className="flex bg-red-400 flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
+                  <div className="inline-block max-w-full overflow-hidden mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
                   <div
                     className="w-fit"
                     data-aos="fade-right"
@@ -90,7 +90,7 @@ export default function Hero() {
                         sm:text-[56px]
                         md:text-[70px]
                         lg:text-[90px]
-                        xl:text-[100px]
+                        xl:text-[120px]
                         whitespace-nowrap
                         [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
                         scale-y-120
@@ -119,7 +119,7 @@ export default function Hero() {
                         sm:text-[56px]
                         md:text-[70px]
                         lg:text-[90px]
-                        xl:text-[100px]
+                        xl:text-[120px]
                         whitespace-nowrap
                         text-right
                         [text-shadow:0_2px_15px_rgba(0,0,0,0.5)]
