@@ -14,7 +14,7 @@ const LoadingScreen = () => {
   const fixedOffset = circumference * (1 - 0.35);
 
   useEffect(() => {
-    // Prevent layout repaint flicker
+    
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -53,7 +53,7 @@ const LoadingScreen = () => {
       }}
     >
       <div className="relative w-[150px] h-[150px] flex items-center justify-center">
-        {/* LOGO */}
+
         <div
           className={`absolute z-10 transition-opacity duration-500 ${
             isFading || !imageLoaded ? "opacity-100" : "opacity-100"
@@ -77,10 +77,9 @@ const LoadingScreen = () => {
           />
         </div>
 
-        {/* ROTATING RINGS */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
           <div className="relative w-[100px] h-[100px] animate-smooth-rotate">
-            {/* Background Ring */}
+
             <svg
               className="absolute inset-0 w-full h-full"
               viewBox="0 0 100 100"
@@ -96,7 +95,6 @@ const LoadingScreen = () => {
               />
             </svg>
 
-            {/* Main Ring */}
             <svg
               className="absolute inset-0 w-full h-full"
               viewBox="0 0 100 100"
@@ -115,7 +113,6 @@ const LoadingScreen = () => {
               />
             </svg>
 
-            {/* Reverse Ring */}
             <div className="absolute inset-0 rounded-full animate-smooth-rotate-reverse opacity-40">
               <div className="w-full h-full rounded-full border-[2px] border-transparent border-t-slate-400" />
             </div>

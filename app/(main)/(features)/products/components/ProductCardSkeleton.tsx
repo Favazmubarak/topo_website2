@@ -6,8 +6,7 @@ export default function ProductCardSkeleton() {
   return (
     <div className="relative overflow-hidden rounded-xl md:rounded-2xl aspect-[3/4] md:aspect-[4/5] shadow-lg bg-gray-100">
       <Skeleton className="w-full h-full rounded-none" />
-      
-      {/* Content Overlay Skeleton */}
+
       <div className="absolute bottom-2 left-2 right-2 bg-white/70 p-3 sm:p-4 md:p-5 rounded-lg md:rounded-xl flex flex-col gap-2 lg:min-h-[150px]">
         <Skeleton className="h-5 w-3/4" />
         <Skeleton className="h-4 w-1/2" />

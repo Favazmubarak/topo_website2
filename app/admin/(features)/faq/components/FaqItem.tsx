@@ -1,4 +1,4 @@
-// components/faq/FaqItem.tsx
+
 import { FaQuestionCircle, FaEdit, FaTrash } from "react-icons/fa";
 
 interface FaqItemProps {

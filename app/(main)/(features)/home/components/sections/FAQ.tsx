@@ -19,8 +19,6 @@ export default function FAQ() {
       id="faq"
     >
       <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-10 lg:gap-16 justify-between items-start">
-
-        {/* LEFT SIDE */}
         <div className="w-full lg:w-[35%] text-left" data-aos="fade-right">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight mb-4 tracking-tight">
             Frequently Asked <br className="hidden lg:block" /> Questions
@@ -29,8 +27,6 @@ export default function FAQ() {
             Find clear answers to your questions and discover everything you need to know about our products and services.
           </p>
         </div>
-
-        {/* RIGHT SIDE */}
         <div className="w-full lg:w-[60%] flex flex-col gap-4 sm:gap-6 lg:ml-auto">
 
           {loading ? (

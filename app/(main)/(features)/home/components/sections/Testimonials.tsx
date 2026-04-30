@@ -8,7 +8,7 @@ import TestimonialSkeleton from "../skeletons/TestimonialSkeleton";
 export default function Testimonials() {
   const { testimonials, loading, error } = useTestimonials();
 
-  // Duplicate testimonials for seamless infinite scroll
+  
   const scrollItems = [...testimonials, ...testimonials];
 
   return (
@@ -23,8 +23,6 @@ export default function Testimonials() {
           </h2>
         </div>
       </div>
-
-      {/* Content States */}
       {loading ? (
         <div className="relative w-full">
            <div className="absolute inset-y-0 left-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
@@ -41,18 +39,14 @@ export default function Testimonials() {
         </div>
       ) : (
         <div className="relative w-full">
-          {/* Gradient Overlays for smooth edges */}
           <div className="absolute inset-y-0 left-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-          {/* Marquee Track */}
           <div className="flex w-max animate-marquee hover:[animation-play-state:paused] py-4">
             {scrollItems.map((testimonial, index) => (
               <div
                 key={`${testimonial._id}-${index}`}
                 className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-6 sm:p-8 flex flex-col h-[320px] w-[300px] sm:w-[380px] mx-4 shrink-0 transition-shadow hover:shadow-lg"
               >
-                {/* rating */}
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex gap-1 text-[#0066B2] text-xl">
                     {[...Array(5)].map((_, i) =>
@@ -71,13 +65,9 @@ export default function Testimonials() {
                     className="opacity-20"
                   />
                 </div>
-
-                {/* review */}
                 <p className="font-poppins text-[#2F2F2F] text-sm sm:text-base leading-relaxed mb-8 flex-grow line-clamp-5 overflow-hidden italic">
                   "{testimonial.review}"
                 </p>
-
-                {/* user */}
                 <div className="flex items-center gap-4 pt-6 border-t border-[#E9E9E9]">
                   <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#E9E9E9]">
                     <Image

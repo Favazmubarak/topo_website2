@@ -7,9 +7,9 @@ import { FaPlus, FaTrash, FaEdit, FaUpload, FaTimes, FaSpinner, FaCheckCircle, F
 import { toast } from "react-hot-toast";
 import { Skeleton } from "@/src/components/common/Skeleton";
 
-// ─────────────────────────────────────────────
-// Tiny inline helpers
-// ─────────────────────────────────────────────
+
+
+
 
 const FieldError = ({ msg }: { msg?: string }) =>
   msg ? (
@@ -19,7 +19,7 @@ const FieldError = ({ msg }: { msg?: string }) =>
     </p>
   ) : null;
 
-// Client-side validation (mirrors server Zod rules)
+
 const validate = (
   formData: { productName: string; title: string; description: string },
   isCreate: boolean,
@@ -60,9 +60,9 @@ const validate = (
   return errs;
 };
 
-// ─────────────────────────────────────────────
-// Page Component
-// ─────────────────────────────────────────────
+
+
+
 
 const ProductAdminPage = () => {
   const {
@@ -84,7 +84,7 @@ const ProductAdminPage = () => {
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
 
-  // Merged errors: server errors win in case of conflict
+  
   const errors = { ...localErrors, ...fieldErrors };
 
   useEffect(() => { fetchProducts(); }, [fetchProducts]);
@@ -99,7 +99,7 @@ const ProductAdminPage = () => {
 
   useEffect(() => {
     if (error && Object.keys(fieldErrors).length === 0) {
-      // Only show toast for non-field errors (field errors are shown inline)
+      
       toast.error(error, { id: "admin-error" });
       clearStatus();
     }
@@ -190,7 +190,6 @@ const ProductAdminPage = () => {
       <div className="max-w-[1400px] mx-auto w-full flex-1 flex flex-col">
         <div className="flex-1">
 
-        {/* Header */}
         <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
           <div>
             <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Products Catalog</h1>
@@ -206,7 +205,6 @@ const ProductAdminPage = () => {
           </button>
         </div>
 
-        {/* Loading Skeleton */}
         {loading && products.length === 0 && (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
             {[...Array(4)].map((_, i) => (
@@ -222,7 +220,6 @@ const ProductAdminPage = () => {
           </div>
         )}
 
-        {/* Product Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
           {products.map((product) => (
             <div key={product._id} className="group flex flex-col space-y-4">
@@ -251,7 +248,6 @@ const ProductAdminPage = () => {
           ))}
         </div>
 
-        {/* Empty State */}
         {products.length === 0 && !loading && (
           <div className="text-center py-16 md:py-20 border-2 border-dashed border-gray-100 rounded-xl md:rounded-2xl">
             <p className="text-sm text-gray-300 font-medium italic">Empty catalog. Start by adding your first product.</p>
@@ -259,7 +255,6 @@ const ProductAdminPage = () => {
         )}
       </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-auto py-12 flex justify-center items-center gap-2">
             <button
@@ -298,18 +293,14 @@ const ProductAdminPage = () => {
           </div>
         )}
 
-        {/* Modal Form */}
         {isFormOpen && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-4">
 
-            {/* Overlay */}
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeForm} />
 
-            {/* Modal */}
             <div className="relative bg-white w-full max-w-full sm:max-w-xl max-h-[90vh] overflow-y-auto rounded-xl sm:rounded-2xl shadow-2xl animate-in fade-in zoom-in duration-300">
               <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
 
-                {/* Modal Header */}
                 <div className="flex items-center justify-between border-b pb-3 sm:pb-4">
                   <h2 className="text-lg sm:text-xl font-medium tracking-tight">
                     {editingId ? "Edit Product" : "New Creation"}
@@ -319,7 +310,6 @@ const ProductAdminPage = () => {
                   </button>
                 </div>
 
-                {/* Server-level field errors banner (only for non-field or "general" key) */}
                 {fieldErrors.general && (
                   <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-lg px-3 py-2.5 text-red-600 text-[10px] font-semibold">
                     <FaExclamationCircle className="mt-0.5 shrink-0" size={11} />
@@ -329,7 +319,6 @@ const ProductAdminPage = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" noValidate>
 
-                  {/* Image Upload */}
                   <div>
                     <div
                       className={`relative aspect-[3/4] sm:aspect-video rounded-lg sm:rounded-xl bg-gray-50 border overflow-hidden cursor-pointer group
@@ -369,10 +358,8 @@ const ProductAdminPage = () => {
                     onChange={handleFileChange}
                   />
 
-                  {/* Inputs */}
                   <div className="space-y-4">
 
-                    {/* Product Name */}
                     <div>
                       <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
                         Product Name {charCount(formData.productName, 60)}
@@ -391,7 +378,6 @@ const ProductAdminPage = () => {
                       <FieldError msg={errors.productName} />
                     </div>
 
-                    {/* Display Title */}
                     <div>
                       <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
                         Display Title {charCount(formData.title, 100)}
@@ -410,7 +396,6 @@ const ProductAdminPage = () => {
                       <FieldError msg={errors.title} />
                     </div>
 
-                    {/* Description */}
                     <div>
                       <label className="block text-[8px] font-black uppercase tracking-widest text-gray-400 mb-1">
                         Description {charCount(formData.description, 200)}
@@ -431,7 +416,6 @@ const ProductAdminPage = () => {
                     </div>
                   </div>
 
-                  {/* Submit */}
                   <button
                     type="submit"
                     disabled={loading}

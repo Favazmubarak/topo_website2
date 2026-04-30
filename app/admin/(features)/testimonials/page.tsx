@@ -4,15 +4,15 @@ import React, { useState, useEffect } from "react";
 import { useTestimonialAdmin } from "./hooks/useTestimonialAdmin";
 import { toast } from "react-hot-toast";
 
-// Components
+
 import { TestimonialHeader } from "./components/TestimonialHeader";
 import { TestimonialGrid } from "./components/TestimonialGrid";
 import { TestimonialFormModal } from "./components/TestimonialFormModal";
 import { TestimonialSkeleton } from "./components/TestimonialSkeleton";
 
-// ─────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────
+
+
+
 
 const validate = (
   formData: { name: string; rating: number; review: string },
@@ -48,9 +48,9 @@ const validate = (
   return errs;
 };
 
-// ─────────────────────────────────────────────
-// Page Component
-// ─────────────────────────────────────────────
+
+
+
 
 const TestimonialsAdminPage = () => {
   const {

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useFaqAdmin } from "./hooks/useFaqAdmin";
 import { toast } from "react-hot-toast";
 
-// Components
+
 import { FaqHeader } from "./components/FaqHeader";
 import { FaqList } from "./components/FaqList";
 import { FaqFormModal } from "./components/FaqFormModal";

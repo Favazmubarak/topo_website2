@@ -50,7 +50,6 @@ export const ReelFormModal = ({
 
             <div className="relative bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom sm:zoom-in duration-300">
                 <div className="p-5 sm:p-6 md:p-8 space-y-5 md:space-y-6">
-                    {/* Modal header */}
                     <div className="flex items-center justify-between border-b pb-3 md:pb-4">
                         <h2 className="text-base md:text-lg font-medium tracking-tight text-black">
                             {editingId ? "Edit Reel" : "Add New Reel"}
@@ -59,8 +58,6 @@ export const ReelFormModal = ({
                             <FaTimes size={15} />
                         </button>
                     </div>
-
-                    {/* General Error Banner */}
                     {fieldErrors.general && (
                         <div className="bg-red-50 border border-red-200 text-red-600 text-[10px] md:text-[11px] rounded-lg md:rounded-xl px-3 md:px-4 py-2.5 md:py-3 leading-relaxed">
                             {fieldErrors.general}
@@ -68,7 +65,6 @@ export const ReelFormModal = ({
                     )}
 
                     <form onSubmit={onSubmit} className="space-y-4 md:space-y-6">
-                        {/* Thumbnail Upload */}
                         <div className="space-y-1 md:space-y-2">
                             <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Reel Thumbnail</label>
                             <div className="relative group">
@@ -101,8 +97,6 @@ export const ReelFormModal = ({
                             </div>
                             <FieldError msg={fieldErrors.thumbnail} />
                         </div>
-
-                        {/* Link */}
                         <div className="space-y-1 md:space-y-2">
                             <label className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-400 ml-1">Video Link</label>
                             <input
@@ -117,8 +111,6 @@ export const ReelFormModal = ({
                             />
                             <FieldError msg={fieldErrors.link} />
                         </div>
-
-                        {/* Submit */}
                         <div className="pt-2 md:pt-4">
                             <button
                                 type="submit"

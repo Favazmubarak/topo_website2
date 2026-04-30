@@ -19,18 +19,12 @@ function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
         alt="Reel Thumbnail"
         className="w-full h-full object-cover transition-transform duration-700"
       />
-      
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/20 group-hover/card:bg-black/40 transition-colors duration-300" />
-      
-      {/* Play Button Overlay */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-transform duration-500 border border-white/40">
           <FaPlay size={18} className="translate-x-0.5" />
         </div>
       </div>
-
-      {/* Button at bottom */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)]">
         <div className="bg-white py-3 rounded-full text-black text-[10px] font-bold text-center uppercase tracking-widest opacity-0 group-hover/card:opacity-100 translate-y-4 group-hover/card:translate-y-0 transition-all duration-500 shadow-xl">
           Watch on Instagram
@@ -84,8 +78,6 @@ export default function Reels() {
             Our Reels
           </h2>
         </div>
-
-        {/* Horizontal scroll on mobile, Grid on desktop */}
         <div className="flex overflow-x-auto snap-x snap-mandatory pb-6 gap-6 scrollbar-hide md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 md:overflow-visible">
           {reels.map((reel, index) => (
             <InstagramReel key={reel._id} reel={reel} index={index} />

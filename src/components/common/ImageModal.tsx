@@ -47,7 +47,7 @@ export function ImageModal({
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:p-8"
           onClick={onClose}
         >
-          {/* Close Button */}
+
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -59,7 +59,6 @@ export function ImageModal({
             <IoClose size={32} />
           </button>
 
-          {/* Image Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}

@@ -165,7 +165,6 @@ export default function Navbar() {
             }}
             className="relative block w-[110px] sm:w-[130px] md:w-[160px] h-10 sm:h-12 md:h-20"
           >
-            {/* White Logo */}
             <Image
               src="/logo.webp"
               alt="topo logo white"
@@ -174,8 +173,6 @@ export default function Navbar() {
                 }`}
               priority
             />
-
-            {/* Blue Logo */}
             <Image
               src="/logo-blue.webp"
               alt="topo logo blue"

@@ -61,7 +61,6 @@ export default function GalleryPage() {
     <main className="pt-40 sm:pt-32 md:pt-40 lg:pt-40 xl:pt-52 pb-16">
       <section className="w-full px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-[1400px] mx-auto">
-          {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
             <div className="w-full md:w-1/2" data-aos="fade-right">
               <h1 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
@@ -78,8 +77,6 @@ export default function GalleryPage() {
               </p>
             </div>
           </div>
-
-          {/* Content */}
           {loading ? (
             <LoadingSkeleton />
           ) : error ? (
@@ -118,8 +115,6 @@ export default function GalleryPage() {
               })}
             </div>
           )}
-
-          {/* Load More Button */}
           {hasMore && galleryImages?.length > 0 && (
             <div className="mt-12 flex justify-center">
               <button

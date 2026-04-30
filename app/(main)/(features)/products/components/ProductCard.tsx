@@ -43,11 +43,7 @@ export default function ProductCard({
       {!imageLoaded && (
         <Skeleton className="absolute inset-0 rounded-none" />
       )}
-
-      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-60" />
-
-      {/* Content */}
       <div
         onClick={() => setIsExpanded(!isExpanded)}
         className={`absolute bottom-2 left-2 right-2 

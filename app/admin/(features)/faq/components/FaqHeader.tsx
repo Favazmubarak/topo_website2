@@ -1,4 +1,4 @@
-// components/faq/FaqHeader.tsx
+
 import { FaPlus } from "react-icons/fa";
 
 interface FaqHeaderProps {

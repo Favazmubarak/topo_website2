@@ -50,13 +50,12 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-6 md:space-y-10 lg:space-y-12">
-      {/* Heading */}
+
       <div>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-black">Dashboard</h1>
         <p className="text-gray-500 mt-1 font-medium text-xs sm:text-sm">Welcome back. Here's what's happening with your site.</p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
         {isLoading && products.length === 0 && testimonials.length === 0 && images.length === 0
           ? Array.from({ length: 3 }).map((_, i) => <StatSkeleton key={i} />)
@@ -74,9 +73,8 @@ export default function AdminDashboardPage() {
         }
       </div>
 
-      {/* Bottom grid */}
       <div className="grid grid-cols-1 gap-4 md:gap-6 lg:gap-8">
-        {/* Quick Actions */}
+
         <div className="bg-gray-50/50 p-4 sm:p-6 md:p-8 rounded-xl md:rounded-2xl border border-gray-100">
           <h2 className="text-sm md:text-lg font-bold text-black mb-3 md:mb-6">Quick Actions</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">

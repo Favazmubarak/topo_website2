@@ -44,7 +44,7 @@ export const useProductAdminStore = create<ProductAdminState>((set, get) => ({
     try {
       const data = await productApi.getAllProducts(page, 12);
       
-      // Robustly handle different response formats
+      
       if (data && data.products && Array.isArray(data.products)) {
         set({ 
           products: data.products, 

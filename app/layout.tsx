@@ -3,6 +3,7 @@ import { Poppins, Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import { AOSProvider } from "@/src/providers/AOSProvider";
 import LoadingScreen from "@/src/components/common/LoadingScreen";
+import ScrollToTop from "@/src/components/common/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
@@ -51,6 +52,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <Toaster position="top-right" reverseOrder={false} />
+        <ScrollToTop />
         <LoadingScreen />
         <AOSProvider>
           {children}

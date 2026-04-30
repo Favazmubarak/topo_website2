@@ -5,7 +5,7 @@ import { useImageAdmin } from "./hooks/useImageAdmin";
 import { Section } from "./api/imageApi";
 import { toast } from "react-hot-toast";
 
-// Components
+
 import { ImageHeader } from "./components/ImageHeader";
 import { SectionFilter } from "./components/SectionFilter";
 import { ImageGrid } from "./components/ImageGrid";
@@ -36,12 +36,12 @@ const ImagesAdminPage = () => {
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
 
-  // Fetch on section change
+  
   useEffect(() => {
     fetchImage(activeSection);
   }, [activeSection, fetchImage]);
 
-  // Toasts
+  
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage, { id: "admin-success" });

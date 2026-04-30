@@ -1,4 +1,4 @@
-// components/FieldError.tsx
+
 import { FaExclamationCircle } from "react-icons/fa";
 
 export const FieldError = ({ msg }: { msg?: string }) =>

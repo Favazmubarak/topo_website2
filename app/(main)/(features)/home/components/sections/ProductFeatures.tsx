@@ -77,7 +77,6 @@ export default function ProductFeatures() {
               transition-all duration-500 ease-in-out
               hover:shadow-[0_20px_40px_rgba(0,102,178,0.2)]"
             >
-              {/* Smooth Background Overlay */}
               <div className="absolute inset-0 bg-[#0066B2] rounded-[20px] opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100" />
 
               <div className="relative z-10 mb-4 sm:mb-6 text-black transition-colors duration-500 group-hover:text-white">

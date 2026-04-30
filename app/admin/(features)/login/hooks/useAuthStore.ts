@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed";
       set({ error: errorMessage, isLoading: false });
-      throw error; // re-throw original so page can read .response.data.errors
+      throw error; 
     }
   },
 
@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await axiosInstance.post("/auth/logout");
     } catch {
-      // proceed with client-side cleanup regardless
+      
     }
     localStorage.removeItem("accessToken");
     set({ user: null, accessToken: null, isAuthenticated: false });

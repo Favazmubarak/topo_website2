@@ -40,15 +40,12 @@ export default function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={closeSidebar}
         />
       )}
-
-      {/* Sidebar */}
       <div
         className={`w-64 h-screen bg-gray-200 border-r border-gray-100 flex flex-col fixed left-0 top-0 z-50 transition-transform duration-300 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           }`}

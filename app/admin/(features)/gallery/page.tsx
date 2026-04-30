@@ -107,7 +107,6 @@ const GalleryAdminPage = () => {
     <div className="min-h-screen bg-white pb-12 md:pb-20 px-3 sm:px-4 md:px-0 text-black font-montserrat">
       <div className="max-w-[1400px] mx-auto">
 
-        {/* Header */}
         <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
           <div>
             <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Gallery Management</h1>
@@ -121,7 +120,6 @@ const GalleryAdminPage = () => {
           </button>
         </div>
 
-        {/* Loading Skeleton */}
         {loading && images.length === 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {[...Array(8)].map((_, i) => (
@@ -130,7 +128,6 @@ const GalleryAdminPage = () => {
           </div>
         )}
 
-        {/* Gallery Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {images.map((img) => (
             <div key={img._id} className="group relative aspect-square rounded-xl md:rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500">
@@ -162,7 +159,6 @@ const GalleryAdminPage = () => {
           ))}
         </div>
 
-        {/* Load More Button */}
         {hasMore && (
           <div className="mt-8 flex justify-center">
             <button
@@ -175,7 +171,6 @@ const GalleryAdminPage = () => {
           </div>
         )}
 
-        {/* Empty State */}
         {images.length === 0 && !loading && (
           <div className="text-center py-16 md:py-20 border-2 border-dashed border-gray-100 rounded-xl md:rounded-2xl flex flex-col items-center justify-center gap-3">
             <FaImage className="text-gray-200" size={32} />
@@ -183,9 +178,6 @@ const GalleryAdminPage = () => {
           </div>
         )}
 
-        {/* Empty State */}
-
-        {/* Modal Form */}
         {isFormOpen && (
           <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={closeForm} />

@@ -13,7 +13,7 @@ export default function Hero() {
   const getSafeSrc = (url?: string) =>
     url?.trim() || "/fallback/hero.jpeg";
 
-  // Reset fade state when image changes
+  
   useEffect(() => {
     setImageLoaded(false);
     setShowSkeleton(true);
@@ -47,7 +47,6 @@ export default function Hero() {
         </div>
       ) : (
         <>
-          {/* Background Image with Fade Effect */}
           {!loading && (
             <Image
               src={getSafeSrc(images?.[0]?.imageUrl)}
@@ -64,8 +63,6 @@ export default function Hero() {
               `}
             />
           )}
-
-          {/* Optional smooth dark overlay */}
           <div
             className={`
               absolute inset-0 bg-black/10
@@ -73,8 +70,6 @@ export default function Hero() {
               ${imageLoaded ? "opacity-100" : "opacity-0"}
             `}
           />
-
-          {/* Content */}
           <div className={`relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16 transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}>
             {!loading && (
               <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
@@ -138,8 +133,6 @@ export default function Hero() {
               </div>
             )}
           </div>
-
-          {/* Bottom Gradient */}
           <div
             className="
               absolute bottom-0 left-0 w-full 

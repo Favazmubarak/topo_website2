@@ -43,13 +43,12 @@ export default function Gallery() {
   const { galleryImages, loading, error } = useGallery();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Show first 7 images
+  
   const displayImages = galleryImages?.slice(0, 7) || [];
 
   return (
     <section className="w-full pb-10 sm:pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
-        {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 mb-10 lg:mb-16">
           <div className="w-full md:w-1/2" data-aos="fade-right">
             <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight tracking-tight">
@@ -66,8 +65,6 @@ export default function Gallery() {
             </p>
           </div>
         </div>
-
-        {/* Content */}
         {loading ? (
           <LoadingSkeleton />
         ) : error ? (

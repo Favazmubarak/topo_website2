@@ -16,21 +16,19 @@ export default function NotFound() {
   return (
     <main className="min-h-screen w-full flex items-center justify-center bg-white px-6 overflow-hidden">
       <div className="max-w-[1400px] w-full flex flex-col items-center text-center relative">
-        {/* Background Decorative Element */}
+
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-full overflow-hidden">
           <h1 className="font-highrise text-[30vw] md:text-[25vw] leading-none text-gray-50 opacity-[0.03] select-none uppercase whitespace-nowrap">
             Not Found
           </h1>
         </div>
 
-        {/* 404 Text */}
         <div data-aos="fade-down">
           <h2 className="font-highrise text-[clamp(80px,18vw,280px)] leading-none text-[#0066B2] tracking-tighter">
             404
           </h2>
         </div>
 
-        {/* Message */}
         <div 
           className="mt-2 md:mt-0 flex flex-col items-center gap-4 md:gap-6"
           data-aos="fade-up"
@@ -65,7 +63,6 @@ export default function NotFound() {
           </Link>
         </div>
 
-        {/* Decorative Lines */}
         <div className="absolute top-0 left-0 w-24 h-[1px] bg-gray-100 hidden lg:block" />
         <div className="absolute bottom-0 right-0 w-24 h-[1px] bg-gray-100 hidden lg:block" />
       </div>

@@ -94,7 +94,6 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-6" noValidate>
           <div className="space-y-5">
-            {}
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Email Address</label>
               <input
@@ -114,8 +113,6 @@ export default function LoginPage() {
               />
               <FieldError msg={errors.email} />
             </div>
-
-            {}
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Password</label>
               <input

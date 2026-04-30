@@ -12,8 +12,6 @@ export const ReelSkeleton = () => {
                             <div className="w-6 h-6 bg-gray-200 rounded-lg" />
                         </div>
                     </div>
-                    
-                    {/* Thumbnail Skeleton */}
                     <div className="aspect-[9/16] w-full bg-gray-200 rounded-lg md:rounded-xl" />
                     
                     <div className="mt-4 flex justify-between">
