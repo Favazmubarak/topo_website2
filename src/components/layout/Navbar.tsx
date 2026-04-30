@@ -155,7 +155,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-2 md:py-2.5 transition-all duration-500 bg-white/10 backdrop-blur-[1px] shadow-lg border-b border-white/20 ${
+        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-2 md:py-2.5 transition-all duration-500 border-b border-white/20 bg-white/30 backdrop-blur-md shadow-lg ${
           isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -260,7 +260,7 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed top-[56px] left-0 w-full bg-white/10 backdrop-blur-sm z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/20 ${isMobileMenuOpen 
+        className={`fixed top-[56px] left-0 w-full bg-white/30 backdrop-blur-md z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/20 ${isMobileMenuOpen 
           ? "translate-y-0 opacity-100 visible" 
           : "-translate-y-full opacity-0 invisible"
         }`}
@@ -293,7 +293,7 @@ export default function Navbar() {
   transition-all duration-200
 
   ${isActive
-                      ? "bg-white/20 backdrop-blur-md border border-white/30 text-brand-blue font-semibold shadow-sm"
+                      ? "bg-white/40 backdrop-blur-md border border-white/40 text-brand-blue font-semibold shadow-sm"
                       : "text-black/70 font-medium"
                     }
 
