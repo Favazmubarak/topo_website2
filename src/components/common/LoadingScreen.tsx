@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import Image from "next/image";
 
@@ -8,15 +8,42 @@ const LoadingScreen = () => {
   const [isFading, setIsFading] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
+  const [minElapsed, setMinElapsed] = useState(false);
+  const originalOverflow = useRef<string>("");
 
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
   const fixedOffset = circumference * (1 - 0.35);
 
   useEffect(() => {
-    
-    const originalOverflow = document.body.style.overflow;
+    originalOverflow.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    const minTimer = setTimeout(() => {
+      setMinElapsed(true);
+    }, 250);
+
+    const fallbackTimer = setTimeout(() => {
+      setHeroReady(true);
+    }, 4000);
+
+    const heroReadyHandler = () => {
+      setHeroReady(true);
+    };
+
+    window.addEventListener("heroReady", heroReadyHandler);
+
+    return () => {
+      clearTimeout(minTimer);
+      clearTimeout(fallbackTimer);
+      window.removeEventListener("heroReady", heroReadyHandler);
+      document.body.style.overflow = originalOverflow.current;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!heroReady || !minElapsed) return;
 
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
@@ -25,7 +52,7 @@ const LoadingScreen = () => {
 
     const removeTimer = setTimeout(() => {
       setShouldRender(false);
-      document.body.style.overflow = originalOverflow;
+      document.body.style.overflow = originalOverflow.current;
 
       setTimeout(() => {
         AOS.refresh();
@@ -35,9 +62,8 @@ const LoadingScreen = () => {
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
-      document.body.style.overflow = originalOverflow;
     };
-  }, []);
+  }, [heroReady, minElapsed]);
 
   if (!shouldRender) return null;
 
@@ -53,7 +79,6 @@ const LoadingScreen = () => {
       }}
     >
       <div className="relative w-[150px] h-[150px] flex items-center justify-center">
-
         <div
           className={`absolute z-10 transition-opacity duration-500 ${
             isFading || !imageLoaded ? "opacity-100" : "opacity-100"
@@ -79,7 +104,6 @@ const LoadingScreen = () => {
 
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
           <div className="relative w-[100px] h-[100px] animate-smooth-rotate">
-
             <svg
               className="absolute inset-0 w-full h-full"
               viewBox="0 0 100 100"
@@ -124,4 +148,3 @@ const LoadingScreen = () => {
 };
 
 export default LoadingScreen;
-

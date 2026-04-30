@@ -12,15 +12,14 @@ interface HeroProps {
 
 export default function Hero({ initialImages }: HeroProps) {
   const { images: fetchedImages, loading, error } = useImage("hero");
-  const images = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
-  
+  const images =
+    initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
 
-  const getSafeSrc = (url?: string) =>
-    url?.trim() || "/fallback/hero.jpeg";
+  const getSafeSrc = (url?: string) => url?.trim() || "/fallback/hero.jpeg";
 
-  
   useEffect(() => {
     setImageLoaded(false);
     setShowSkeleton(true);
@@ -32,13 +31,19 @@ export default function Hero({ initialImages }: HeroProps) {
     }
   }, [imageLoaded]);
 
+  useEffect(() => {
+    if (!imageLoaded) return;
+
+    window.dispatchEvent(new Event("heroReady"));
+  }, [imageLoaded]);
+
   return (
     <section
       id="hero"
       className="relative w-full h-[65vh] sm:h-[75vh] md:h-screen overflow-hidden px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50"
     >
       {showSkeleton && (
-        <div 
+        <div
           className={`absolute inset-0 z-40 transition-opacity duration-1000 ease-in-out ${
             imageLoaded ? "opacity-0" : "opacity-100"
           }`}
@@ -46,7 +51,7 @@ export default function Hero({ initialImages }: HeroProps) {
           <HeroSkeleton />
         </div>
       )}
-      
+
       {error ? (
         <div className="w-full h-full flex items-center justify-center">
           <p className="text-red-500">Error: {error}</p>
@@ -75,7 +80,9 @@ export default function Hero({ initialImages }: HeroProps) {
               ${imageLoaded ? "opacity-100" : "opacity-0"}
             `}
           />
-          <div className={`relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16 transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}>
+          <div
+            className={`relative z-10 flex flex-col justify-center h-full -translate-y-4 sm:-translate-y-6 md:-translate-y-12 lg:-translate-y-16 transition-opacity duration-700 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+          >
             {!loading && (
               <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-13 items-start">
                 <div className="inline-block mx-auto sm:mx-0 flex flex-col gap-2 sm:gap-3 md:gap-4">
