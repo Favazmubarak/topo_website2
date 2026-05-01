@@ -20,7 +20,7 @@ export default function About({ initialImages }: AboutProps) {
 
   const handleLearnMore = (e: React.MouseEvent) => {
     e.preventDefault();
-    const element = document.getElementById('hero');
+    const element = document.getElementById('products');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -59,7 +59,7 @@ export default function About({ initialImages }: AboutProps) {
               that enhance both residential and commercial environments.
             </p>
 
-            <Link href="#hero" onClick={handleLearnMore}>
+            <Link href="#products" onClick={handleLearnMore}>
               <button className="flex items-center gap-3 sm:gap-4 bg-[#0066B2] text-white px-3 sm:pl-5 py-2.5 sm:py-3 rounded-full font-poppins text-sm hover:bg-[#005596] transition-all duration-300 group shadow-lg hover:shadow-[#0066B2]/20">
                 Learn more
                 <div className="bg-white rounded-full p-2 group-hover:bg-gray-100 transition-colors">

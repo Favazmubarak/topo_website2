@@ -47,11 +47,12 @@ interface GalleryProps {
 
 export default function Gallery({ initialImages }: GalleryProps) {
   const { galleryImages: fetchedImages, loading, error } = useGallery();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const galleryImages = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
   
   const displayImages = galleryImages?.slice(0, 7) || [];
+  const allImageUrls = displayImages.map(image => image.imageUrl);
 
   return (
     <section className="w-full pb-10 sm:pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
@@ -91,7 +92,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
                   className={`${layout.span} ${layout.aspect} relative overflow-hidden rounded-[15px] group cursor-pointer`}
                   data-aos="fade-up"
                   data-aos-delay={index * 80}
-                  onClick={() => setSelectedImage(image.imageUrl)}
+                  onClick={() => setSelectedIndex(index)}
                 >
                   <Image
                     src={image.imageUrl}
@@ -113,9 +114,11 @@ export default function Gallery({ initialImages }: GalleryProps) {
       </div>
 
       <ImageModal
-        isOpen={!!selectedImage}
-        onClose={() => setSelectedImage(null)}
-        imageUrl={selectedImage || ""}
+        isOpen={selectedIndex !== null}
+        onClose={() => setSelectedIndex(null)}
+        images={allImageUrls}
+        currentIndex={selectedIndex || 0}
+        onIndexChange={(index) => setSelectedIndex(index)}
       />
     </section>
   );

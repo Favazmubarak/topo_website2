@@ -49,13 +49,15 @@ function ErrorState({ error }: { error: string }) {
 
 export default function GalleryPage() {
   const { galleryImages, loading, loadingMore, error, hasMore, page, fetchGalleryImages } = useGallery();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const handleLoadMore = () => {
     if (!loading && !loadingMore && hasMore) {
       fetchGalleryImages(page + 1);
     }
   };
+
+  const allImageUrls = galleryImages?.map(image => image.imageUrl) || [];
 
   return (
     <main className="pt-40 sm:pt-32 md:pt-40 lg:pt-40 xl:pt-52 pb-16">
@@ -96,7 +98,7 @@ export default function GalleryPage() {
                     data-aos="fade-up"
                     data-aos-delay={(index % 4) * 80}
                     className={`${layout.span} ${layout.aspect} relative aspect-[4/3] overflow-hidden rounded-[15px] group cursor-pointer`}
-                    onClick={() => setSelectedImage(image.imageUrl)}
+                    onClick={() => setSelectedIndex(index)}
                   >
                     <Image
                       src={image.imageUrl}
@@ -137,9 +139,11 @@ export default function GalleryPage() {
       </section>
 
       <ImageModal
-        isOpen={!!selectedImage}
-        onClose={() => setSelectedImage(null)}
-        imageUrl={selectedImage || ""}
+        isOpen={selectedIndex !== null}
+        onClose={() => setSelectedIndex(null)}
+        images={allImageUrls}
+        currentIndex={selectedIndex || 0}
+        onIndexChange={(index) => setSelectedIndex(index)}
       />
     </main>
   );
