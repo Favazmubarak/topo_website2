@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { useImage } from "../../hooks/useImage";
 import { Skeleton } from "@/src/components/common/Skeleton";
@@ -16,6 +17,14 @@ export default function About({ initialImages }: AboutProps) {
 
   const getSafeSrc = (url?: string, defaultPath: string = "/fallback/about.jpg") =>
     url?.trim() || defaultPath;
+
+  const handleLearnMore = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById('hero');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section
@@ -50,23 +59,25 @@ export default function About({ initialImages }: AboutProps) {
               that enhance both residential and commercial environments.
             </p>
 
-            <button className="flex items-center gap-3 sm:gap-4 bg-[#0066B2] text-white px-3 sm:pl-5 py-2.5 sm:py-3 rounded-full font-poppins text-sm hover:bg-[#005596] transition-all duration-300 group shadow-lg hover:shadow-[#0066B2]/20">
-              Learn more
-              <div className="bg-white rounded-full p-2 group-hover:bg-gray-100 transition-colors">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-[#0066B2] w-4 h-4 sm:w-5 sm:h-5 -rotate-45"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </div>
-            </button>
+            <Link href="#hero" onClick={handleLearnMore}>
+              <button className="flex items-center gap-3 sm:gap-4 bg-[#0066B2] text-white px-3 sm:pl-5 py-2.5 sm:py-3 rounded-full font-poppins text-sm hover:bg-[#005596] transition-all duration-300 group shadow-lg hover:shadow-[#0066B2]/20">
+                Learn more
+                <div className="bg-white rounded-full p-2 group-hover:bg-gray-100 transition-colors">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-[#0066B2] w-4 h-4 sm:w-5 sm:h-5 -rotate-45"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </button>
+            </Link>
           </div>
         </div>
 
