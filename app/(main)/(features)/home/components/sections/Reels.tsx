@@ -72,7 +72,7 @@ export default function Reels() {
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 sm:mb-14 md:mb-16">
           <h2
-            className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight"
+            className="font-montserrat text-[#0066B2] px-4 text-[clamp(22px,5vw,50px)] font-medium leading-tight"
             data-aos="fade-up"
           >
             Our Reels

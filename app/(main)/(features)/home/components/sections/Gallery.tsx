@@ -49,7 +49,9 @@ export default function Gallery({ initialImages }: GalleryProps) {
   const { galleryImages: fetchedImages, loading, error } = useGallery();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const galleryImages = initialImages && initialImages.length > 0 ? initialImages : fetchedImages;
+  // Use fetched data if available, otherwise fall back to initial data
+  const galleryImages = fetchedImages && fetchedImages.length > 0 ? fetchedImages : (initialImages || []);
+  const showSkeleton = loading && galleryImages.length === 0;
   
   const displayImages = galleryImages?.slice(0, 7) || [];
   const allImageUrls = displayImages.map(image => image.imageUrl);
@@ -73,7 +75,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
             </p>
           </div>
         </div>
-        {loading ? (
+        {showSkeleton ? (
           <LoadingSkeleton />
         ) : error ? (
           <ErrorState error={error} />

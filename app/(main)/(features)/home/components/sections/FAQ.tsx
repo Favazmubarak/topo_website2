@@ -15,7 +15,8 @@ export default function FAQ({ initialFAQs }: FAQProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const { faqs: fetchedFaqs, loading, error } = useFAQ();
 
-  const faqs = initialFAQs && initialFAQs.length > 0 ? initialFAQs : fetchedFaqs;
+  const faqs = fetchedFaqs.length > 0 ? fetchedFaqs : (initialFAQs || []);
+  const showSkeleton = loading && faqs.length === 0;
 
   const toggleFAQ = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -37,7 +38,7 @@ export default function FAQ({ initialFAQs }: FAQProps) {
         </div>
         <div className="w-full lg:w-[60%] flex flex-col gap-4 sm:gap-6 lg:ml-auto">
 
-          {loading ? (
+          {showSkeleton ? (
             <FAQSkeleton />
           ) : error ? (
             <div className="flex justify-center items-center min-h-[400px] text-red-500">
@@ -62,7 +63,7 @@ export default function FAQ({ initialFAQs }: FAQProps) {
                       ({index + 1})
                     </span>
 
-                    <p className="font-montserrat text-black text-[13px] sm:text-base md:text-[18px] font-medium leading-[1.4]">
+                    <p className="font-montserrat text-black text-[13px] sm:text-base md:text-[18px] font-medium leading-[1.4] break-words whitespace-normal">
                       {faq.question}
                     </p>
                   </div>
@@ -83,8 +84,8 @@ export default function FAQ({ initialFAQs }: FAQProps) {
                       : "grid-rows-[0fr] opacity-0"
                     }`}
                 >
-                  <div className="overflow-hidden">
-                    <p className="font-montserrat text-[#929292] text-[12px] sm:text-sm md:text-base leading-relaxed pl-[44px] sm:pl-[64px] md:pl-[72px]">
+                  <div className="overflow-hidden min-h-0">
+                    <p className="font-montserrat text-[#929292] text-[12px] sm:text-sm md:text-base leading-relaxed pl-[44px] sm:pl-[64px] md:pl-[72px] break-words whitespace-normal">
                       {faq.answer}
                     </p>
                   </div>

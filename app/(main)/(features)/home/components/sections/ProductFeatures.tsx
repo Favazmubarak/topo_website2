@@ -58,7 +58,7 @@ export default function ProductFeatures() {
     <section className="w-full bg-[#E1ECFF] md:py-12 sm:py-10 py-8 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="text-center mb-10 sm:mb-16">
-          <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] font-medium leading-tight mb-3" data-aos="fade-up">
+          <h2 className="font-montserrat text-[#0066B2] text-[clamp(24px,5vw,50px)] font-medium leading-tight mb-3" data-aos="fade-up">
             Product Features
           </h2>
           <p className="font-montserrat font-[500] text-black text-xs sm:text-base md:text-[20px] max-w-[800px] mx-auto" data-aos="fade-up" data-aos-delay="100">

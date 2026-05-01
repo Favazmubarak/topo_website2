@@ -24,7 +24,7 @@ export const getAllGalleryImagesServer = async (page: number = 1, limit: number 
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
     try {
         const res = await fetch(`${baseUrl}/gallery?page=${page}&limit=${limit}`, {
-            next: { revalidate: 3600 }
+            next: { revalidate: 0 }
         });
         if (!res.ok) return null;
         return res.json();

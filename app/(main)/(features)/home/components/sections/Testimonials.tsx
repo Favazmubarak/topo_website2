@@ -62,7 +62,7 @@ export default function Testimonials() {
                         className="opacity-20"
                       />
                     </div>
-                    <p className="font-poppins text-[#2F2F2F] text-sm sm:text-base leading-relaxed mb-8 flex-grow line-clamp-5 overflow-hidden italic">
+                    <p className="font-montserrat text-[#2F2F2F] text-[13px] sm:text-base leading-relaxed mb-8 flex-grow overflow-y-auto no-scrollbar italic break-words whitespace-normal">
                       "{testimonial.review}"
                     </p>
                     <div className="flex items-center gap-4 pt-6 border-t border-[#E9E9E9]">

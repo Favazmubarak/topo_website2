@@ -7,8 +7,8 @@ interface FaqHeaderProps {
 
 export const FaqHeader = ({ onAddClick }: FaqHeaderProps) => (
     <div className="mb-6 md:mb-12 flex items-center justify-between border-b pb-4 md:pb-6">
-        <div>
-            <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight">Frequently Asked Questions</h1>
+        <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl md:text-2xl font-medium tracking-tight break-words">Frequently Asked Questions</h1>
             <p className="text-[8px] sm:text-[9px] md:text-[10px] uppercase font-black tracking-widest text-gray-400 mt-0.5">
                 Manage site-wide help and support
             </p>
