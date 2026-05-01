@@ -47,15 +47,19 @@ export default function ProductCard({
       <div
         onClick={() => setIsExpanded(!isExpanded)}
         className={`absolute bottom-2 left-2 right-2 
-        bg-white/80 backdrop-blur-sm p-3 sm:p-4 md:p-5 
+        bg-white/90 backdrop-blur-md p-3 sm:p-4 md:p-5 
         rounded-lg md:rounded-xl flex flex-col gap-1
-        transition-all duration-500 cursor-pointer
-        ${isExpanded ? "min-h-[37.5%] max-h-[90%] h-auto overflow-y-auto" : "h-[37.5%] overflow-hidden"}`}
+        cursor-pointer shadow-xl border border-white/20
+        transition-[max-height,background-color,backdrop-filter] duration-500 ease
+        will-change-[max-height] [backface-visibility:hidden] [transform:translateZ(0)]
+        ${isExpanded 
+          ? "min-h-[37.5%] max-h-[90%] h-auto overflow-y-auto scrollbar-hide" 
+          : "min-h-[37.5%] max-h-[37.5%] h-[37.5%] overflow-hidden"}`}
       >
         <h3
           className={`font-poppins text-black 
           text-[12px] sm:text-[14px] md:text-[18px] lg:text-[20px]
-          leading-snug font-medium ${isExpanded ? "" : "line-clamp-1"}`}
+          leading-snug font-medium break-words whitespace-normal transition-all duration-300 ${isExpanded ? "" : "line-clamp-1"}`}
         >
           {productName}
         </h3>
@@ -63,7 +67,7 @@ export default function ProductCard({
         <p
           className={`font-poppins 
             text-[10px] sm:text-xs md:text-sm lg:text-base 
-            tracking-wide text-black transition-all duration-300 ${isExpanded ? "" : "line-clamp-1"}`}
+            tracking-wide text-black break-words whitespace-normal transition-all duration-300 ${isExpanded ? "" : "line-clamp-1"}`}
         >
           {title}
         </p>
@@ -71,7 +75,7 @@ export default function ProductCard({
         <p
           className={`font-montserrat text-[#2F2F2F] 
           text-[10px] sm:text-[11px] md:text-[13px] lg:text-[15px]
-          leading-snug font-normal transition-all duration-300
+          leading-snug font-normal break-words whitespace-normal transition-all duration-300
           ${isExpanded ? "block" : "line-clamp-1 sm:line-clamp-2 md:line-clamp-3"}`}
         >
           {description}
