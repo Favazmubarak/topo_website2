@@ -20,8 +20,9 @@ export default function Upgrade() {
   };
 
   return (
-    <section className="w-full my-3 sm:my-6 md:my-12 lg:my-20 pb-3 sm:pb-6 md:pb-12 lg:pb-20">
-      <div className="w-full h-[180px] sm:h-[240px] md:h-[360px] lg:h-[450px] relative overflow-hidden group shadow-xl">
+    <section className="w-full bg-slate-white md:py-12 sm:py-10 py-8">
+      <div className="max-w-full bg-red-200  mx-auto">
+  <div className="w-full h-[180px] sm:h-[240px] md:h-[360px] lg:h-[450px] relative overflow-hidden group shadow-xl">
         {loading ? (
           <Skeleton className="w-full h-full rounded-none" />
         ) : error ? (
@@ -74,6 +75,8 @@ export default function Upgrade() {
           </>
         )}
       </div>
+      </div>
+    
     </section>
   );
 }

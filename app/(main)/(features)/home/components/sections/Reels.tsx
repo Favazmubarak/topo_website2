@@ -57,8 +57,8 @@ export default function Reels() {
   if (!loading && reels.length === 0) {
     if (error) {
       return (
-        <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
-          <div className="max-w-[1400px] mx-auto flex justify-center items-center py-10">
+        <section className="w-full md:py-12 sm:py-10 py-8 md:pb-24 sm:pb-20 pb-16 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
+          <div className="max-w-[1400px] mx-auto flex justify-center items-center ">
             <h2 className="text-red-500 font-montserrat">Error: {error}</h2>
           </div>
         </section>
@@ -68,7 +68,7 @@ export default function Reels() {
   }
 
   return (
-    <section className="w-full pb-16 md:pb-24 px-4 sm:px-6 md:px-12 lg:px-20">
+    <section className="w-full md:py-12 sm:py-10 py-8 md:pb-24 sm:pb-20 pb-16 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 sm:mb-14 md:mb-16">
           <h2

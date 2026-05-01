@@ -29,7 +29,7 @@ export default function About({ initialImages }: AboutProps) {
   return (
     <section
       id="about"
-      className="w-full bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20"
+      className="w-full bg-white-200 py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-12 lg:px-20"
     >
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-12">

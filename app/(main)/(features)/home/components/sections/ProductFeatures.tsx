@@ -55,7 +55,7 @@ const ArrowIcon = ({ color }: { color: string }) => (
 
 export default function ProductFeatures() {
   return (
-    <section className="w-full bg-[#E1ECFF] my-10 sm:my-16 py-14 sm:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
+    <section className="w-full bg-[#E1ECFF] md:py-12 sm:py-10 py-8 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="font-montserrat text-[#0066B2] text-[clamp(20px,5vw,50px)] font-medium leading-tight mb-3" data-aos="fade-up">

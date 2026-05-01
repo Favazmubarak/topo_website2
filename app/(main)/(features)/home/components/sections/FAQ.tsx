@@ -23,7 +23,7 @@ export default function FAQ({ initialFAQs }: FAQProps) {
 
   return (
     <section
-      className="w-full my-10 sm:my-16 py-10 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20"
+      className="w-full bg-white md:py-12 sm:py-10 py-8 px-4 sm:px-6 md:px-12 lg:px-20"
       id="faq"
     >
       <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-10 lg:gap-16 justify-between items-start">
