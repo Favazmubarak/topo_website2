@@ -134,29 +134,40 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <HiMapPin className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mt-1 shrink-0" />
 
-                <span className="text-sm sm:text-base lg:text-base leading-snug break-words">
+                <Link
+                  href="https://www.google.com/maps/search/?api=1&query=Kakathodu,+Karumanamkurissi+(P.O.),+Cherpulassery,+Palakkad,+Kerala+679+504"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm sm:text-base lg:text-base leading-snug break-words hover:underline"
+                >
                   Kakathodu, Karumanamkurissi (P.O.),
                   <br />
                   Cherpulassery, Palakkad, Kerala
                   <br />
                   679 504.
-                </span>
+                </Link>
               </li>
 
               <li className="flex items-center space-x-3">
                 <HiPhone className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 shrink-0" />
 
-                <span className="text-sm sm:text-base lg:text-base break-all">
-                  75564442588
-                </span>
+                <Link
+                  href="tel:7907030870"
+                  className="text-sm sm:text-base lg:text-base break-all hover:underline"
+                >
+                  7907030870
+                </Link>
               </li>
 
               <li className="flex items-center space-x-3">
                 <HiEnvelope className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 shrink-0" />
 
-                <span className="text-sm sm:text-base lg:text-base break-all">
+                <Link
+                  href="mailto:Toppo@gmail.com"
+                  className="text-sm sm:text-base lg:text-base break-all hover:underline"
+                >
                   Toppo@gmail.com
-                </span>
+                </Link>
               </li>
             </ul>
           </div>
