@@ -22,7 +22,7 @@ const LoadingScreen = () => {
 
     const minTimer = setTimeout(() => {
       setMinElapsed(true);
-    }, 100);
+    }, 300);
 
     const fallbackTimer = setTimeout(() => {
       setHeroReady(true);
