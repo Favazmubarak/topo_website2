@@ -68,7 +68,7 @@ export default function Reels() {
   }
 
   return (
-    <section className="w-full md:py-12 sm:py-10 py-8 md:pb-24 sm:pb-20 pb-16 px-4 sm:px-6 md:px-12 lg:px-20">
+    <section className="w-full md:py-12 sm:py-10 py-8 md:pb-24 sm:pb-20 pb-16 px-0 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-10 sm:mb-14 md:mb-16">
           <h2
