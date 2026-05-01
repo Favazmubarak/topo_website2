@@ -240,9 +240,9 @@ const ProductAdminPage = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">{product.productName}</p>
-                <h3 className="text-sm font-bold tracking-tight">{product.title}</h3>
-                <p className="text-[10px] text-gray-500 line-clamp-2 leading-relaxed">{product.description}</p>
+                <p className="text-[9px] font-black uppercase tracking-widest text-gray-400 break-words whitespace-normal">{product.productName}</p>
+                <h3 className="text-sm font-bold tracking-tight break-words whitespace-normal">{product.title}</h3>
+                <p className="text-[10px] text-gray-500 line-clamp-2 leading-relaxed break-words whitespace-normal">{product.description}</p>
               </div>
             </div>
           ))}
@@ -321,7 +321,7 @@ const ProductAdminPage = () => {
 
                   <div>
                     <div
-                      className={`relative aspect-[3/4] sm:aspect-video rounded-lg sm:rounded-xl bg-gray-50 border overflow-hidden cursor-pointer group
+                      className={`relative aspect-[4/5] rounded-lg sm:rounded-xl bg-gray-100 border overflow-hidden cursor-pointer group
                         ${errors.image ? "border-red-300 ring-1 ring-red-300" : "border-gray-100"}`}
                       onClick={() => document.getElementById("prod-upload")?.click()}
                     >
@@ -330,7 +330,7 @@ const ProductAdminPage = () => {
                           src={previewUrl}
                           alt="Preview"
                           fill
-                          className={`object-cover transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}
+                          className={`object-contain transition-opacity duration-500 ${previewReady ? "opacity-100" : "opacity-0"}`}
                           onLoad={() => setPreviewReady(true)}
                         />
                       ) : (
