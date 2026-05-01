@@ -4,6 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import Image from "next/image";
 
+const radius = 45;
+const circumference = 2 * Math.PI * radius;
+const fixedOffset = circumference * (1 - 0.35);
+
 const LoadingScreen = () => {
   const [isFading, setIsFading] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
@@ -12,21 +16,17 @@ const LoadingScreen = () => {
   const [minElapsed, setMinElapsed] = useState(false);
   const originalOverflow = useRef<string>("");
 
-  const radius = 45;
-  const circumference = 2 * Math.PI * radius;
-  const fixedOffset = circumference * (1 - 0.35);
-
   useEffect(() => {
     originalOverflow.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const minTimer = setTimeout(() => {
       setMinElapsed(true);
-    }, 250);
+    }, 100);
 
     const fallbackTimer = setTimeout(() => {
       setHeroReady(true);
-    }, 4000);
+    }, 3000);
 
     const heroReadyHandler = () => {
       setHeroReady(true);
@@ -48,7 +48,7 @@ const LoadingScreen = () => {
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
       window.dispatchEvent(new Event("loaderFinished"));
-    }, 150);
+    }, 0);
 
     const removeTimer = setTimeout(() => {
       setShouldRender(false);
@@ -57,7 +57,7 @@ const LoadingScreen = () => {
       setTimeout(() => {
         AOS.refresh();
       }, 50);
-    }, 500);
+    }, 400);
 
     return () => {
       clearTimeout(fadeTimer);
@@ -69,7 +69,7 @@ const LoadingScreen = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-linear ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-400 ease-linear ${
         isFading ? "opacity-0" : "opacity-100"
       }`}
       style={{
