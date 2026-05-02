@@ -8,13 +8,13 @@ import { useState } from "react";
 import { GalleryImage } from "@/app/(main)/(features)/gallery/api/galleryApi";
 
 const LAYOUT_CONFIG = [
-  { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-[7/4]" },
-  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-[5/4]" },
+  { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
   { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
   { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
   { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
-  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-[5/4]" },
-  { span: "col-span-2 md:col-span-7", aspect: "aspect-[2/1] md:aspect-[7/4]" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-2 md:col-span-7", aspect: "aspect-[2/1] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
 ];
 
 function LoadingSkeleton() {

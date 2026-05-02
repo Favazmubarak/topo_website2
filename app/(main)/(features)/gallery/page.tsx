@@ -7,21 +7,21 @@ import { Skeleton } from "@/src/components/common/Skeleton";
 import { useState } from "react";
 
 const LAYOUT_CONFIG = [
-  { span: "col-span-1 md:col-span-7", aspect: "md:aspect-[7/4]" },
-  { span: "col-span-1 md:col-span-5", aspect: "md:aspect-[5/4]" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-1 md:col-span-5", aspect: "md:aspect-[5/4]" },
-  { span: "col-span-2 md:col-span-7", aspect: "md:aspect-[7/4]" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-2 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-1 md:col-span-7", aspect: "md:aspect-[7/4]" },
-  { span: "col-span-1 md:col-span-5", aspect: "md:aspect-[5/4]" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-1 md:col-span-4", aspect: "md:aspect-square" },
-  { span: "col-span-2 md:col-span-4", aspect: "md:aspect-square" },
+  { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-2 md:col-span-7", aspect: "aspect-[2/1] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-2 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-7", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-1 md:col-span-5", aspect: "aspect-[4/3] md:aspect-none md:w-full md:h-[calc(((100vw-96px-264px)/12*4)+72px)] lg:h-[calc(((min(100vw,1400px)-160px-264px)/12*4)+72px)]" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-1 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
+  { span: "col-span-2 md:col-span-4", aspect: "aspect-[4/3] md:aspect-square" },
 ];
 
 function LoadingSkeleton() {
