@@ -49,10 +49,9 @@ const useGalleryStore = create<GalleryState>((set) => ({
 export const useGallery = () => {
   const store = useGalleryStore();
   useEffect(() => {
-    if (!store.hasFetched && !store.loading) { 
-      store.fetchGalleryImages(1);
-    }
-  }, [store.hasFetched, store.loading, store.fetchGalleryImages]);
+    // Always fetch page 1 on mount to ensure fresh data
+    store.fetchGalleryImages(1);
+  }, [store.fetchGalleryImages]);
 
   return store;
 };

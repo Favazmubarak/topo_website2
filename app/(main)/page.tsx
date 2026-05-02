@@ -1,15 +1,16 @@
-import dynamic from "next/dynamic";
+export const dynamic = 'force-dynamic';
+import nextDynamic from "next/dynamic";
 import Hero from "./(features)/home/components/sections/Hero";
 import About from "./(features)/home/components/sections/About";
 import Products from "./(features)/home/components/sections/products";
 import WhyChooseTopo from "./(features)/home/components/sections/WhyChooseTopo";
 
-const FAQ = dynamic(() => import("./(features)/home/components/sections/FAQ"));
-const ProductFeatures = dynamic(() => import("./(features)/home/components/sections/ProductFeatures"));
-const Testimonials = dynamic(() => import("./(features)/home/components/sections/Testimonials"));
-const Gallery = dynamic(() => import("./(features)/home/components/sections/Gallery"));
-const Upgrade = dynamic(() => import("./(features)/home/components/sections/Upgrade"));
-const Reels = dynamic(() => import("./(features)/home/components/sections/Reels"));
+const FAQ = nextDynamic(() => import("./(features)/home/components/sections/FAQ"));
+const ProductFeatures = nextDynamic(() => import("./(features)/home/components/sections/ProductFeatures"));
+const Testimonials = nextDynamic(() => import("./(features)/home/components/sections/Testimonials"));
+const Gallery = nextDynamic(() => import("./(features)/home/components/sections/Gallery"));
+const Upgrade = nextDynamic(() => import("./(features)/home/components/sections/Upgrade"));
+const Reels = nextDynamic(() => import("./(features)/home/components/sections/Reels"));
 
 import { getImageBySectionServer } from "./(features)/home/api/imageApi";
 import { getAllProductsServer } from "./(features)/products/api/productApi";

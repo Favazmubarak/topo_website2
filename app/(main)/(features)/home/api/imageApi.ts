@@ -17,7 +17,7 @@ export const getImageBySectionServer = async (section: Section): Promise<Section
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
   try {
     const res = await fetch(`${baseUrl}/cms/images/${section}`, {
-      next: { revalidate: 3600 } // Cache for 1 hour
+      cache: 'no-store' // Disable caching to ensure immediate updates
     });
     if (!res.ok) return [];
     return res.json();

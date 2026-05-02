@@ -92,10 +92,8 @@ export const useImage = (section: Section) => {
   const fetchImage = useImageStore((state) => state.fetchImage);
   const isFetched = useImageStore((state) => state.isFetched[section]);
   useEffect(() => {
-    if (!isFetched) {
-      fetchImage(section);
-    }
-  }, [isFetched,section,fetchImage]);
+    fetchImage(section);
+  }, [section, fetchImage]);
 
   return { images: sectionImages, loading: isLoading, error: sectionError, fetchImage };
 };

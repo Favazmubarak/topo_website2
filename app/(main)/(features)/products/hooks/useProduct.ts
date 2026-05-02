@@ -70,10 +70,8 @@ export const useProduct = () => {
   } = useProductStore();
 
   useEffect(() => {
-    if (!hasFetched) {
-      fetchProducts(1);
-    }
-  }, [hasFetched, fetchProducts]);
+    fetchProducts(1);
+  }, [fetchProducts]);
 
   return {
     products,
