@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useImage } from "../hooks/useImage";
-import { SectionImage } from "../../api/imageApi";
+import { SectionImage } from "../api/imageApi";
 import HeroSkeleton from "./HeroSkeleton";
 
 interface HeroProps {

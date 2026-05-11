@@ -2,7 +2,7 @@
 
 import { FaPlay } from "react-icons/fa";
 import { useReels } from "../hooks/useReels";
-import { Reel } from "../../api/reelApi";
+import { Reel } from "../api/reelApi";
 
 function InstagramReel({ reel, index }: { reel: Reel; index: number }) {
   return (

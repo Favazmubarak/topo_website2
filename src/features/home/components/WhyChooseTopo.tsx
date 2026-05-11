@@ -7,7 +7,7 @@ import { SlEnergy } from "react-icons/sl";
 import { TbCloudPlus } from "react-icons/tb";
 import { useImage } from "../hooks/useImage";
 
-import { SectionImage } from "../../api/imageApi";
+import { SectionImage } from "../api/imageApi";
 import { Skeleton } from "@/src/components/common/Skeleton";
 
 const features = [

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useFAQ } from "../hooks/useFaq";
 import FAQSkeleton from "./FAQSkeleton";
-import { FAQ as FAQType } from "../../api/faqApi";
+import { FAQ as FAQType } from "../api/faqApi";
 
 
 interface FAQProps {

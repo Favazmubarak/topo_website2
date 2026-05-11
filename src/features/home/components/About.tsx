@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useImage } from "../hooks/useImage";
 import { Skeleton } from "@/src/components/common/Skeleton";
 
-import { SectionImage } from "../../api/imageApi";
+import { SectionImage } from "../api/imageApi";
 
 interface AboutProps {
   initialImages?: SectionImage[];
