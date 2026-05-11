@@ -5,29 +5,7 @@ import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
 import mongoose, { Schema, Document } from "mongoose";
 import { z } from "zod";
 
-// Product Model
-interface IProduct extends Document {
-  productName: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  publicId: string;
-}
-
-const ProductSchema = new Schema(
-  {
-    productName: { type: String, required: true, trim: true },
-    title: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true },
-    imageUrl: { type: String, required: true },
-    publicId: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
-const Product =
-  mongoose.models.Product ||
-  mongoose.model<IProduct>("Product", ProductSchema);
+import Product from "@/src/models/Product";
 
 // Validation
 const createProductSchema = z.object({

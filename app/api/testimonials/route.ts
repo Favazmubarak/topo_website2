@@ -5,29 +5,7 @@ import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
 import mongoose, { Schema, Document } from "mongoose";
 import { z } from "zod";
 
-// Testimonial Model
-interface ITestimonial extends Document {
-  name: string;
-  avatar: string;
-  publicId?: string;
-  rating: number;
-  review: string;
-}
-
-const TestimonialSchema = new Schema(
-  {
-    name: { type: String, required: true, trim: true },
-    avatar: { type: String, required: true, trim: true },
-    publicId: { type: String, trim: true },
-    rating: { type: Number, required: true },
-    review: { type: String, required: true, trim: true },
-  },
-  { timestamps: true }
-);
-
-const Testimonial =
-  mongoose.models.Testimonial ||
-  mongoose.model<ITestimonial>("Testimonial", TestimonialSchema);
+import Testimonial from "@/src/models/Testimonial";
 
 // Validation
 const createTestimonialSchema = z.object({

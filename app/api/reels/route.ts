@@ -5,23 +5,7 @@ import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
 import mongoose, { Schema, Document } from "mongoose";
 import { z } from "zod";
 
-// Reel Model
-interface IReel extends Document {
-  thumbnail: string;
-  publicId: string;
-  link: string;
-}
-
-const ReelSchema = new Schema(
-  {
-    thumbnail: { type: String, required: true },
-    publicId: { type: String, required: true },
-    link: { type: String, required: true, unique: true, trim: true },
-  },
-  { timestamps: true }
-);
-
-const Reel = mongoose.models.Reel || mongoose.model<IReel>("Reel", ReelSchema);
+import Reel from "@/src/models/Reel";
 
 // Validation
 const createReelSchema = z.object({

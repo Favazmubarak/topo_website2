@@ -1,9 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import AdminSidebar from "./components/AdminSidebar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { useUIStore } from "@/app/admin/components/hooks/useUIStore";
+import AdminSidebar from "@/src/features/admin/components/AdminSidebar";
+import ProtectedRoute from "@/src/features/admin/components/ProtectedRoute";
+import { useUIStore } from "@/src/features/admin/hooks/useUIStore";
 import { FaBars } from "react-icons/fa";
 
 export default function DashboardLayout({

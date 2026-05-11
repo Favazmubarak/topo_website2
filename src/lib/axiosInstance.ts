@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "../../app/admin/(features)/login/hooks/useAuthStore";
+import { useAuthStore } from "@/src/features/admin/hooks/useAuthStore";
 
 const axiosInstance = axios.create({
   baseURL: "/api",

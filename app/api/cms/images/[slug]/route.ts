@@ -3,7 +3,7 @@ import { connectDB } from "@/src/lib/mongodb";
 import { verifyAuthFromRequest } from "@/src/lib/auth";
 import { uploadBufferToCloudinary, deleteFromCloudinary } from "@/src/lib/cloudinary";
 import { isValidObjectId } from "mongoose";
-import SectionImage from "@/src/lib/models/SectionImage";
+import SectionImage from "@/src/models/SectionImage";
 
 // GET /api/cms/images/[slug]
 export async function GET(

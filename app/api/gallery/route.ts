@@ -4,22 +4,7 @@ import { verifyAuthFromRequest } from "@/src/lib/auth";
 import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
 import mongoose, { Schema, Document } from "mongoose";
 
-// Gallery Model
-interface IGallery extends Document {
-  imageUrl: string;
-  publicId: string;
-}
-
-const GallerySchema = new Schema(
-  {
-    imageUrl: { type: String, required: true },
-    publicId: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
-const Gallery =
-  mongoose.models.Gallery || mongoose.model<IGallery>("Gallery", GallerySchema);
+import Gallery from "@/src/models/Gallery";
 
 // GET /api/gallery
 export async function GET(req: NextRequest) {

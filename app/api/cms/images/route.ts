@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/src/lib/mongodb";
 import { verifyAuthFromRequest } from "@/src/lib/auth";
 import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
-import SectionImage from "@/src/lib/models/SectionImage";
+import SectionImage from "@/src/models/SectionImage";
 
 // GET /api/cms/images — get all images
 export async function GET() {

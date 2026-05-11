@@ -1,38 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/src/lib/mongodb";
 import { verifyAuthFromRequest } from "@/src/lib/auth";
-import {
-  uploadBufferToCloudinary,
-  deleteFromCloudinary,
-} from "@/src/lib/cloudinary";
-import mongoose, { Schema, Document } from "mongoose";
+import { uploadBufferToCloudinary, deleteFromCloudinary } from "@/src/lib/cloudinary";
 import { z } from "zod";
+import Product from "@/src/models/Product";
 
-// Product Model
-interface IProduct extends Document {
-  productName: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  publicId: string;
-}
-
-const ProductSchema = new Schema(
-  {
-    productName: { type: String, required: true, trim: true },
-    title: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true },
-    imageUrl: { type: String, required: true },
-    publicId: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
-const Product =
-  mongoose.models.Product ||
-  mongoose.model<IProduct>("Product", ProductSchema);
-
-// Validation
 const updateProductSchema = z.object({
   productName: z.string().min(1).optional(),
   title: z.string().min(1).optional(),
@@ -46,19 +18,16 @@ const formatZodErrors = (error: z.ZodError): Record<string, string> =>
     return acc;
   }, {} as Record<string, string>);
 
-// GET /api/products/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     await connectDB();
-    const product = await Product.findById(params.id);
+    const product = await Product.findById(id);
     if (!product) {
-      return NextResponse.json(
-        { message: "Product not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Product not found" }, { status: 404 });
     }
     return NextResponse.json(product, { status: 200 });
   } catch (error: any) {
@@ -69,41 +38,33 @@ export async function GET(
   }
 }
 
-// PATCH /api/products/[id]
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const admin = verifyAuthFromRequest(req);
     if (!admin) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
+    const { id } = await params;
     await connectDB();
 
-    const existingProduct = await Product.findById(params.id);
+    const existingProduct = await Product.findById(id);
     if (!existingProduct) {
-      return NextResponse.json(
-        { message: "Product not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Product not found" }, { status: 404 });
     }
 
     const formData = await req.formData();
     const file = formData.get("image") as File;
-
     const body = {
       productName: formData.get("productName") as string,
       title: formData.get("title") as string,
       description: formData.get("description") as string,
     };
-
-    // Remove undefined/null values
     const cleanBody = Object.fromEntries(
       Object.entries(body).filter(([_, v]) => v != null && v !== "")
     );
-
     const parsed = updateProductSchema.safeParse(cleanBody);
     if (!parsed.success) {
       return NextResponse.json(
@@ -113,30 +74,19 @@ export async function PATCH(
     }
 
     let updateData: any = { ...parsed.data };
-
     if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      let uploadResult;
-      try {
-        uploadResult = await uploadBufferToCloudinary(buffer, "topo-admin/products");
-      } catch {
-        throw new Error("Image upload failed. Please try again.");
-      }
-
+      const uploadResult = await uploadBufferToCloudinary(buffer, "topo-admin/products");
       if (existingProduct.publicId) {
         await deleteFromCloudinary(existingProduct.publicId).catch((err) =>
           console.error("Failed to delete old image:", err)
         );
       }
-
       updateData.imageUrl = uploadResult.url;
       updateData.publicId = uploadResult.publicId;
     }
 
-    const updated = await Product.findByIdAndUpdate(params.id, updateData, {
-      new: true,
-    });
-
+    const updated = await Product.findByIdAndUpdate(id, updateData, { new: true });
     return NextResponse.json(
       { message: "Product updated successfully", data: updated },
       { status: 200 }
@@ -149,33 +99,26 @@ export async function PATCH(
   }
 }
 
-// DELETE /api/products/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const admin = verifyAuthFromRequest(req);
     if (!admin) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
+    const { id } = await params;
     await connectDB();
 
-    const product = await Product.findById(params.id);
+    const product = await Product.findById(id);
     if (!product) {
-      return NextResponse.json(
-        { message: "Product not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Product not found" }, { status: 404 });
     }
-
     if (product.publicId) {
       await deleteFromCloudinary(product.publicId);
     }
-
-    await Product.findByIdAndDelete(params.id);
-
+    await Product.findByIdAndDelete(id);
     return NextResponse.json(
       { message: "Product deleted successfully" },
       { status: 200 }

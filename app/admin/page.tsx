@@ -9,9 +9,9 @@ import {
   FaPlus, 
   FaArrowRight 
 } from "react-icons/fa";
-import { useProductAdminStore } from "./(features)/products/hooks/useProductAdmin";
-import { useTestimonialAdminStore } from "./(features)/testimonials/hooks/useTestimonialAdmin";
-import { useGalleryAdminStore } from "./(features)/gallery/hooks/useGalleryAdmin";
+import { useProductAdminStore } from "@/src/features/products/hooks/useProductAdmin";
+import { useTestimonialAdminStore } from "@/src/features/testimonials/hooks/useTestimonialAdmin";
+import { useGalleryAdminStore } from "@/src/features/gallery/hooks/useGalleryAdmin";
 
 const quickActions = [
   { name: "Add New Product", href: "/admin/products", icon: FaPlus },

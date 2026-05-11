@@ -1,26 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/src/lib/mongodb";
 import { verifyAuthFromRequest } from "@/src/lib/auth";
-import mongoose, { Schema, Document } from "mongoose";
 import { z } from "zod";
+import Faq from "@/src/models/Faq";
 
-// FAQ Model
-interface IFAQ extends Document {
-  question: string;
-  answer: string;
-}
-
-const FAQSchema = new Schema(
-  {
-    question: { type: String, required: true, trim: true },
-    answer: { type: String, required: true, trim: true },
-  },
-  { timestamps: true }
-);
-
-const FAQ = mongoose.models.FAQ || mongoose.model<IFAQ>("FAQ", FAQSchema);
-
-// Validation
 const updateFAQSchema = z.object({
   question: z.string().min(1).optional(),
   answer: z.string().min(1).optional(),
@@ -33,14 +16,14 @@ const formatZodErrors = (error: z.ZodError): Record<string, string> =>
     return acc;
   }, {} as Record<string, string>);
 
-// GET /api/faqs/[id]
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     await connectDB();
-    const faq = await FAQ.findById(params.id);
+    const faq = await Faq.findById(id);
     if (!faq) {
       return NextResponse.json({ message: "FAQ not found" }, { status: 404 });
     }
@@ -53,20 +36,18 @@ export async function GET(
   }
 }
 
-// PUT /api/faqs/[id]
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const admin = verifyAuthFromRequest(req);
     if (!admin) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
+    const { id } = await params;
     await connectDB();
     const body = await req.json();
-
     const parsed = updateFAQSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
@@ -74,14 +55,10 @@ export async function PUT(
         { status: 400 }
       );
     }
-
-    const updated = await FAQ.findByIdAndUpdate(params.id, parsed.data, {
-      new: true,
-    });
+    const updated = await Faq.findByIdAndUpdate(id, parsed.data, { new: true });
     if (!updated) {
       return NextResponse.json({ message: "FAQ not found" }, { status: 404 });
     }
-
     return NextResponse.json(
       { message: "FAQ updated successfully", data: updated },
       { status: 200 }
@@ -94,23 +71,21 @@ export async function PUT(
   }
 }
 
-// DELETE /api/faqs/[id]
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const admin = verifyAuthFromRequest(req);
     if (!admin) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
+    const { id } = await params;
     await connectDB();
-    const faq = await FAQ.findByIdAndDelete(params.id);
+    const faq = await Faq.findByIdAndDelete(id);
     if (!faq) {
       return NextResponse.json({ message: "FAQ not found" }, { status: 404 });
     }
-
     return NextResponse.json(
       { message: "FAQ deleted successfully" },
       { status: 200 }

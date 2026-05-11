@@ -4,21 +4,7 @@ import { verifyAuthFromRequest } from "@/src/lib/auth";
 import mongoose, { Schema, Document } from "mongoose";
 import { z } from "zod";
 
-// FAQ Model
-interface IFAQ extends Document {
-  question: string;
-  answer: string;
-}
-
-const FAQSchema = new Schema(
-  {
-    question: { type: String, required: true, trim: true },
-    answer: { type: String, required: true, trim: true },
-  },
-  { timestamps: true }
-);
-
-const FAQ = mongoose.models.FAQ || mongoose.model<IFAQ>("FAQ", FAQSchema);
+import Faq from "@/src/models/Faq";
 
 // Validation
 const createFAQSchema = z.object({
@@ -37,7 +23,7 @@ const formatZodErrors = (error: z.ZodError): Record<string, string> =>
 export async function GET() {
   try {
     await connectDB();
-    const faqs = await FAQ.find().sort({ createdAt: -1 });
+    const faqs = await Faq.find().sort({ createdAt: -1 });
     return NextResponse.json(faqs, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
@@ -66,7 +52,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newFAQ = await FAQ.create(parsed.data);
+    const newFAQ = await Faq.create(parsed.data);
     return NextResponse.json(
       { message: "FAQ created successfully", data: newFAQ },
       { status: 201 }
