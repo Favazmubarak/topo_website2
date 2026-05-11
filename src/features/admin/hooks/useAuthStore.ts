@@ -16,8 +16,12 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  accessToken: typeof window !== "undefined" ? localStorage.getItem("accessToken") : null,
-  isAuthenticated: typeof window !== "undefined" ? !!localStorage.getItem("accessToken") : false,
+  accessToken:
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null,
+  isAuthenticated:
+    typeof window !== "undefined"
+      ? !!localStorage.getItem("accessToken")
+      : false,
   isLoading: false,
   error: null,
 
@@ -42,25 +46,27 @@ export const useAuthStore = create<AuthState>((set) => ({
         set({
           accessToken,
           isAuthenticated: true,
-          isLoading: false
+          isLoading: false,
         });
+        window.location.href = "/admin/faq";
       }
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed";
       set({ error: errorMessage, isLoading: false });
-      throw error; 
+      throw error;
     }
   },
 
   logout: async () => {
     try {
       await axiosInstance.post("/auth/logout");
-    } catch {
-      
-    }
+    } catch {}
     localStorage.removeItem("accessToken");
     set({ user: null, accessToken: null, isAuthenticated: false });
-    if (typeof window !== "undefined" && window.location.pathname !== "/admin/login") {
+    if (
+      typeof window !== "undefined" &&
+      window.location.pathname !== "/admin/login"
+    ) {
       window.location.href = "/admin/login";
     }
   },
