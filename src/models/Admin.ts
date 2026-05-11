@@ -15,14 +15,13 @@ const adminSchema = new Schema<IAdmin>(
     email: { type: String, unique: true, sparse: true },
     password: { type: String, required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-adminSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+adminSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
-
-export default mongoose.models.Admin || mongoose.model<IAdmin>('Admin', adminSchema);
+export default mongoose.models.Admin ||
+  mongoose.model<IAdmin>("Admin", adminSchema);
