@@ -6,7 +6,12 @@ export function middleware(req: NextRequest) {
   const isLoginPage = req.nextUrl.pathname === '/admin/login'
 
   if (isAdminRoute && !isLoginPage) {
+    const cookieToken = req.cookies.get("accessToken")?.value;
+    console.log("Middleware cookie:", cookieToken ? "EXISTS" : "MISSING");
+    
     const admin = verifyAuthFromRequest(req)
+    console.log("Middleware auth:", admin ? "VALID" : "INVALID");
+    
     if (!admin) {
       return NextResponse.redirect(new URL('/admin/login', req.url))
     }
