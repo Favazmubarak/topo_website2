@@ -5,8 +5,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/src/features/admin/hooks/useAuthStore";
 import { toast } from "react-hot-toast";
-import { FaSpinner, FaExclamationCircle, FaEye, FaEyeSlash } from "react-icons/fa";
-
+import {
+  FaSpinner,
+  FaExclamationCircle,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 
 const FieldError = ({ msg }: { msg?: string }) =>
   msg ? (
@@ -15,7 +19,6 @@ const FieldError = ({ msg }: { msg?: string }) =>
       {msg}
     </p>
   ) : null;
-
 
 const validate = (email: string, password: string) => {
   const errs: Record<string, string> = {};
@@ -44,9 +47,9 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace("/admin");
+      router.replace("/admin/faq");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   const errors = { ...localErrors, ...serverErrors };
 
@@ -54,7 +57,6 @@ export default function LoginPage() {
     e.preventDefault();
     setServerErrors({});
 
-    
     const clientErrs = validate(email, password);
     if (Object.keys(clientErrs).length > 0) {
       setLocalErrors(clientErrs);
@@ -65,13 +67,15 @@ export default function LoginPage() {
     try {
       await login({ email, password });
       toast.success("Welcome back!");
-      router.push("/admin");
     } catch (error: any) {
       const serverFieldErrors = error?.response?.data?.errors;
       if (serverFieldErrors && typeof serverFieldErrors === "object") {
         setServerErrors(serverFieldErrors);
       } else {
-        const msg = error?.response?.data?.message || error?.message || "Invalid credentials";
+        const msg =
+          error?.response?.data?.message ||
+          error?.message ||
+          "Invalid credentials";
         toast.error(msg);
       }
     }
@@ -90,46 +94,70 @@ export default function LoginPage() {
               priority
             />
           </div>
-          <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400">Administration Portal</p>
+          <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400">
+            Administration Portal
+          </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6" noValidate>
           <div className="space-y-5">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Email Address</label>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">
+                Email Address
+              </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (localErrors.email) setLocalErrors(p => { const { email, ...r } = p; return r; });
-                  if (serverErrors.email) setServerErrors(p => { const { email, ...r } = p; return r; });
+                  if (localErrors.email)
+                    setLocalErrors((p) => {
+                      const { email, ...r } = p;
+                      return r;
+                    });
+                  if (serverErrors.email)
+                    setServerErrors((p) => {
+                      const { email, ...r } = p;
+                      return r;
+                    });
                 }}
                 placeholder="admin@topo.com"
                 className={`w-full bg-gray-50 border text-black px-4 py-4 rounded-lg focus:outline-none focus:ring-1 transition-all text-sm placeholder:text-gray-400
-                  ${errors.email
-                    ? "border-red-300 ring-1 ring-red-300 bg-red-50"
-                    : "border-gray-200 focus:ring-black/20 focus:border-black/30"
+                  ${
+                    errors.email
+                      ? "border-red-300 ring-1 ring-red-300 bg-red-50"
+                      : "border-gray-200 focus:ring-black/20 focus:border-black/30"
                   }`}
               />
               <FieldError msg={errors.email} />
             </div>
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">Password</label>
+              <label className="text-[11px] font-bold uppercase tracking-widest text-black/70 ml-1">
+                Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    if (localErrors.password) setLocalErrors(p => { const { password, ...r } = p; return r; });
-                    if (serverErrors.password) setServerErrors(p => { const { password, ...r } = p; return r; });
+                    if (localErrors.password)
+                      setLocalErrors((p) => {
+                        const { password, ...r } = p;
+                        return r;
+                      });
+                    if (serverErrors.password)
+                      setServerErrors((p) => {
+                        const { password, ...r } = p;
+                        return r;
+                      });
                   }}
                   placeholder="••••••••"
                   className={`w-full bg-gray-50 border text-black px-4 py-4 rounded-lg focus:outline-none focus:ring-1 transition-all text-sm placeholder:text-gray-400 pr-12
-                    ${errors.password
-                      ? "border-red-300 ring-1 ring-red-300 bg-red-50"
-                      : "border-gray-200 focus:ring-black/20 focus:border-black/30"
+                    ${
+                      errors.password
+                        ? "border-red-300 ring-1 ring-red-300 bg-red-50"
+                        : "border-gray-200 focus:ring-black/20 focus:border-black/30"
                     }`}
                 />
                 <button
@@ -138,7 +166,11 @@ export default function LoginPage() {
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                  {showPassword ? (
+                    <FaEyeSlash size={18} />
+                  ) : (
+                    <FaEye size={18} />
+                  )}
                 </button>
               </div>
               <FieldError msg={errors.password} />
