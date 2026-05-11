@@ -11,7 +11,6 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/admin/login', req.url))
     }
   }
-
   return NextResponse.next()
 }
 

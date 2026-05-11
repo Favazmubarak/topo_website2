@@ -7,40 +7,25 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-
   login: (credentials: any) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => void;
   setAccessToken: (token: string | null) => void;
 }
 
-const setTokenCookie = (token: string) => {
-  document.cookie = `accessToken=${token}; path=/; max-age=${15 * 24 * 60 * 60}; SameSite=Strict`;
-};
-
-const removeTokenCookie = () => {
-  document.cookie = "accessToken=; path=/; max-age=0";
-};
-
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  accessToken:
-    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null,
-  isAuthenticated:
-    typeof window !== "undefined"
-      ? !!localStorage.getItem("accessToken")
-      : false,
+  accessToken: typeof window !== "undefined" ? localStorage.getItem("accessToken") : null,
+  isAuthenticated: typeof window !== "undefined" ? !!localStorage.getItem("accessToken") : false,
   isLoading: false,
   error: null,
 
   setAccessToken: (token: string | null) => {
     if (token) {
       localStorage.setItem("accessToken", token);
-      setTokenCookie(token);
       set({ accessToken: token, isAuthenticated: true });
     } else {
       localStorage.removeItem("accessToken");
-      removeTokenCookie();
       set({ accessToken: null, isAuthenticated: false, user: null });
     }
   },
@@ -50,15 +35,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await axiosInstance.post("/auth/login", credentials);
       const { accessToken } = response.data;
-
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
-        setTokenCookie(accessToken);
-        set({
-          accessToken,
-          isAuthenticated: true,
-          isLoading: false,
-        });
+        set({ accessToken, isAuthenticated: true, isLoading: false });
         window.location.href = "/admin/faq";
       }
     } catch (error: any) {
@@ -69,26 +48,15 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: async () => {
-    try {
-      await axiosInstance.post("/auth/logout");
-    } catch {}
+    try { await axiosInstance.post("/auth/logout"); } catch {}
     localStorage.removeItem("accessToken");
-    removeTokenCookie();
     set({ user: null, accessToken: null, isAuthenticated: false });
-    if (
-      typeof window !== "undefined" &&
-      window.location.pathname !== "/admin/login"
-    ) {
-      window.location.href = "/admin/login";
-    }
+    window.location.href = "/admin/login";
   },
 
   checkAuth: () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
-      set({ accessToken: token, isAuthenticated: true });
-    } else {
-      set({ accessToken: null, isAuthenticated: false });
-    }
+    if (token) set({ accessToken: token, isAuthenticated: true });
+    else set({ accessToken: null, isAuthenticated: false });
   },
 }));
