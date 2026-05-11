@@ -14,6 +14,14 @@ interface AuthState {
   setAccessToken: (token: string | null) => void;
 }
 
+const setTokenCookie = (token: string) => {
+  document.cookie = `accessToken=${token}; path=/; max-age=${15 * 24 * 60 * 60}; SameSite=Strict`;
+};
+
+const removeTokenCookie = () => {
+  document.cookie = "accessToken=; path=/; max-age=0";
+};
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   accessToken:
@@ -28,9 +36,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   setAccessToken: (token: string | null) => {
     if (token) {
       localStorage.setItem("accessToken", token);
+      setTokenCookie(token);
       set({ accessToken: token, isAuthenticated: true });
     } else {
       localStorage.removeItem("accessToken");
+      removeTokenCookie();
       set({ accessToken: null, isAuthenticated: false, user: null });
     }
   },
@@ -43,6 +53,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
+        setTokenCookie(accessToken);
         set({
           accessToken,
           isAuthenticated: true,
@@ -62,6 +73,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       await axiosInstance.post("/auth/logout");
     } catch {}
     localStorage.removeItem("accessToken");
+    removeTokenCookie();
     set({ user: null, accessToken: null, isAuthenticated: false });
     if (
       typeof window !== "undefined" &&

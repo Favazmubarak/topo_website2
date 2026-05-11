@@ -14,18 +14,22 @@ export const verifyAccessToken = (token: string) => {
   return jwt.verify(token, ACCESS_TOKEN_SECRET);
 };
 
-// Helper to verify auth from Next.js API route request
 export const verifyAuthFromRequest = (req: NextRequest) => {
   try {
+    // Check Authorization header (for API calls)
     const authHeader = req.headers.get("authorization");
-
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return null;
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.split(" ")[1];
+      return verifyAccessToken(token);
     }
 
-    const token = authHeader.split(" ")[1];
-    const decoded = verifyAccessToken(token);
-    return decoded;
+    // Check cookie (for middleware/page protection)
+    const cookieToken = req.cookies.get("accessToken")?.value;
+    if (cookieToken) {
+      return verifyAccessToken(cookieToken);
+    }
+
+    return null;
   } catch (error) {
     return null;
   }
