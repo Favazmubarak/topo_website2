@@ -1,26 +1,22 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IProduct extends Document {
-  name: string;
-  description?: string;
-  price?: number;
-  imageUrl?: string;
-  publicId?: string;
-  category?: string;
-  inStock: boolean;
+  productName: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  publicId: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const productSchema = new Schema<IProduct>(
   {
-    name: { type: String, required: true },
-    description: { type: String },
-    price: { type: Number },
-    imageUrl: { type: String },
-    publicId: { type: String },
-    category: { type: String },
-    inStock: { type: Boolean, default: true },
+    productName: { type: String, required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    publicId: { type: String, required: true },
   },
   { timestamps: true }
 );
