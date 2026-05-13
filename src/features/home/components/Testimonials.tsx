@@ -9,7 +9,7 @@ export default function Testimonials() {
   const { testimonials, loading, error } = useTestimonials();
 
   
-  const scrollItems = [...testimonials, ...testimonials];
+  const scrollItems = testimonials;
 
   return (
     <section className="w-full bg-white md:py-12 sm:py-10 py-8 overflow-hidden">
