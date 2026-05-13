@@ -4,7 +4,14 @@ import { verifyAuthFromRequest } from "@/src/lib/auth";
 import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
 import SectionImage from "@/src/models/SectionImage";
 
-// GET /api/cms/images — get all images
+const SECTION_LIMITS: Record<string, number> = {
+  hero: 1,
+  about: 2,
+  "why-choose": 1,
+  cta: 1,
+};
+
+// GET /api/cms/images
 export async function GET() {
   try {
     await connectDB();
@@ -13,12 +20,12 @@ export async function GET() {
   } catch (error: any) {
     return NextResponse.json(
       { message: error.message || "Failed to fetch images" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
-// POST /api/cms/images — create new image
+// POST /api/cms/images
 export async function POST(req: NextRequest) {
   try {
     const admin = verifyAuthFromRequest(req);
@@ -38,7 +45,28 @@ export async function POST(req: NextRequest) {
       if (!section) errors.section = "Section is required";
       return NextResponse.json(
         { message: "Validation failed", errors },
-        { status: 400 },
+        { status: 400 }
+      );
+    }
+
+    // Check file size — max 10MB
+    if (file.size > 10 * 1024 * 1024) {
+      return NextResponse.json(
+        { message: "Image is too large. Maximum allowed size is 10MB." },
+        { status: 400 }
+      );
+    }
+
+    // Check section limit
+    const limit = SECTION_LIMITS[section] ?? 1;
+    const currentCount = await SectionImage.countDocuments({ section });
+
+    if (currentCount >= limit) {
+      return NextResponse.json(
+        {
+          message: `Maximum ${limit} image${limit > 1 ? "s" : ""} allowed for ${section} section. Please delete existing image${limit > 1 ? "s" : ""} first.`,
+        },
+        { status: 409 }
       );
     }
 
@@ -47,7 +75,7 @@ export async function POST(req: NextRequest) {
     try {
       uploadResult = await uploadBufferToCloudinary(
         buffer,
-        `topo-admin/${section}`,
+        `topo-admin/${section}`
       );
     } catch {
       throw new Error("Cloudinary upload failed");
@@ -61,12 +89,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "Image created successfully", data: image },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error: any) {
     return NextResponse.json(
       { message: error.message || "Failed to create image" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
