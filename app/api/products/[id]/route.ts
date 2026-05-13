@@ -5,6 +5,14 @@ import { uploadBufferToCloudinary, deleteFromCloudinary } from "@/src/lib/cloudi
 import { z } from "zod";
 import Product from "@/src/models/Product";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
+
 const updateProductSchema = z.object({
   productName: z.string().min(1).optional(),
   title: z.string().min(1).optional(),

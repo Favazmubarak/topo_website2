@@ -4,8 +4,15 @@ import { verifyAuthFromRequest } from "@/src/lib/auth";
 import { uploadBufferToCloudinary } from "@/src/lib/cloudinary";
 import mongoose, { Schema, Document } from "mongoose";
 import { z } from "zod";
-
 import Product from "@/src/models/Product";
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
 
 // Validation
 const createProductSchema = z.object({
