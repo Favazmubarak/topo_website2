@@ -46,7 +46,7 @@ export const createProduct = async (formData: FormData): Promise<Product> => {
 };
 
 export const updateProduct = async (id: string, formData: FormData): Promise<Product> => {
-  const response = await axiosInstance.put(`/products/${id}`, formData, {
+  const response = await axiosInstance.patch(`/products/${id}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return response.data.data;
