@@ -47,7 +47,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace("/admin/faq");
+      router.replace("/admin");
     }
   }, [isAuthenticated]);
 

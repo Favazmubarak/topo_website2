@@ -38,7 +38,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
         set({ accessToken, isAuthenticated: true, isLoading: false });
-        window.location.href = "/admin/faq";
+        window.location.href = "/admin";
       }
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed";
