@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/src/lib/mongodb";
-import Admin from "@/src/models/Admin";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 export async function GET(req: NextRequest) {
   const secret = req.nextUrl.searchParams.get("secret");
@@ -11,16 +12,18 @@ export async function GET(req: NextRequest) {
   try {
     await connectDB();
 
-    await Admin.deleteMany({});
+    // Use the raw collection to bypass pre-save hook entirely
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash("admin123", salt);
 
-    // Let the pre-save hook handle hashing
-    const admin = new Admin({
+    await mongoose.connection.collection("admins").deleteMany({});
+    await mongoose.connection.collection("admins").insertOne({
       username: "admin",
       email: "admin@topo.com",
-      password: "admin123",
+      password: hashedPassword,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
-
-    await admin.save();
 
     return NextResponse.json({
       message: "✅ Admin seeded successfully",
