@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/src/lib/mongodb";
 import Admin from "@/src/models/Admin";
-import bcrypt from "bcryptjs";
 
 export async function GET(req: NextRequest) {
   const secret = req.nextUrl.searchParams.get("secret");
@@ -14,20 +13,19 @@ export async function GET(req: NextRequest) {
 
     await Admin.deleteMany({});
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash("admin123", salt);
-
-    await Admin.create({
+    // Let the pre-save hook handle hashing
+    const admin = new Admin({
       username: "admin",
       email: "admin@topo.com",
-      password: hashedPassword,
+      password: "admin123",
     });
+
+    await admin.save();
 
     return NextResponse.json({
       message: "✅ Admin seeded successfully",
-      username: "admin",
       email: "admin@topo.com",
-      password: "admin@123",
+      password: "admin123",
     });
   } catch (error: any) {
     return NextResponse.json(
