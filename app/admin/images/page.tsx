@@ -93,11 +93,10 @@ const ImagesAdminPage = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("Image too large — max 10 MB.");
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload a valid image (jpeg, png, webp).");
       return;
     }
-    if (!file.type.startsWith("image/")) {
       toast.error("Please upload a valid image (jpeg, png, webp).");
       return;
     }

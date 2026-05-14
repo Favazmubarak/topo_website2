@@ -57,7 +57,7 @@ export const ImageFormModal = ({
                   <>
                     <FaPlus className="text-gray-200 mb-2 group-hover/upload:text-black transition-colors" size={18} />
                     <p className="text-[10px] md:text-xs text-gray-400 font-bold">Click to select image</p>
-                    <p className="text-[8px] text-gray-300 mt-0.5">jpeg, png, webp — max 10 MB</p>
+                    <p className="text-[8px] text-gray-300 mt-0.5">jpeg, png, webp — auto-compressed</p>
                   </>
                 )}
                 {previewUrl && (
