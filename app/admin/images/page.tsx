@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useImageAdmin } from "@/src/features/images/hooks/useImageAdmin";
 import { Section } from "@/src/features/images/api/imageApi";
 import { toast } from "react-hot-toast";
+import imageCompression from "browser-image-compression";
 
 
 import { ImageHeader } from "@/src/features/images/components/ImageHeader";
@@ -35,6 +36,7 @@ const ImagesAdminPage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
+  const [isCompressing, setIsCompressing] = useState(false);
 
   
   useEffect(() => {
@@ -116,9 +118,32 @@ const ImagesAdminPage = () => {
       return;
     }
     setLocalErrors({});
+
+    let fileToUpload = selectedFile;
+    if (fileToUpload) {
+      setIsCompressing(true);
+      const toastId = toast.loading("Compressing image to WebP...");
+      try {
+        const options = {
+          maxSizeMB: 2,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+          fileType: "image/webp" as string,
+        };
+        fileToUpload = await imageCompression(fileToUpload, options);
+        toast.dismiss(toastId);
+      } catch (error) {
+        toast.dismiss(toastId);
+        toast.error("Failed to compress image");
+        setIsCompressing(false);
+        return;
+      }
+      setIsCompressing(false);
+    }
+
     const formData = new FormData();
     formData.append("section", selectedSection);
-    if (selectedFile) formData.append("image", selectedFile);
+    if (fileToUpload) formData.append("image", fileToUpload);
     if (editingId) await updateImage(editingId, formData);
     else await addImage(formData);
   };
@@ -158,7 +183,7 @@ const ImagesAdminPage = () => {
       <ImageFormModal
         isOpen={isFormOpen}
         editingId={editingId}
-        loading={loading}
+        loading={loading || isCompressing}
         previewUrl={previewUrl}
         errors={localErrors}
         onClose={closeForm}
