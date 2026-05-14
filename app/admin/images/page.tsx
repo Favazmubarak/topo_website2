@@ -97,9 +97,6 @@ const ImagesAdminPage = () => {
       toast.error("Please upload a valid image (jpeg, png, webp).");
       return;
     }
-      toast.error("Please upload a valid image (jpeg, png, webp).");
-      return;
-    }
     if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     setSelectedFile(file);
     setPreviewUrl(URL.createObjectURL(file));
