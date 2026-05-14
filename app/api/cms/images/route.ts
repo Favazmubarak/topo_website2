@@ -77,8 +77,9 @@ export async function POST(req: NextRequest) {
         buffer,
         `topo-admin/${section}`
       );
-    } catch {
-      throw new Error("Cloudinary upload failed");
+    } catch (err: any) {
+      const reason = err?.message || err?.error?.message || String(err);
+      throw new Error(`Cloudinary rejected the image: ${reason}`);
     }
 
     const image = await SectionImage.create({
