@@ -11,7 +11,7 @@ const AOS_CONFIG = {
   once: false,
   mirror: false,
   offset: 50,
-};
+} as const;
 
 export const AOSProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
