@@ -8,7 +8,7 @@ export default function TestimonialSkeleton() {
       {[1, 2, 3, 4].map((i) => (
         <div
           key={i}
-          className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-6 sm:p-8 flex flex-col h-[320px] w-[300px] sm:w-[380px] mx-4 shrink-0"
+          className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-5 sm:p-8 flex flex-col h-[220px] sm:h-[260px] w-[340px] sm:w-[600px] mx-4 shrink-0"
         >
 
           <div className="flex justify-between items-start mb-6">
