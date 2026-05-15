@@ -150,7 +150,11 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-2 md:py-2.5 transition-all duration-500 border-b border-white/20 bg-white/30 backdrop-blur-md shadow-lg ${
+        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-2 md:py-2.5 transition-all duration-700 ${
+          isScrolled 
+            ? "bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-100" 
+            : "bg-transparent border-transparent shadow-none"
+        } ${
           isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
