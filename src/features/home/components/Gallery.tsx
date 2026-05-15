@@ -17,18 +17,15 @@ export default function Gallery({ initialImages }: { initialImages?: GalleryImag
   const { galleryImages: allImages, loading, error } = useGallery();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   
-  // State for the 6 visible images
   const [visibleImages, setVisibleImages] = useState<GalleryImage[]>([]);
   const galleryImages = allImages && allImages.length > 0 ? allImages : (initialImages || []);
   
-  // Initialization
   useEffect(() => {
     if (galleryImages.length > 0) {
       setVisibleImages(galleryImages.slice(0, 6));
     }
   }, [galleryImages]);
 
-  // Rotation Logic: Every 5 seconds, swap one random image
   useEffect(() => {
     if (galleryImages.length <= 6) return;
 
@@ -36,8 +33,6 @@ export default function Gallery({ initialImages }: { initialImages?: GalleryImag
       setVisibleImages((prev) => {
         const newImages = [...prev];
         const slotToReplace = Math.floor(Math.random() * 6);
-        
-        // Find an image that isn't currently visible
         const currentIds = new Set(newImages.map(img => img._id));
         const pool = galleryImages.filter(img => !currentIds.has(img._id));
         
@@ -91,15 +86,11 @@ export default function Gallery({ initialImages }: { initialImages?: GalleryImag
             ))}
           </div>
         ) : (
-          <div className="space-y-12">
-            {/* 
-                Auto-Rotating Grid
-                Animated with Framer Motion for smooth project transitions
-            */}
+          <div className="space-y-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {visibleImages.map((image, index) => (
                 <div
-                  key={index} // Using index to keep the slot stable
+                  key={index}
                   className="relative overflow-hidden rounded-[20px] cursor-pointer aspect-[4/3] sm:aspect-square md:aspect-[4/3] bg-gray-50"
                   onClick={() => setSelectedIndex(index)}
                 >
@@ -125,18 +116,18 @@ export default function Gallery({ initialImages }: { initialImages?: GalleryImag
               ))}
             </div>
 
-            {/* Premium Pill Navigation */}
-            <div className="flex flex-col items-center pt-8" data-aos="fade-up">
-              <Link href="/gallery" className="group flex items-center gap-6 px-10 py-5 rounded-full border border-gray-100 bg-white hover:bg-gray-50 transition-all duration-500 shadow-sm hover:shadow-xl">
-                <span className="text-[11px] font-mono tracking-[0.3em] uppercase text-gray-500 group-hover:text-[#0066B2] transition-colors duration-500">
+            {/* Minimized Premium Navigation Pill */}
+            <div className="flex flex-col items-center" data-aos="fade-up">
+              <Link href="/gallery" className="group flex items-center gap-4 px-6 py-3 rounded-full bg-[#FBFBFB] hover:bg-white transition-all duration-500 shadow-sm hover:shadow-md border border-gray-50">
+                <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-gray-400 group-hover:text-[#0066B2] transition-colors duration-500">
                   Full Portfolio
                 </span>
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#0066B2] text-white transform group-hover:translate-x-1 transition-transform duration-500 shadow-lg shadow-[#0066B2]/20">
+                <div className="w-7 h-7 flex items-center justify-center rounded-full bg-[#0066B2] text-white transform group-hover:translate-x-1 transition-transform duration-500 shadow-sm">
                   <svg 
-                    width="18" height="18" viewBox="0 0 24 24" fill="none" 
+                    width="14" height="14" viewBox="0 0 24 24" fill="none" 
                     className="stroke-white"
                   >
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </Link>
