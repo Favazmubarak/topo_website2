@@ -255,19 +255,26 @@ export default function Navbar() {
         </div>
 
         <div className="flex flex-col gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={(e) => {
-                setIsMobileMenuOpen(false);
-                handleScrollNav(e, link.name === "Home" ? "hero" : link.href.replace("#", ""));
-              }}
-              className="text-4xl font-medium text-black/80 hover:text-[#0066B2] transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isScrollLink = link.isScroll || link.name === "Home";
+            const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
+
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  if (isScrollLink) {
+                    handleScrollNav(e, targetId);
+                  }
+                }}
+                className="text-4xl font-medium text-black/80 hover:text-[#0066B2] transition-colors"
+              >
+                {link.name}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="mt-auto pt-12 border-t border-black/5">
