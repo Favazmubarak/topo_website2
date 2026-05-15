@@ -8,7 +8,7 @@ const Footer = () => {
     <footer id="footer" className="bg-brand-blue text-white md:pt-12 sm:pt-10 py-8 px-4 sm:px-6 md:px-10 lg:px-16 font-poppins overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8 lg:gap-10">
-          <div className="lg:col-span-2 flex flex-col" data-aos="fade-up">
+          <div className="lg:col-span-2 flex flex-col">
             <Link href="/">
               <Image
                 src="/logo.webp"
@@ -45,8 +45,6 @@ const Footer = () => {
 
           <div
             className="flex flex-col space-y-3 md:space-y-4 lg:col-span-1"
-            data-aos="fade-up"
-            data-aos-delay="100"
           >
             <h3 className="text-base md:text-lg lg:text-xl font-medium">
               Company
@@ -81,8 +79,6 @@ const Footer = () => {
 
           <div
             className="flex flex-col space-y-3 md:space-y-4 lg:col-span-1"
-            data-aos="fade-up"
-            data-aos-delay="200"
           >
             <h3 className="text-base md:text-lg lg:text-xl font-medium">
               Support
@@ -123,8 +119,6 @@ const Footer = () => {
 
           <div
             className="flex flex-col space-y-3 md:space-y-4 lg:col-span-2"
-            data-aos="fade-up"
-            data-aos-delay="300"
           >
             <h3 className="text-base md:text-lg lg:text-xl font-medium">
               Contact
