@@ -2,71 +2,71 @@
 
 import Image from "next/image";
 import { useTestimonials } from "../hooks/useTestimonials";
-import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+import { IoMdStar } from "react-icons/io";
 import TestimonialSkeleton from "./TestimonialSkeleton";
 
+/**
+ * Premium Architectural Testimonials
+ * Clean edge-to-edge horizontal marquee with high-end typography and golden ratings.
+ */
 export default function Testimonials() {
   const { testimonials, loading, error } = useTestimonials();
 
-  
-  const scrollItems = testimonials;
+  // Multiplied items for seamless infinite scroll
+  const scrollItems = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
 
   return (
-    <section className="w-full bg-white md:py-12 sm:py-10 py-8 overflow-hidden">
-      <div className="px-4 sm:px-6 md:px-12 lg:px-20">
-        <div className="max-w-[1400px] mx-auto">
-          <h2
-            className="font-montserrat text-[#0066B2] text-[clamp(22px,5vw,50px)] font-medium leading-tight"
-            data-aos="fade-up"
-          >
-            What Our Clients Say
-          </h2>
+    <section className="w-full bg-[#FBFBFB] md:py-24 sm:py-16 py-12 overflow-hidden border-y border-gray-50">
+      <div className="px-6 md:px-12 lg:px-20">
+        <div className="max-w-[1500px] mx-auto">
+          
+          {/* Section Header */}
+          <div className="flex flex-col items-center text-center mb-16" data-aos="fade-up">
+            <span className="text-[#0066B2] text-[10px] font-mono tracking-[0.5em] uppercase mb-4 block">Testimonials</span>
+            <h2 className="font-montserrat text-[#1A1A1A] text-[clamp(28px,4vw,44px)] font-light leading-none tracking-tighter">
+              Client <span className="text-[#0066B2]">Perspectives</span>
+            </h2>
+            <div className="w-12 h-[1px] bg-gray-200 mt-8" />
+          </div>
 
           {loading ? (
-            <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-              <TestimonialSkeleton />
-            </div>
+            <TestimonialSkeleton />
           ) : error ? (
-            <div className="flex justify-center items-center min-h-[400px] text-red-500 text-center px-4">
+            <div className="flex justify-center items-center min-h-[300px] text-red-500 font-montserrat">
               Error: {error}
             </div>
           ) : testimonials.length === 0 ? (
-            <div className="flex justify-center items-center min-h-[400px] text-gray-500">
-              No testimonials available right now.
+            <div className="flex justify-center items-center min-h-[300px] text-gray-400 font-montserrat">
+              No feedback available yet.
             </div>
           ) : (
             <div className="relative w-full">
-              <div className="flex w-max animate-marquee hover:[animation-play-state:paused] py-4">
+              {/* Removed side "fog/smoke" gradients for a cleaner, edge-to-edge architectural feel */}
+              
+              <div className="flex w-max animate-marquee hover:[animation-play-state:paused] py-8">
                 {scrollItems.map((testimonial, index) => (
                   <div
                     key={`${testimonial._id}-${index}`}
-                    className="bg-white border-2 border-[#E9E9E9] rounded-[24px] p-6 sm:p-8 flex flex-col h-[320px] w-[300px] sm:w-[380px] mx-4 shrink-0 transition-shadow hover:shadow-lg"
+                    className="bg-white rounded-[32px] p-8 flex flex-col h-[300px] w-[320px] sm:w-[380px] mx-5 shrink-0 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-gray-100 transition-all duration-700 hover:shadow-[0_20px_50px_-20px_rgba(0,102,178,0.15)] hover:-translate-y-3"
                   >
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="flex gap-1 text-[#0066B2] text-xl">
-                        {[...Array(5)].map((_, i) =>
-                          i < testimonial.rating ? (
-                            <IoMdStar key={i} />
-                          ) : (
-                            <IoMdStarOutline key={i} className="text-gray-300" />
-                          )
-                        )}
+                    {/* Golden Stars Rating */}
+                    <div className="flex justify-between items-center mb-6">
+                      <div className="flex gap-0.5 text-[#FFB800]">
+                        {[...Array(5)].map((_, i) => (
+                          <IoMdStar key={i} className={`text-xl ${i < testimonial.rating ? "opacity-100" : "opacity-20 text-gray-400"}`} />
+                        ))}
                       </div>
-                      <Image
-                        src="/quotes.png"
-                        alt="quote"
-                        width={32}
-                        height={32}
-                        className="opacity-20"
-                      />
+                      <span className="text-[10px] font-mono text-gray-300">REF_{index + 10}</span>
                     </div>
-                    <p className="font-montserrat text-[#2F2F2F] text-[13px] sm:text-base leading-relaxed mb-8 flex-grow overflow-y-auto no-scrollbar italic break-words whitespace-normal">
+
+                    {/* Premium Typography Content */}
+                    <p className="font-poppins font-normal text-[#2A2A2A] text-base md:text-[17px] leading-[1.6] mb-6 flex-grow italic overflow-y-auto no-scrollbar">
                       "{testimonial.review}"
                     </p>
-                    <div className="flex items-center gap-4 pt-6 border-t border-[#E9E9E9]">
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#E9E9E9]">
+
+                    {/* Footer / Branding */}
+                    <div className="flex items-center gap-4 pt-6 border-t border-gray-50">
+                      <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-md bg-gray-50">
                         <Image
                           src={testimonial?.avatar || "/avatar.jpg"}
                           alt={testimonial.name}
@@ -75,10 +75,12 @@ export default function Testimonials() {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-montserrat text-base font-semibold text-[#333]">
+                        <span className="font-montserrat text-[13px] font-bold text-[#1A1A1A] tracking-tight uppercase leading-none">
                           {testimonial.name}
                         </span>
-                        <span className="text-xs text-gray-500">Verified Client</span>
+                        <span className="text-[9px] font-mono text-[#0066B2] font-semibold uppercase tracking-[0.2em] mt-1.5 opacity-70">
+                          Verified Partner
+                        </span>
                       </div>
                     </div>
                   </div>

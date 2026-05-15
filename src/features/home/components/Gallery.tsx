@@ -65,7 +65,7 @@ export default function Gallery({ initialImages }: { initialImages?: GalleryImag
   }
 
   return (
-    <section className="w-full bg-white py-20 overflow-hidden">
+    <section className="w-full bg-white pt-8 pb-20 overflow-hidden">
       <div className="max-w-[1500px] mx-auto px-6 md:px-12 lg:px-16">
         
         {/* Header */}
