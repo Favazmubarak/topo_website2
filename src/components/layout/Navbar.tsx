@@ -138,8 +138,8 @@ export default function Navbar() {
         <div
           className={`relative mx-auto flex items-center justify-between pointer-events-auto transition-all duration-500 ease-in-out ${
             isNotch
-              ? "h-[52px] max-w-[680px] bg-white rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 px-5 md:px-6 mt-3 md:mt-0 w-[calc(100%-1.5rem)] md:w-full"
-              : "h-[88px] max-w-[1400px] bg-transparent rounded-none px-5 sm:px-8 md:px-16 mt-0 w-full border border-transparent shadow-none"
+              ? "h-[52px] max-w-[680px] bg-white rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 px-4 md:px-6 mt-3 md:mt-0 w-[calc(100%-1rem)] md:w-full"
+              : "h-[88px] max-w-[1400px] bg-transparent rounded-none px-4 sm:px-8 md:px-16 mt-0 w-full border border-transparent shadow-none"
           }`}
         >
           {/* Logo Section */}
@@ -153,7 +153,7 @@ export default function Navbar() {
                 router.push("/");
               }
             }}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2 group -ml-6 md:ml-0"
           >
             <div
               className={`relative transition-all duration-500 ${
@@ -220,7 +220,7 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <button
-            className={`md:hidden p-2 transition-colors duration-300 pointer-events-auto ${
+            className={`md:hidden p-2 transition-colors duration-300 pointer-events-auto -mr-6 md:mr-0 ${
               isWhiteHeader ? "text-white" : "text-black"
             }`}
             onClick={() => setIsMobileMenuOpen(true)}
