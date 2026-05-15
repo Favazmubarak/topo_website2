@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useProductAdmin } from "@/src/features/products/hooks/useProductAdmin";
-import { FaPlus, FaTrash, FaEdit, FaUpload, FaTimes, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit, FaUpload, FaTimes, FaSpinner, FaCheckCircle, FaExclamationCircle, FaCropAlt } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { Skeleton } from "@/src/components/common/Skeleton";
+import { ImageCropper } from "@/src/components/common/ImageCropper";
 
 // Smart compression — maintains quality, just reduces file size
 const compressImage = (file: File, maxSizeMB: number = 3): Promise<File> => {
@@ -133,6 +134,8 @@ const ProductAdminPage = () => {
   const [readyImages, setReadyImages] = useState<Record<string, boolean>>({});
   const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
   const [isCompressing, setIsCompressing] = useState(false);
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
+  const [croppingImage, setCroppingImage] = useState<string | null>(null);
 
   const errors = { ...localErrors, ...fieldErrors };
 
@@ -161,6 +164,8 @@ const ProductAdminPage = () => {
     setLocalErrors({});
     if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
+    setCroppingImage(null);
+    setIsCropperOpen(false);
   };
 
   const handleEdit = (product: any) => {
@@ -193,24 +198,32 @@ const ProductAdminPage = () => {
 
     setLocalErrors((prev) => { const { image, ...rest } = prev; return rest; });
 
-    // Show preview immediately
+    // Intercept for cropping
+    setCroppingImage(URL.createObjectURL(file));
+    setIsCropperOpen(true);
+  };
+
+  const handleCropComplete = async (croppedFile: File) => {
+    setIsCropperOpen(false);
+    
+    // Show preview of cropped image
     if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
-    setPreviewUrl(URL.createObjectURL(file));
+    setPreviewUrl(URL.createObjectURL(croppedFile));
     setPreviewReady(false);
 
     // Compress if over 3MB
-    if (file.size > 3 * 1024 * 1024) {
+    if (croppedFile.size > 3 * 1024 * 1024) {
       setIsCompressing(true);
       try {
-        const compressed = await compressImage(file, 3);
+        const compressed = await compressImage(croppedFile, 3);
         setSelectedFile(compressed);
       } catch {
-        setSelectedFile(file);
+        setSelectedFile(croppedFile);
       } finally {
         setIsCompressing(false);
       }
     } else {
-      setSelectedFile(file);
+      setSelectedFile(croppedFile);
     }
   };
 
@@ -450,6 +463,14 @@ const ProductAdminPage = () => {
               </div>
             </div>
           </div>
+        )}
+        {isCropperOpen && croppingImage && (
+          <ImageCropper
+            image={croppingImage}
+            onCropComplete={handleCropComplete}
+            onCancel={() => setIsCropperOpen(false)}
+            aspect={4/5}
+          />
         )}
       </div>
     </div>
