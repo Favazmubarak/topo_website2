@@ -87,7 +87,7 @@ export default function About({ initialImages }: AboutProps) {
 
 
               <div
-                className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[20px] shadow-xl"
+                className="relative group aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-[16px] sm:rounded-[10px] shadow-xl"
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
@@ -95,7 +95,7 @@ export default function About({ initialImages }: AboutProps) {
                   loading ? (
                     <Skeleton className="w-full h-full rounded-[16px] sm:rounded-[20px]" />
                   ) : error ? (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[10px]">
                       <p className="text-red-500 text-xs">Error: {error}</p>
                     </div>
                   ) : (
@@ -111,7 +111,7 @@ export default function About({ initialImages }: AboutProps) {
               </div>
 
               <div
-                className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[20px] shadow-xl"
+                className="relative group aspect-[16/10] sm:aspect-[16/9] sm:h-[85%] self-end w-full overflow-hidden rounded-[16px] sm:rounded-[10px] shadow-xl"
                 data-aos="fade-up"
                 data-aos-delay="450"
               >
@@ -120,7 +120,7 @@ export default function About({ initialImages }: AboutProps) {
                   loading ? (
                     <Skeleton className="w-full h-full rounded-[16px] sm:rounded-[20px]" />
                   ) : error ? (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[20px]">
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-[16px] sm:rounded-[10px]">
                       <p className="text-red-500 text-xs">Error: {error}</p>
                     </div>
                   ) : (
