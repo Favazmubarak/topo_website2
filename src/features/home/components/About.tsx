@@ -81,7 +81,7 @@ export default function About({ initialImages }: AboutProps) {
           </div>
         </div>
 
-        <div className="w-full pt-12 sm:pt-16">
+        <div className="hidden md:block w-full pt-6 sm:pt-8">
           <div className="w-full md:max-w-[55%]">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
 

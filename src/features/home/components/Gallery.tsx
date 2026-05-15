@@ -91,7 +91,9 @@ export default function Gallery({ initialImages }: { initialImages?: GalleryImag
               {visibleImages.map((image, index) => (
                 <div
                   key={index}
-                  className="relative overflow-hidden rounded-[20px] cursor-pointer aspect-[4/3] sm:aspect-square md:aspect-[4/3] bg-gray-50"
+                  className={`relative overflow-hidden rounded-[20px] cursor-pointer aspect-[4/3] sm:aspect-square md:aspect-[4/3] bg-gray-50 ${
+                    index >= 3 ? "hidden sm:block" : "block"
+                  }`}
                   onClick={() => setSelectedIndex(index)}
                 >
                   <AnimatePresence mode="popLayout">

@@ -21,6 +21,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === "/";
+  
+  // Use the scrolled state to determine if it should look like a notch
+  const isNotch = isScrolled;
   const isWhiteHeader = isHomePage && !isScrolled;
 
   useEffect(() => {
@@ -64,34 +67,14 @@ export default function Navbar() {
 
   useEffect(() => {
     if (isHomePage && typeof window !== "undefined") {
-      const handleHashScroll = () => {
-        const hash = window.location.hash;
-        if (!hash) return false;
-
-        const id = hash.replace("#", "");
-        const element = document.getElementById(id);
-        if (element) {
-          setTimeout(() => {
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: "smooth" });
-          }, 100);
-          return true;
-        }
-        return false;
-      };
-
       const scrollTarget = sessionStorage.getItem("scrollTarget");
       if (scrollTarget || window.location.hash) {
         window.scrollTo(0, 0);
-
         const targetId = scrollTarget || window.location.hash.replace("#", "");
-
         let attempts = 0;
         const intervalId = setInterval(() => {
           attempts++;
-          const hash = window.location.hash;
-          const currentTarget = sessionStorage.getItem("scrollTarget") || (hash ? hash.replace("#", "") : null);
-          
+          const currentTarget = sessionStorage.getItem("scrollTarget") || window.location.hash.replace("#", "");
           if (currentTarget) {
             const element = document.getElementById(currentTarget);
             if (element) {
@@ -102,13 +85,11 @@ export default function Navbar() {
               clearInterval(intervalId);
             }
           }
-          
           if (attempts > 20) {
             clearInterval(intervalId);
             sessionStorage.removeItem("scrollTarget");
           }
         }, 100);
-
         return () => clearInterval(intervalId);
       }
 
@@ -150,15 +131,18 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[100] flex items-center px-3 sm:px-6 md:px-12 lg:px-20 py-2 md:py-2.5 transition-all duration-700 ${
-          isScrolled 
-            ? "bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-100" 
-            : "bg-transparent border-transparent shadow-none"
-        } ${
+        className={`fixed top-0 left-0 right-0 z-[100] pointer-events-none transition-all duration-500 pt-0 md:pt-3 ${
           isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="flex-1 flex items-center z-50">
+        <div
+          className={`relative mx-auto flex items-center justify-between pointer-events-auto transition-all duration-500 ease-in-out ${
+            isNotch
+              ? "h-[52px] max-w-[680px] bg-white rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 px-4 md:px-6 mt-3 md:mt-0 w-[calc(100%-2rem)] md:w-full"
+              : "h-[88px] max-w-[1400px] bg-transparent rounded-none px-8 md:px-16 mt-0 w-full border border-transparent shadow-none"
+          }`}
+        >
+          {/* Logo Section */}
           <Link
             href="/"
             onClick={(e) => {
@@ -169,143 +153,126 @@ export default function Navbar() {
                 router.push("/");
               }
             }}
-            className="relative block w-[90px] sm:w-[110px] md:w-[130px] h-8 sm:h-10 md:h-14"
+            className="flex items-center gap-2 group"
           >
-            <Image
-              src="/logo.webp"
-              alt="topo logo white"
-              fill
-              className={`object-contain transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader ? "opacity-100" : "opacity-0"
+            <div
+              className={`relative transition-all duration-500 ${
+                isNotch
+                  ? "h-6 md:h-[36px] w-20 md:w-[110px]"
+                  : "h-10 md:h-[68px] w-28 md:w-[190px]"
+              }`}
+            >
+              <Image
+                src="/logo.webp"
+                alt="topo logo white"
+                fill
+                className={`object-contain transition-all duration-500 ${
+                  isWhiteHeader ? "opacity-100" : "opacity-0"
                 }`}
-              priority
-            />
-            <Image
-              src="/logo-blue.webp"
-              alt="topo logo blue"
-              fill
-              className={`object-contain scale-[1.12] transition-opacity duration-500 drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)] ${isWhiteHeader ? "opacity-0" : "opacity-100"
+                priority
+              />
+              <Image
+                src="/logo-blue.webp"
+                alt="topo logo blue"
+                fill
+                className={`object-contain transition-all duration-500 ${
+                  isWhiteHeader ? "opacity-0" : "opacity-100"
                 }`}
-              priority
-            />
+                priority
+              />
+            </div>
           </Link>
-        </div>
 
-        <div className="hidden md:flex items-center space-x-6 flex-none">
-          {navLinks.map((link) => {
-            const isScrollLink = link.isScroll || link.name === "Home";
-            const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
-            const isActive = isScrollLink
-              ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
-              : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
+          {/* Desktop Links - Absolutely Centered */}
+          <div className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
+            {navLinks.map((link) => {
+              const isScrollLink = link.isScroll || link.name === "Home";
+              const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
+              const isActive = isScrollLink
+                ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
+                : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
 
-            const linkHref = isScrollLink ? "/" : link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={isScrollLink ? "/" : link.href}
+                  scroll={false}
+                  onClick={(e) => {
+                    if (isScrollLink) handleScrollNav(e, targetId);
+                  }}
+                  className={`text-[13.5px] tracking-tight transition-all duration-500 font-bold ${
+                    isWhiteHeader
+                      ? "text-white hover:text-white/80"
+                      : isActive
+                      ? "text-[#0066B2]"
+                      : "text-black hover:text-[#0066B2]"
+                  }`}
+                  style={isWhiteHeader ? { textShadow: "0 1px 4px rgba(0,0,0,0.3)" } : {}}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </div>
 
-            return (
-              <Link
-                key={link.name}
-                href={linkHref}
-                scroll={false}
-                onClick={(e) => {
-                  if (isScrollLink) {
-                    handleScrollNav(e, targetId);
-                  } else {
-                    setIsMobileMenuOpen(false);
-                  }
-                }}
-                className={`group text-base transition-all duration-500 flex flex-col items-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] ${
-                  isWhiteHeader
-                    ? "text-white hover:text-white"
-                    : isActive
-                      ? "text-brand-blue"
-                      : "text-black hover:text-brand-blue"
-                }`}
-              >
-                <span className="flex flex-col items-center">
-                  <span className={`transition-all duration-500 ${
-                    isActive 
-                      ? `font-bold opacity-100 ${isWhiteHeader ? "text-white" : "text-brand-blue"}` 
-                      : "font-light opacity-80 group-hover:font-bold group-hover:opacity-100"
-                  }`}>
-                    {link.name}
-                  </span>
-                  <span className="font-bold invisible h-0 select-none pointer-events-none" aria-hidden="true">
-                    {link.name}
-                  </span>
-                </span>
-              </Link>
-            );
-          })}
-        </div>
+          {/* Right Spacer for Layout Balancing */}
+          <div className="w-8 hidden md:block" />
 
-        <div className="flex-1 flex justify-end">
+          {/* Mobile Toggle */}
           <button
-            className="md:hidden z-50 p-2 focus:outline-none text-black"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            className={`md:hidden p-2 transition-colors duration-300 pointer-events-auto ${
+              isWhiteHeader ? "text-white" : "text-black"
+            }`}
+            onClick={() => setIsMobileMenuOpen(true)}
           >
-            <div className="w-8 h-6 flex flex-col justify-between items-end relative">
-              <span
-                className={`h-0.5 transition-all duration-500 rounded-full bg-black ${isMobileMenuOpen ? "w-8 rotate-45 translate-y-2.5" : "w-8"}`}
-              />
-              <span
-                className={`h-0.5 transition-all duration-500 rounded-full bg-black ${isMobileMenuOpen ? "opacity-0 -translate-x-2" : "w-6 opacity-100"}`}
-              />
-              <span
-                className={`h-0.5 transition-all duration-500 rounded-full bg-black ${isMobileMenuOpen ? "w-8 -rotate-45 -translate-y-2.5" : "w-8"}`}
-              />
+            <div className="w-6 h-5 flex flex-col justify-between items-end">
+              <span className="h-0.5 w-6 bg-current rounded-full" />
+              <span className="h-0.5 w-4 bg-current rounded-full" />
+              <span className="h-0.5 w-6 bg-current rounded-full" />
             </div>
           </button>
         </div>
       </nav>
 
+      {/* Mobile Fullscreen Overlay */}
       <div
-        className={`fixed top-[56px] left-0 w-full bg-white/30 backdrop-blur-md z-[40] flex flex-col items-center justify-center p-8 transition-all duration-500 ease-in-out md:hidden shadow-lg border-b border-white/20 ${isMobileMenuOpen 
-          ? "translate-y-0 opacity-100 visible" 
-          : "-translate-y-full opacity-0 invisible"
+        className={`fixed inset-0 z-[110] bg-white/95 backdrop-blur-2xl transition-all duration-500 md:hidden flex flex-col px-8 py-12 ${
+          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
-        <div className="flex flex-col items-center space-y-3 w-full">
-          {navLinks.map((link) => {
-            const isScrollLink = link.isScroll || link.name === "Home";
-            const targetId = link.name === "Home" ? "hero" : link.href.replace("#", "");
-            const isActive = isScrollLink
-              ? isHomePage && activeSection === (link.href === "/" ? "hero" : targetId)
-              : pathname === link.href && (!isHomePage || activeSection === "hero" || activeSection === "");
+        <div className="flex justify-between items-center mb-20">
+          <div className="relative w-24 h-10">
+             <Image src="/logo-blue.webp" alt="Logo" fill className="object-contain" />
+          </div>
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)} 
+            className="p-3 bg-gray-50 rounded-full text-[#0066B2]"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-6 h-6">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-            const linkHref = isScrollLink ? "/" : link.href;
+        <div className="flex flex-col gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                handleScrollNav(e, link.name === "Home" ? "hero" : link.href.replace("#", ""));
+              }}
+              className="text-4xl font-medium text-black/80 hover:text-[#0066B2] transition-colors"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
 
-            return (
-              <div key={link.name} className="overflow-hidden w-full text-center">
-                <Link
-                  href={linkHref}
-                  scroll={false}
-                  onClick={(e) => {
-                    if (isScrollLink) {
-                      handleScrollNav(e, targetId);
-                    } else {
-                      setIsMobileMenuOpen(false);
-                    }
-                  }}
-                  className={`
-  block w-full py-2 px-3 rounded-lg
-  text-xl relative
-  transition-all duration-200
-
-  ${isActive
-                      ? "bg-white/40 backdrop-blur-md border border-white/40 text-brand-blue font-semibold shadow-sm"
-                      : "text-black/70 font-medium"
-                    }
-
-  active:scale-[0.97]
-`}
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    <span>{link.name}</span>
-                  </span>
-                </Link>
-              </div>
-            );
-          })}
+        <div className="mt-auto pt-12 border-t border-black/5">
+          <p className="text-[11px] font-black uppercase tracking-[0.4em] text-black/30 mb-4">Contact</p>
+          <p className="text-xl font-bold text-[#0066B2]">info@topowindows.com</p>
         </div>
       </div>
     </>

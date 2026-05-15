@@ -41,13 +41,11 @@ export default function Testimonials() {
             </div>
           ) : (
             <div className="relative w-full">
-              {/* Removed side "fog/smoke" gradients for a cleaner, edge-to-edge architectural feel */}
-              
               <div className="flex w-max animate-marquee hover:[animation-play-state:paused] py-8">
                 {scrollItems.map((testimonial, index) => (
                   <div
                     key={`${testimonial._id}-${index}`}
-                    className="bg-white rounded-[32px] p-8 flex flex-col h-[300px] w-[320px] sm:w-[380px] mx-5 shrink-0 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-gray-100 transition-all duration-700 hover:shadow-[0_20px_50px_-20px_rgba(0,102,178,0.15)] hover:-translate-y-3"
+                    className="bg-white rounded-[32px] p-6 sm:p-8 flex flex-col h-[280px] sm:h-[300px] w-[280px] sm:w-[380px] mx-3 sm:mx-5 shrink-0 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-gray-100 transition-all duration-700 hover:shadow-[0_20px_50px_-20px_rgba(0,102,178,0.15)] hover:-translate-y-3"
                   >
                     {/* Golden Stars Rating */}
                     <div className="flex justify-between items-center mb-6">
