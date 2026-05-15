@@ -3,11 +3,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import AOS from "aos";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const radius = 45;
 const circumference = 2 * Math.PI * radius;
 
 const LoadingScreen = () => {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   const [isFading, setIsFading] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -17,6 +21,9 @@ const LoadingScreen = () => {
   const originalOverflow = useRef<string>("");
 
   useEffect(() => {
+    // Only activate the loader on the home page
+    if (!isHomePage) return;
+
     originalOverflow.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -25,9 +32,11 @@ const LoadingScreen = () => {
       setLogoVisible(true);
     }, 100);
 
+    // Fallback: force heroReady after 12s max so the loader never hangs forever
+    // (raised from 4s so slow connections don't dismiss before the image loads)
     const fallbackTimer = setTimeout(() => {
       setHeroReady(true);
-    }, 4000);
+    }, 12000);
 
     const heroReadyHandler = () => {
       setHeroReady(true);
@@ -41,7 +50,7 @@ const LoadingScreen = () => {
       window.removeEventListener("heroReady", heroReadyHandler);
       document.body.style.overflow = originalOverflow.current;
     };
-  }, []);
+  }, [isHomePage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Stage 2: Progress animation (starts AFTER logo scaling animation is done)
   useEffect(() => {
@@ -90,7 +99,7 @@ const LoadingScreen = () => {
     };
   }, [progress, heroReady]);
 
-  if (!shouldRender) return null;
+  if (!isHomePage || !shouldRender) return null;
 
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 

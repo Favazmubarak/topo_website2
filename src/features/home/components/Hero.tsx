@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useImage } from "../hooks/useImage";
 import { SectionImage } from "../api/imageApi";
 import HeroSkeleton from "./HeroSkeleton";
@@ -10,6 +10,13 @@ interface HeroProps {
   initialImages?: SectionImage[];
 }
 
+/** Append Cloudinary auto-format + auto-quality transformations for faster delivery */
+const optimizeCloudinaryUrl = (url: string): string => {
+  if (!url.includes("res.cloudinary.com")) return url;
+  // Insert f_auto,q_auto after "/upload/"
+  return url.replace("/upload/", "/upload/f_auto,q_auto,w_1920/");
+};
+
 export default function Hero({ initialImages }: HeroProps) {
   const { images: fetchedImages, loading, error } = useImage("hero");
   const images =
@@ -17,23 +24,28 @@ export default function Hero({ initialImages }: HeroProps) {
 
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  // Track the last URL we rendered so we only reset state when URL actually changes
+  const lastRenderedUrl = useRef<string | null>(null);
 
-  const getSafeSrc = (url?: string) => url?.trim() || "/fallback/hero.jpeg";
+  const getRawSrc = (url?: string) => url?.trim() || "/fallback/hero.jpeg";
+  const getSafeSrc = (url?: string) => {
+    const raw = getRawSrc(url);
+    return optimizeCloudinaryUrl(raw);
+  };
 
+  // Reset loading state ONLY when the actual image URL changes, not on every re-render.
+  // This prevents the skeleton from flashing on revisit when the browser already cached the image.
   useEffect(() => {
+    const newUrl = getRawSrc(images?.[0]?.imageUrl);
+    if (lastRenderedUrl.current !== null && lastRenderedUrl.current === newUrl) return;
+    lastRenderedUrl.current = newUrl;
     setImageLoaded(false);
     setShowSkeleton(true);
-  }, [images]);
-
-  useEffect(() => {
-    if (imageLoaded) {
-      setShowSkeleton(false);
-    }
-  }, [imageLoaded]);
+  }, [images]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!imageLoaded) return;
-
+    setShowSkeleton(false);
     window.dispatchEvent(new Event("heroReady"));
   }, [imageLoaded]);
 

@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.1.47"],
   images: {
+    minimumCacheTTL: 86400, // cache optimized images for 24 hours
     remotePatterns: [
       {
         protocol: "https",
