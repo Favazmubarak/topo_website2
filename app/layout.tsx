@@ -50,6 +50,10 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body className="min-h-full flex flex-col font-sans">
         <Toaster position="top-right" reverseOrder={false} />
         <ScrollToTop />

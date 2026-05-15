@@ -8,7 +8,9 @@ interface ImageState {
   loading: Record<Section, boolean>;
   error: Record<Section, string | null>; 
   isFetched: Record<Section, boolean>;
+  loadedUrls: Set<string>;
   fetchImage: (section: Section) => Promise<void>;
+  markAsLoaded: (url: string) => void;
 }
 
 const useImageStore = create<ImageState>((set, get) => ({
@@ -35,6 +37,16 @@ const useImageStore = create<ImageState>((set, get) => ({
     about: null,
     "why-choose": null,
     cta: null,
+  },
+  loadedUrls: new Set(),
+
+  markAsLoaded: (url: string) => {
+    if (get().loadedUrls.has(url)) return;
+    set((state) => {
+      const newSet = new Set(state.loadedUrls);
+      newSet.add(url);
+      return { loadedUrls: newSet };
+    });
   },
 
   fetchImage: async (section) => {
@@ -90,10 +102,19 @@ export const useImage = (section: Section) => {
   const isLoading = useImageStore((state) => state.loading[section]);
   const sectionError = useImageStore((state) => state.error[section]);
   const fetchImage = useImageStore((state) => state.fetchImage);
-  const isFetched = useImageStore((state) => state.isFetched[section]);
+  const markAsLoaded = useImageStore((state) => state.markAsLoaded);
+  const loadedUrls = useImageStore((state) => state.loadedUrls);
+  
   useEffect(() => {
     fetchImage(section);
   }, [section, fetchImage]);
 
-  return { images: sectionImages, loading: isLoading, error: sectionError, fetchImage };
+  return { 
+    images: sectionImages, 
+    loading: isLoading, 
+    error: sectionError, 
+    fetchImage,
+    markAsLoaded,
+    loadedUrls
+  };
 };
