@@ -18,7 +18,7 @@ const LoadingScreen = () => {
   const isHomePage = pathname === "/";
 
   const [mounted, setMounted] = useState(false);
-  const [hasSeen, setHasSeen] = useState(true);
+  const [hasSeen, setHasSeen] = useState(false); // Assume NOT seen initially to block the view
   const [shouldRender, setShouldRender] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [heroReady, setHeroReady] = useState(false);
@@ -26,8 +26,9 @@ const LoadingScreen = () => {
   const originalOverflow = useRef<string>("");
 
   useEffect(() => {
-    // Session persistence for premium feel (one-time play)
+    // Immediate check for session persistence
     const seen = sessionStorage.getItem("topo_loader_seen");
+    
     if (seen) {
       setHasSeen(true);
       setMounted(true);
@@ -35,11 +36,11 @@ const LoadingScreen = () => {
     }
 
     if (!isHomePage) {
+      setHasSeen(true); // Don't show on subpages
       setMounted(true);
       return;
     }
 
-    setHasSeen(false);
     setMounted(true);
 
     originalOverflow.current = document.body.style.overflow;
@@ -65,6 +66,10 @@ const LoadingScreen = () => {
           clearInterval(interval);
           return 100;
         }
+        
+        // If hero is already ready, jump to 100% instantly
+        if (heroReady) return 100;
+
         const increment = prev < 70 ? 2.5 : prev < 90 ? 0.6 : 0.2;
         return Math.min(prev + increment, 100);
       });

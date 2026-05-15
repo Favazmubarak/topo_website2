@@ -16,8 +16,8 @@ interface HeroProps {
  */
 const optimizeCloudinaryUrl = (url: string, width: number = 1920, quality: string = "auto"): string => {
   if (!url.includes("res.cloudinary.com")) return url;
-  // Use f_auto for modern format selection and q_auto for smart compression
-  return url.replace("/upload/", `/upload/f_auto,q_${quality},w_${width}/`);
+  // Use f_auto, q_auto:eco and dpr_auto for ultra-fast, sharp delivery
+  return url.replace("/upload/", `/upload/f_auto,q_${quality},w_${width},dpr_auto/`);
 };
 
 export default function Hero({ initialImages }: HeroProps) {
@@ -41,8 +41,8 @@ export default function Hero({ initialImages }: HeroProps) {
   }, []);
 
   const rawUrl = getRawSrc(images?.[0]?.imageUrl);
-  const highResSrc = optimizeCloudinaryUrl(rawUrl, isMobile ? 800 : 1920, "auto:eco");
-  const blurSrc = optimizeCloudinaryUrl(rawUrl, 50, "auto:low"); // LQIP micro-image
+  const highResSrc = optimizeCloudinaryUrl(rawUrl, isMobile ? 800 : 1600, "auto:eco"); // Reduced from 1920 to 1600 for speed
+  const blurSrc = optimizeCloudinaryUrl(rawUrl, 40, "auto:low"); // LQIP micro-image
 
   // Instant Load Logic: Skip skeleton if URL was already loaded in this session
   useEffect(() => {
