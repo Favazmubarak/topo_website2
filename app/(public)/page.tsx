@@ -4,6 +4,7 @@ import Hero from "@/src/features/home/components/Hero";
 import About from "@/src/features/home/components/About";
 import Products from "@/src/features/home/components/products";
 import WhyChooseTopo from "@/src/features/home/components/WhyChooseTopo";
+import Footer from "@/src/components/layout/Footer";
 
 const FAQ = nextDynamic(() => import("@/src/features/home/components/FAQ"));
 const ProductFeatures = nextDynamic(() => import("@/src/features/home/components/ProductFeatures"));
@@ -41,6 +42,7 @@ export default async function Home() {
       <Gallery initialImages={galleryData?.data || []} />
       <Upgrade />
       <Reels />
+      <Footer />
     </main>
   );
 }

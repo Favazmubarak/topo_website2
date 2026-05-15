@@ -18,19 +18,20 @@ export const AOSProvider = ({ children }: { children: React.ReactNode }) => {
   const isHomePage = pathname === "/";
 
   useEffect(() => {
-    if (isHomePage) {
-      // On home page: wait for the loader to finish before initialising AOS
-      // so elements aren't revealed before the curtain lifts.
+    // Check if the loader has already been seen in this session
+    const hasSeenLoader = typeof window !== "undefined" && sessionStorage.getItem("topo_loader_seen");
+
+    if (isHomePage && !hasSeenLoader) {
+      // On first home visit: wait for the cinematic loader to finish
       const initAOS = () => AOS.init(AOS_CONFIG);
       window.addEventListener("loaderFinished", initAOS);
       return () => window.removeEventListener("loaderFinished", initAOS);
     } else {
-      // On all other pages (gallery, products, …): initialise immediately.
-      // Without this, data-aos elements stay invisible forever because
-      // loaderFinished is never dispatched on non-home pages.
+      // On sub-pages, OR on home page if loader was already seen (refresh/back):
+      // Initialize immediately so content is visible.
       AOS.init(AOS_CONFIG);
     }
-  }, [isHomePage]);
+  }, [isHomePage, pathname]);
 
   return <>{children}</>;
 };
